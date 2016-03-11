@@ -17,7 +17,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     // inhghogogoogogogogog
-    ///hhoghoghog
+    ///hhogh
     NavigationView menuView;
     DrawerLayout drawer;
     TabLayout tabLayout;
