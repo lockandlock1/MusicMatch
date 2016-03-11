@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/Home"
+        android:icon="@android:drawable/ic_input_get"
+        android:title="Home"
+        android:orderInCategory="100"
+        />
+    <item android:id="@+id/MyMusicStroy"
+        android:icon="@android:drawable/ic_input_add"
+        android:title="MusicStory"
+        android:orderInCategory="101" />
+    <item android:id="@+id/HallofFame"
+        android:icon="@android:drawable/ic_input_delete"
+        android:title="HallofFame"
+        android:orderInCategory="102" />
+
+    <item android:id="@+id/Settings"
+        android:icon="@android:drawable/ic_input_get"
+        android:title="settings"
+        android:orderInCategory="103" />
+    <item android:id="@+id/LogOut"
+        android:icon="@android:drawable/ic_input_add"
+        android:title="LogOut"
+        android:orderInCategory="104" />
+</menu>
