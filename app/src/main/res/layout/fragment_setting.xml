@@ -1,10 +1,104 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.listenandrepeat.musicandmatch.SettingFragment">
+    tools:context=".Setting.SettingFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="닉네임 변경"
+        android:id="@+id/btn_nickname"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="32dp"
+        android:onClick="showDialogNickname"/>
 
-</FrameLayout>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="이메일 변경"
+        android:id="@+id/btn_email"
+        android:layout_below="@+id/btn_nickname"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/btn_nickname"
+        android:layout_alignEnd="@+id/btn_nickname"
+        android:layout_marginTop="20dp"
+        android:onClick="showDialogEmail"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="패스워드 변경"
+        android:id="@+id/btn_pw"
+        android:layout_below="@+id/btn_email"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="20dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="알림받기"
+        android:id="@+id/btn_alarm"
+        android:layout_below="@+id/btn_pw"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="20dp" />
+
+    <Switch
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/switch_alarm"
+        android:layout_alignBaseline="@id/btn_alarm"
+        android:layout_alignRight="@+id/btn_pw"
+        android:checked="false" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="버전정보"
+        android:id="@+id/btn_version"
+        android:layout_below="@+id/btn_alarm"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/btn_pw"
+        android:layout_alignEnd="@+id/btn_pw"
+        android:layout_marginTop="20dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="로그아웃"
+        android:id="@+id/btn_logout"
+        android:layout_below="@+id/btn_version"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignRight="@+id/btn_version"
+        android:layout_alignEnd="@+id/btn_version"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="회원탈퇴"
+        android:id="@+id/btn_leave"
+        android:layout_below="@+id/btn_logout"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_alignRight="@+id/switch_alarm"
+        android:layout_alignEnd="@+id/switch_alarm"
+        android:layout_marginRight="20dp"
+        android:onClick="showDialogLeave"/>
+
+</RelativeLayout>

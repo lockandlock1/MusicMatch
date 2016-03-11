@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.listenandrepeat.musicandmatch" >
+    package="com.example.listenandrepeat.musicandmatch">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -12,69 +12,53 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar" >
-        <activity android:name=".MainActivity" >
+        android:theme="@style/AppTheme.NoActionBar">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".PhotoDetailActivity" >
-        </activity>
-        <activity android:name=".VideoDetailActivity" >
-        </activity>
-        <activity android:name=".PostDetailActivity" >
-        </activity>
-        <activity android:name=".StoryWriteActivity" >
-        </activity>
-        <activity android:name=".SearchFromScActivity" >
-        </activity>
-        <activity android:name=".SearchFromYtActivity" >
-        </activity>
-        <activity android:name=".CommentActivity" >
-        </activity>
-        <activity android:name=".CommentEditActivity" >
-        </activity>
-        <activity android:name=".MatchingWriteActivity" >
-        </activity>
-        <activity android:name=".MatchingActivity" >
-        </activity>
-        <activity android:name=".AboutMeActivity" >
-        </activity>
-        <activity android:name=".PlayMusicActivity" >
-        </activity>
-        <activity android:name=".AlarmActivity" >
-        </activity>
-        <activity android:name=".MessageMainActivity" >
-        </activity>
-        <activity android:name=".MessageWriteActivity" >
-        </activity>
-        <activity android:name=".MessageDetailActivity" >
-        </activity>
-        <activity android:name=".MessageReplyActivity" >
-        </activity>
-        <activity android:name=".PasswordEditActivity" >
-        </activity>
-        <activity android:name=".JoinActivity" >
-        </activity>
-        <activity android:name=".GoogleJoinActivity" >
-        </activity>
-        <activity android:name=".EmailJoinActivity" >
-        </activity>
-        <activity android:name=".LoginActivity" >
-        </activity>
-        <activity android:name=".LoginNeedActivity" >
-        </activity>
-        <activity android:name=".FollowActivity" >
-        </activity>
+        <activity android:name=".PhotoDetailActivity" />
+        <activity android:name=".VideoDetailActivity" />
+        <activity android:name=".PostDetailActivity" />
+        <activity android:name=".StoryWriteActivity" />
+        <activity android:name=".SearchFromScActivity" />
+        <activity android:name=".SearchFromYtActivity" />
+        <activity android:name=".CommentActivity" />
+        <activity android:name=".CommentEditActivity" />
+        <activity android:name=".MatchingWriteActivity" />
+        <activity android:name=".MatchingActivity" />
+        <activity android:name=".AboutMeActivity" />
+        <activity android:name=".PlayMusicActivity" />
+        <activity android:name=".AlarmActivity" />
+        <activity android:name=".MessageMainActivity" />
+        <activity android:name=".MessageWriteActivity" />
+        <activity android:name=".MessageDetailActivity" />
+        <activity android:name=".MessageReplyActivity" />
+        <activity android:name=".PasswordEditActivity" />
+        <activity android:name=".JoinActivity" />
+        <activity android:name=".GoogleJoinActivity" />
+        <activity android:name=".EmailJoinActivity" />
+        <activity android:name=".Login.LoginActivity" />
+        <activity android:name=".LoginNeedActivity" />
+        <activity android:name=".FollowActivity" />
 
         <meta-data
             android:name="com.example.listenandrepeat.musicandmatch.ManagerClass.MyGlideModule"
             android:value="GlideModule" />
 
-        <activity android:name=".PhotoActivity" >
-        </activity>
+        <activity android:name=".PhotoActivity" />
+        <activity android:name=".Login.LoginAgreeActivity" />
+        <activity android:name=".Login.LoginEmailActivity" />
+        <activity android:name=".Login.LoginGoogleActivity" />
+        <activity android:name=".Login.LoginJoinActivity" />
+        <activity android:name=".Login.LoginSoundcloudActivity" />
+        <activity android:name=".Login.PasswordFindEmailActivity" />
+        <activity android:name=".Login.PasswordFindNewPasswordActivity" />
+        <activity android:name=".Login.SplashActivity" />
+        <activity android:name=".Setting.SettingPasswordActivity"></activity>
     </application>
 
 </manifest>

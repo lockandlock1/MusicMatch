@@ -1,6 +1,7 @@
 package com.example.listenandrepeat.musicandmatch;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -14,6 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.example.listenandrepeat.musicandmatch.Login.SplashActivity;
+import com.example.listenandrepeat.musicandmatch.Setting.SettingFragment;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     // inhghogogoogogogogog
@@ -89,6 +93,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.LogOut:
                 Toast.makeText(MainActivity.this,"good",Toast.LENGTH_LONG).show();
+                startActivity(new Intent(getApplication(), SplashActivity.class));
+                MainActivity.this.finish();
                 break;
 
         }
