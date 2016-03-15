@@ -33,4 +33,14 @@ public class ProfileEditActivity extends AppCompatActivity {
             }
         });
     }
+
+    public void showDialogGenreFragment(View view) {
+        DialogGenreFragment f = new DialogGenreFragment();
+        f.show(getSupportFragmentManager(), "dialog");
+    }
+
+    public void showDialogPositionFragment(View view) {
+        DialogPositionFragment f = new DialogPositionFragment();
+        f.show(getSupportFragmentManager(), "dialog");
+    }
 }
