@@ -192,6 +192,8 @@ public class NetworkManager {
     public void cancelAll(Object tag) {
 
     }
+
+    //
     private static  final MediaType MEDIA_TYPE = MediaType.parse("image/png");
 
     private static final String URL_FORMAT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/members/me";
