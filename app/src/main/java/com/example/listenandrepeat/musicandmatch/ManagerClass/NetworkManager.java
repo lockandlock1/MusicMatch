@@ -213,23 +213,17 @@ public class NetworkManager {
 
     private static final String URL_COMMENT_MODIFY = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts/%s/replies/%s";
 
-    public Request modifyStory(Context context,int pid,String title,String content,int limitPeo,int decidePeo,File file,final OnResultListener<StoryWriteResult> listener) throws UnsupportedEncodingException{
+    public Request modifyStory(Context context,int pid,String title,String contents,int limitPeo,int decidePeo,final OnResultListener<StoryWriteResult> listener) throws UnsupportedEncodingException{
         String url = String .format(URL_STORY_MODIFY,pid);
 
         final CallbackObject<StoryWriteResult> callbackObject = new CallbackObject<StoryWriteResult>();
 
-
-        MultipartBody.Builder builder = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("title", title)
-                .addFormDataPart("content", content)
-                .addFormDataPart("limit_people", "" + limitPeo)
-                .addFormDataPart("decide_people", "" + decidePeo);
-        if (file != null) {
-            builder.addFormDataPart("photo", "photo.jpg", RequestBody.create(MEDIA_TYPE, file));
-        }
-
-        RequestBody requestBody = builder.build();
+        RequestBody requestBody = new FormBody.Builder()
+                .add("content",contents)
+                .add("title",title)
+                .add("limit_people","" + limitPeo)
+                .add("decide_people","" + decidePeo)
+                .build();
 
 
         Request request = new Request.Builder().url(url)
