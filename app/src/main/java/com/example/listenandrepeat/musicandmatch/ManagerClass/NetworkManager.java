@@ -7,6 +7,7 @@ import android.os.Message;
 
 import com.example.listenandrepeat.musicandmatch.DataClass.CommentDetailResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.CommentResult;
+import com.example.listenandrepeat.musicandmatch.DataClass.LoginAndSignUpResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.MatchingDetailResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.MemberProfileResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.StoryWriteResult;
@@ -191,12 +192,13 @@ public class NetworkManager {
     public void cancelAll(Object tag) {
 
     }
+    private static  final MediaType MEDIA_TYPE = MediaType.parse("image/png");
 
     private static final String URL_FORMAT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/members/me";
 
     private static final String URL_PROFILE_MEMBER = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/members/%s";
 
-    // Matching and Story Tab
+    // Matching and Story Tab URL
     private static final String URL_MATCHING_CONTENT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts?page=%s";
 
     private static final String URL_STORY_WRITE = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts";
@@ -204,7 +206,7 @@ public class NetworkManager {
     private static final String URL_STORY_DELETE = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts/%s";
 
     private static final String URL_STORY_MODIFY = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts/%s";
-    // Comment
+    // Comment URL
     private static final String URL_COMMENT_CONTENT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts/%s/replies?page=%s";
 
     private static final String URL_COMMENT_WRITE = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts/%s/replies";
@@ -213,6 +215,91 @@ public class NetworkManager {
 
     private static final String URL_COMMENT_MODIFY = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts/%s/replies/%s";
 
+    // Login URL
+    private static final String URL_SIGN_UP = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/members";
+
+    private static final String URL_LOCAL_LOGIN = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/auth/login";
+
+    public Request login(Context context, String userName, String passWord , final OnResultListener<LoginAndSignUpResult> listener) throws UnsupportedEncodingException{
+        String url = URL_LOCAL_LOGIN;
+
+        final CallbackObject<LoginAndSignUpResult> callbackObject = new CallbackObject<LoginAndSignUpResult>();
+        RequestBody requestBody = new FormBody.Builder()
+                .add("username",userName)
+                .add("password",passWord)
+                .build();
+
+        Request request = new Request.Builder().url(url)
+                .tag(context)
+                .post(requestBody)
+                .build();
+
+        callbackObject.request = request;
+        callbackObject.listener = listener;
+
+        mClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callbackObject.exception = e;
+                Message msg = mHandler.obtainMessage(MESSAGE_FAILURE, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Gson parser = new Gson();
+                LoginAndSignUpResult result = parser.fromJson(response.body().string(),LoginAndSignUpResult.class);
+                callbackObject.result = result;
+                Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS,callbackObject);
+                mHandler.sendMessage(msg);
+            }
+        });
+        return request;
+    }
+    //Login Function
+    public Request signUp(Context context, String userName, String nickName, String passWord, final OnResultListener<LoginAndSignUpResult> listener) throws UnsupportedEncodingException{
+        String url = URL_SIGN_UP;
+
+        final CallbackObject<LoginAndSignUpResult> callbackObject = new CallbackObject<LoginAndSignUpResult>();
+
+        RequestBody requestBody = new FormBody.Builder()
+                .add("username",userName)
+                .add("nickname",nickName)
+                .add("password",passWord)
+                .build();
+
+        Request request = new Request.Builder().url(url)
+                .tag(context)
+                .post(requestBody)
+                .build();
+
+        callbackObject.request = request;
+        callbackObject.listener = listener;
+
+        mClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callbackObject.exception = e;
+                Message msg = mHandler.obtainMessage(MESSAGE_FAILURE, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Gson parser = new Gson();
+                LoginAndSignUpResult result = parser.fromJson(response.body().string(),LoginAndSignUpResult.class);
+                callbackObject.result = result;
+                Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS,callbackObject);
+                mHandler.sendMessage(msg);
+            }
+        });
+        return request;
+    }
+
+
+    // Story Function
+
+     // modify
     public Request modifyStory(Context context,int pid,String title,String contents,int limitPeo,int decidePeo,final OnResultListener<StoryWriteResult> listener) throws UnsupportedEncodingException{
         String url = String .format(URL_STORY_MODIFY,pid);
 
@@ -256,7 +343,7 @@ public class NetworkManager {
 
     }
 
-
+    // delete
     public Request deleteStory(Context context,int pid,
                                  final OnResultListener<StoryWriteResult> listener) throws  UnsupportedEncodingException{
         String url = String.format(URL_STORY_DELETE,pid);
@@ -294,6 +381,92 @@ public class NetworkManager {
         return  request;
     }
 
+    // write
+    public Request postStoryWrite(Context context,String title,String content,int limitPeo,int decidePeo,File file,final OnResultListener<StoryWriteResult> listener) throws UnsupportedEncodingException{
+        String url = URL_STORY_WRITE;
+
+        final CallbackObject<StoryWriteResult> callbackObject = new CallbackObject<StoryWriteResult>();
+
+
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("title", title)
+                .addFormDataPart("content", content)
+                .addFormDataPart("limit_people", "" + limitPeo)
+                .addFormDataPart("decide_people", "" + decidePeo);
+        if (file != null) {
+            builder.addFormDataPart("photo", "photo.jpg", RequestBody.create(MEDIA_TYPE, file));
+        }
+
+        RequestBody requestBody = builder.build();
+
+
+        Request request = new Request.Builder().url(url)
+                .tag(context)
+                .post(requestBody)
+                .build();
+
+
+        callbackObject.request = request;
+        callbackObject.listener = listener;
+
+        mClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callbackObject.exception = e;
+                Message msg = mHandler.obtainMessage(MESSAGE_FAILURE, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Gson parser = new Gson();
+                StoryWriteResult result = parser.fromJson(response.body().string(),StoryWriteResult.class);
+                callbackObject.result = result;
+                Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS,callbackObject);
+                mHandler.sendMessage(msg);
+            }
+        });
+        return request;
+
+    }
+    public Request getMatchingDetail(Context context,int page,final OnResultListener<MatchingDetailResult> listener)throws UnsupportedEncodingException{
+
+        String url = String.format(URL_MATCHING_CONTENT, page);
+
+        final CallbackObject<MatchingDetailResult> callbackObject = new CallbackObject<MatchingDetailResult>();
+
+        Request request = new Request.Builder().url(url)
+                .tag(context)
+                .build();
+
+        callbackObject.request = request;
+        callbackObject.listener = listener;
+        mClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callbackObject.exception = e;
+                Message msg = mHandler.obtainMessage(MESSAGE_FAILURE, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Gson parser = new Gson();
+                MatchingDetailResult result = parser.fromJson(response.body().string(), MatchingDetailResult.class);
+                callbackObject.result = result;
+                Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+        });
+        return request;
+    }
+    /*
+    ************************************************************************************
+    *
+     */
+
+    // Comment Function
     public Request  modifyComment(Context context,int pid,int rid,String contents,
                                  final OnResultListener<CommentResult> listener) throws  UnsupportedEncodingException{
         String url = String.format(URL_COMMENT_MODIFY,pid,rid);
@@ -371,17 +544,6 @@ public class NetworkManager {
         return  request;
     }
 
-
-
-
-
-
-
-
-
-    private static  final MediaType MEDIA_TYPE = MediaType.parse("image/png");
-
-
     public Request postCommentWrite(Context context,int pid,String contents,
                                     final OnResultListener<CommentResult> listener) throws  UnsupportedEncodingException{
         String url = String.format(URL_COMMENT_WRITE,pid);
@@ -420,54 +582,7 @@ public class NetworkManager {
 
         return  request;
     }
-    public Request postStoryWrite(Context context,String title,String content,int limitPeo,int decidePeo,File file,final OnResultListener<StoryWriteResult> listener) throws UnsupportedEncodingException{
-        String url = URL_STORY_WRITE;
 
-        final CallbackObject<StoryWriteResult> callbackObject = new CallbackObject<StoryWriteResult>();
-
-
-        MultipartBody.Builder builder = new MultipartBody.Builder()
-                .setType(MultipartBody.FORM)
-                .addFormDataPart("title", title)
-                .addFormDataPart("content", content)
-                .addFormDataPart("limit_people", "" + limitPeo)
-                .addFormDataPart("decide_people", "" + decidePeo);
-        if (file != null) {
-            builder.addFormDataPart("photo", "photo.jpg", RequestBody.create(MEDIA_TYPE, file));
-        }
-
-        RequestBody requestBody = builder.build();
-
-
-        Request request = new Request.Builder().url(url)
-                .tag(context)
-                .post(requestBody)
-                .build();
-
-
-        callbackObject.request = request;
-        callbackObject.listener = listener;
-
-        mClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                callbackObject.exception = e;
-                Message msg = mHandler.obtainMessage(MESSAGE_FAILURE, callbackObject);
-                mHandler.sendMessage(msg);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Gson parser = new Gson();
-                StoryWriteResult result = parser.fromJson(response.body().string(),StoryWriteResult.class);
-                callbackObject.result = result;
-                Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS,callbackObject);
-                mHandler.sendMessage(msg);
-            }
-        });
-        return request;
-
-    }
 
     public Request getCommentDetail(Context context,int pid,int page,final OnResultListener<CommentDetailResult> listener) throws UnsupportedEncodingException{
        String url = String.format(URL_COMMENT_CONTENT,pid,page);
@@ -500,38 +615,11 @@ public class NetworkManager {
        });
        return request;
    }
-
-    public Request getMatchingDetail(Context context,int page,final OnResultListener<MatchingDetailResult> listener)throws UnsupportedEncodingException{
-
-        String url = String.format(URL_MATCHING_CONTENT,page);
-
-        final CallbackObject<MatchingDetailResult> callbackObject = new CallbackObject<MatchingDetailResult>();
-
-        Request request = new Request.Builder().url(url)
-                .tag(context)
-                .build();
-
-        callbackObject.request = request;
-        callbackObject.listener = listener;
-        mClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                callbackObject.exception = e;
-                Message msg = mHandler.obtainMessage(MESSAGE_FAILURE, callbackObject);
-                mHandler.sendMessage(msg);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Gson parser = new Gson();
-                MatchingDetailResult result = parser.fromJson(response.body().string(), MatchingDetailResult.class);
-                callbackObject.result = result;
-                Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
-                mHandler.sendMessage(msg);
-            }
-        });
-        return request;
-    }
+    /*
+      ************************************************************************************
+      *
+       */
+    // Profile Function
     public Request getMemberProfile(Context context, String mid, final OnResultListener<MemberProfileResult> listener) throws UnsupportedEncodingException {
         try {
 
@@ -572,42 +660,7 @@ public class NetworkManager {
         return null;
     }
 
-/*
-    public Request getNaverMovie(Context context, String keyword, int start, int display,
-                                 final OnResultListener<NaverMovies> listener) throws UnsupportedEncodingException {
-        String url = String.format(URL_FORMAT, URLEncoder.encode(keyword, "utf-8"), start, display);
 
-        final CallbackObject<NaverMovies> callbackObject = new CallbackObject<NaverMovies>();
-
-        Request request = new Request.Builder().url(url)
-                .header("X-Naver-Client-Id", "FRzO_6MMu6zwQYAaXlZr")
-                .header("X-Naver-Client-Secret", "z0iOB55iQk")
-                .tag(context)
-                .build();
-
-        callbackObject.request = request;
-        callbackObject.listener = listener;
-        mClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                callbackObject.exception = e;
-                Message msg = mHandler.obtainMessage(MESSAGE_FAILURE, callbackObject);
-                mHandler.sendMessage(msg);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                XMLParser parser = new XMLParser();
-                NaverMovies movies = parser.fromXml(response.body().byteStream(), "channel", NaverMovies.class);
-                callbackObject.result = movies;
-                Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
-                mHandler.sendMessage(msg);
-            }
-        });
-
-        return request;
-    }
-*/
     public Request testSSL(Context context, final OnResultListener<String> listener) {
         Request request = new Request.Builder().url("https://192.168.210.51:8443/test.html").build();
         final CallbackObject<String> callbackObject = new CallbackObject<String>();

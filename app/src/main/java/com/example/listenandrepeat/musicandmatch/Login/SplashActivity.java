@@ -11,15 +11,12 @@ import com.example.listenandrepeat.musicandmatch.R;
 public class SplashActivity extends AppCompatActivity {
 
     ImageView imageView;
-    int id=R.drawable.splash;
+    int id = R.drawable.splash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-//        Drawable d = getResources().getDrawable(R.drawable.splash);
-//        imageView =(ImageView)findViewById(R.id.imageView);
-//        imageView.setImageDrawable(d);
         Handler hd = new Handler();
         hd.postDelayed(new splashHandler(), 1000);
     }

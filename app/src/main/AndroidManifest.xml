@@ -14,11 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
         <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".PhotoDetailActivity" />
         <activity android:name=".VideoDetailActivity" />
@@ -59,7 +55,13 @@
         <activity android:name=".Login.LoginSoundcloudActivity" />
         <activity android:name=".Login.PasswordFindEmailActivity" />
         <activity android:name=".Login.PasswordFindNewPasswordActivity" />
-        <activity android:name=".Login.SplashActivity" />
+        <activity android:name=".Login.SplashActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".Setting.SettingPasswordActivity" />
         <activity android:name=".Setting.ProfileEditActivity" />
         <activity android:name=".Setting.ProfileEditIntroActivity" />
