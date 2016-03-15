@@ -26,7 +26,8 @@
         <activity android:name=".StoryWriteActivity" />
         <activity android:name=".SearchFromScActivity" />
         <activity android:name=".SearchFromYtActivity" />
-        <activity android:name=".CommentActivity" />
+        <activity android:name=".CommentActivity"
+            android:windowSoftInputMode="adjustResize"/>
         <activity android:name=".CommentEditActivity" />
         <activity android:name=".MatchingWriteActivity" />
         <activity android:name=".MatchingActivity" />

@@ -20,7 +20,7 @@ public class ContentsItem {
     String content;
 
     int pid;
-
+    int mid;
     @SerializedName("limit_people")
     int limitPeople;
     @SerializedName("decide_people")

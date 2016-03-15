@@ -85,9 +85,9 @@ public class AllFragment extends Fragment {
             @Override
             public void onAdapterItemCommentImageClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
                 Intent intent = new Intent(getActivity(), CommentActivity.class);
-                int PostId = adapter.items.get(position).pid;
+                int postId = adapter.items.get(position).pid;
              //   Toast.makeText(getContext(),"CommentImage Click : " + PostId,Toast.LENGTH_SHORT).show();
-                intent.putExtra(CommentActivity.PARAM_POST_ID, PostId);
+                intent.putExtra(CommentActivity.PARAM_POST_ID, postId);
                 startActivity(intent);
             }
         });
