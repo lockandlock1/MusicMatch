@@ -2,8 +2,10 @@ package com.example.listenandrepeat.musicandmatch.Setting;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.listenandrepeat.musicandmatch.R;
 
@@ -21,6 +23,16 @@ public class SettingPasswordActivity extends AppCompatActivity {
 //        actionBar.setDisplayShowCustomEnabled(true);
 //        actionBar.setHomeAsUpIndicator(R.drawable.ic_back);
 //        actionBar.setTitle("비밀번호 변경");
+
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
+        toolbar.setTitle("비밀번호 변경");
+        toolbar.setNavigationIcon(R.drawable.ic_back);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(SettingPasswordActivity.this, "center toolbar navigation click", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         Button btn = (Button)findViewById(R.id.btn_OK);
         btn.setOnClickListener(new View.OnClickListener() {
