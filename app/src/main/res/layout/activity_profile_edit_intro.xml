@@ -16,7 +16,8 @@
         android:id="@+id/textView6"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="64dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -53,5 +54,16 @@
         android:layout_alignTop="@+id/btn_change"
         android:layout_alignRight="@+id/editText"
         android:layout_alignEnd="@+id/editText" />
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/toolbar"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:background="#d3001e"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

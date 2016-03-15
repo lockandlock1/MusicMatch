@@ -15,7 +15,8 @@
         android:id="@+id/image_photo"
         android:src="@drawable/circle_profile"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -44,22 +45,22 @@
         android:layout_height="wrap_content"
         android:id="@+id/image_genre"
         android:src="@drawable/genre"
-        android:layout_centerVertical="true"
-        android:layout_toLeftOf="@+id/image_photo"
-        android:layout_toStartOf="@+id/image_photo"
         android:clickable="true"
-        android:onClick="showDialogGenreFragment"/>
+        android:onClick="showDialogGenreFragment"
+        android:layout_below="@+id/text_nickname"
+        android:layout_toLeftOf="@+id/image_photo"
+        android:layout_toStartOf="@+id/image_photo" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/image_position"
         android:src="@drawable/position"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/image_photo"
-        android:layout_toEndOf="@+id/image_photo"
         android:clickable="true"
-        android:onClick="showDialogPositionFragment"/>
+        android:onClick="showDialogPositionFragment"
+        android:layout_above="@+id/btn_intro"
+        android:layout_toRightOf="@+id/image_photo"
+        android:layout_toEndOf="@+id/image_photo" />
 
     <Button
         android:layout_width="wrap_content"
