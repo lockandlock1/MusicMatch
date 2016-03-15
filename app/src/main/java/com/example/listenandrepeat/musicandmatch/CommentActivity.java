@@ -12,7 +12,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.listenandrepeat.musicandmatch.DataClass.CommentDetailResult;
-import com.example.listenandrepeat.musicandmatch.DataClass.CommentWriteResult;
+import com.example.listenandrepeat.musicandmatch.DataClass.CommentResult;
 import com.example.listenandrepeat.musicandmatch.ManagerClass.NetworkManager;
 
 import java.io.UnsupportedEncodingException;
@@ -46,16 +46,22 @@ public class CommentActivity extends AppCompatActivity {
         postId = intent.getIntExtra(PARAM_POST_ID,0);
 
         editText = (EditText)findViewById(R.id.text_comment);
+
+
+        Toast.makeText(CommentActivity.this, "Comment Id : " + postId, Toast.LENGTH_SHORT).show();
+        initComment();
         btn = (Button)findViewById(R.id.btn_post);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 try {
-                    NetworkManager.getInstance().postCommentWrite(CommentActivity.this, postId, editText.getText().toString(), new NetworkManager.OnResultListener<CommentWriteResult>() {
+                    NetworkManager.getInstance().postCommentWrite(CommentActivity.this, postId, editText.getText().toString(), new NetworkManager.OnResultListener<CommentResult>() {
                         @Override
-                        public void onSuccess(Request request, CommentWriteResult result) {
-                            Toast.makeText(CommentActivity.this,result.success.message,Toast.LENGTH_SHORT).show();
+                        public void onSuccess(Request request, CommentResult result) {
+                            editText.setText("");
+                            Toast.makeText(CommentActivity.this, result.success.message, Toast.LENGTH_SHORT).show();
+
                             initComment();
 
                         }
@@ -70,9 +76,6 @@ public class CommentActivity extends AppCompatActivity {
                 }
             }
         });
-
-        Toast.makeText(CommentActivity.this, "Comment Id : " + postId, Toast.LENGTH_SHORT).show();
-        initComment();
     }
 
     private void initComment() {

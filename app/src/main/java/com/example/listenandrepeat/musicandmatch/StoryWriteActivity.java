@@ -46,18 +46,23 @@ public class StoryWriteActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                File file = new File(filePath);
+
+                File file = null;
+                if (filePath != null) {
+                    file = new File(filePath);
+                }
 
                 try {
-                    NetworkManager.getInstance().postStroyWrite(StoryWriteActivity.this,"title",writeContents.getText().toString(),1,0,file, new NetworkManager.OnResultListener<StoryWriteResult>() {
+                    NetworkManager.getInstance().postStoryWrite(StoryWriteActivity.this, "title", writeContents.getText().toString(), 1, 0, file, new NetworkManager.OnResultListener<StoryWriteResult>() {
                         @Override
                         public void onSuccess(Request request, StoryWriteResult result) {
-                            Toast.makeText(StoryWriteActivity.this,result.success.message,Toast.LENGTH_LONG).show();
+                            Toast.makeText(StoryWriteActivity.this, result.success.message, Toast.LENGTH_LONG).show();
+
                         }
 
                         @Override
                         public void onFailure(Request request, int code, Throwable cause) {
-
+                              Toast.makeText(StoryWriteActivity.this,"fail",Toast.LENGTH_SHORT).show();
                         }
                     });
                 } catch (UnsupportedEncodingException e) {

@@ -7,7 +7,7 @@ import java.util.ArrayList;
 /**
  * Created by ListenAndRepeat on 2016. 3. 14..
  */
-public class CommentWrite {
+public class Comment {
     public String message;
 
 

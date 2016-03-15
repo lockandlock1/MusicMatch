@@ -13,7 +13,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.listenandrepeat.musicandmatch.DataClass.CommentResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.MatchingDetailResult;
+import com.example.listenandrepeat.musicandmatch.DataClass.StoryWriteResult;
 import com.example.listenandrepeat.musicandmatch.ManagerClass.NetworkManager;
 
 import java.io.UnsupportedEncodingException;
@@ -63,12 +65,14 @@ public class MatchingFragment extends Fragment {
             @Override
             public void onAdapterItemEditImageClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
 
-                Toast.makeText(getContext(), "EditImage Click : ", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "EditImage Click : ", Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
             public void onAdpaterItemLikeImageClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
                 Toast.makeText(getContext(),"LikeImage Click : " + adapter.items.get(position).pid,Toast.LENGTH_SHORT).show();
+
             }
 
             @Override

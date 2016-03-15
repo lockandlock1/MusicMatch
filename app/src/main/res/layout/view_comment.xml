@@ -56,4 +56,14 @@
         android:layout_toRightOf="@+id/image_profile"
         android:layout_toEndOf="@+id/image_profile" />
 
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/spinner"
+        android:layout_alignTop="@+id/text_contents"
+        android:layout_alignLeft="@+id/image_position"
+        android:layout_alignStart="@+id/image_position"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"/>
+
 </RelativeLayout>

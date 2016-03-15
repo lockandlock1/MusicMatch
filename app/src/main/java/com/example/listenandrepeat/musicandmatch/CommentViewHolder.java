@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -19,6 +20,8 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
     CommentItem item;
     Context mContext;
 
+    Spinner spinner;
+    SpinnerAdapter mAdapter;
     public CommentViewHolder(View itemView) {
         super(itemView);
         mContext = itemView.getContext();
@@ -28,7 +31,11 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
         nickText = (TextView)itemView.findViewById(R.id.text_nick);
         contentsText = (TextView)itemView.findViewById(R.id.text_contents);
         dateText = (TextView)itemView.findViewById(R.id.text_date);
+        spinner = (Spinner)itemView.findViewById(R.id.spinner);
+        mAdapter = new SpinnerAdapter();
+        spinner.setAdapter(mAdapter);
 
+        initSpinner();
 
     }
     public void setCommentItem(CommentItem c){
@@ -48,5 +55,13 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
 
 
     }
+    private void initSpinner(){
+        SpinnerItem s1 = new SpinnerItem(null,"Edit");
+        SpinnerItem s2 = new SpinnerItem(null,"Delete");
+
+        mAdapter.add(s1);
+        mAdapter.add(s2);
+    }
+
 
 }
