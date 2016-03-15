@@ -26,8 +26,9 @@
         <activity android:name=".StoryWriteActivity" />
         <activity android:name=".SearchFromScActivity" />
         <activity android:name=".SearchFromYtActivity" />
-        <activity android:name=".CommentActivity"
-            android:windowSoftInputMode="adjustResize"/>
+        <activity
+            android:name=".CommentActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".CommentEditActivity" />
         <activity android:name=".MatchingWriteActivity" />
         <activity android:name=".MatchingActivity" />
@@ -59,7 +60,10 @@
         <activity android:name=".Login.PasswordFindEmailActivity" />
         <activity android:name=".Login.PasswordFindNewPasswordActivity" />
         <activity android:name=".Login.SplashActivity" />
-        <activity android:name=".Setting.SettingPasswordActivity"></activity>
+        <activity android:name=".Setting.SettingPasswordActivity" />
+        <activity android:name=".Setting.ProfileEditActivity" />
+        <activity android:name=".Setting.ProfileEditIntroActivity" />
+        <activity android:name=".Setting.ProfileEditNameActivity"></activity>
     </application>
 
 </manifest>
