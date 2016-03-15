@@ -48,6 +48,15 @@ public class SettingFragment extends Fragment {
             }
         });
 
+        btn = (Button)view.findViewById(R.id.btn_version);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ProfileEditActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         return view;
     }
