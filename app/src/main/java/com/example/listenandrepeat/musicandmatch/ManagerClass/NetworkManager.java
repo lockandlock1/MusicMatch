@@ -10,6 +10,9 @@ import com.example.listenandrepeat.musicandmatch.DataClass.CommentResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.LoginAndSignUpResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.MatchingDetailResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.MemberProfileResult;
+import com.example.listenandrepeat.musicandmatch.DataClass.ProfileChange;
+import com.example.listenandrepeat.musicandmatch.DataClass.ProfileMe;
+import com.example.listenandrepeat.musicandmatch.DataClass.ProfileOther;
 import com.example.listenandrepeat.musicandmatch.DataClass.StoryWriteResult;
 import com.example.listenandrepeat.musicandmatch.MyApplication;
 import com.example.listenandrepeat.musicandmatch.R;
@@ -688,4 +691,174 @@ public class NetworkManager {
         return request;
 
     }
+
+
+    //////////////////////////////////////////////// 인호 추가//////////////////////////////////////////////////////
+    ////////////////////////////////////준수꺼
+    private static final String URL_FORMAT_JOIN = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/members";
+    private static final String URL_FORMAT_LOGIN_LINK = "http://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/auth/soundcloud";
+    private static final String URL_FORMAT_LOGIN_LOCAL = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/auth/login";
+    private static final String URL_FORMAT_LOGOUT_LOCAL = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/auth/logout";
+
+    private static final String URL_FORMAT_PROFILE_ME = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/members/me";
+    private static final String URL_FORMAT_PROFILE_OTHER = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/members/1";
+    private static final String URL_FORMAT_TRACK_LIST_OTHER = "http://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/members/1/tracks";
+    private static final String URL_FORMAT_TRACK_LIST_ME = "http://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/members/me/tracks";
+
+    private static final String URL_FORMAT_PROFILE_CHANGE = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/members/me";
+    private static final String URL_FORMAT_PROFILE_PHOTO_CHANGE = "https://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts";
+
+    private static final String URL_FORMAT_STORY_WRITE = "http://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts/1234";
+    private static final String URL_FORMAT_STORY_CHANGE = "http://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts/1234";
+    private static final String URL_FORMAT_STORY_DELETE = "http://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts?page=1";
+    private static final String URL_FORMAT_STORY_SEARCH = "http://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts/1234/replies";
+
+    private static final String URL_FORMAT_COMMENT_WRITE = "http://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts/1234/replies/1";
+    private static final String URL_FORMAT_COMMENT_CHANGE = "http://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts/1234/replies/1";
+    private static final String URL_FORMAT_COMMENT_DELETE = "http://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts/1/replies?page=1";
+    private static final String URL_FORMAT_COMMENT_DETAIL = "https://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts/1/photos";
+
+    ////////////////////////////////// 용이형 유알엘주소
+//    private static final String URL_FORMAT_JOIN = "https://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/members";
+//    private static final String URL_FORMAT_LOGIN_LINK = "http://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/auth/soundcloud";
+//    private static final String URL_FORMAT_LOGIN_LOCAL = "https://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/auth/login";
+//    private static final String URL_FORMAT_LOGOUT_LOCAL = "https://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/auth/logout";
+//
+//    private static final String URL_FORMAT_PROFILE_ME = "https://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/members/me";
+//    private static final String URL_FORMAT_PROFILE_OTHER = "https://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/members/%s";
+//    private static final String URL_FORMAT_TRACK_LIST_OTHER = "http://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/members/1/tracks";
+//    private static final String URL_FORMAT_TRACK_LIST_ME = "http://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/members/me/tracks";
+//
+//    private static final String URL_FORMAT_PROFILE_CHANGE = "https://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/members/me";
+//    private static final String URL_FORMAT_PROFILE_PHOTO_CHANGE = "https://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/members/me/photos";
+//
+//    private static final String URL_FORMAT_STORY_WRITE = "https://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts";
+//    private static final String URL_FORMAT_STORY_CHANGE = "http://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts/1234";
+//    private static final String URL_FORMAT_STORY_DELETE = "http://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts/1234";
+//    private static final String URL_FORMAT_STORY_SEARCH = "http://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts?page=1";
+//
+//    private static final String URL_FORMAT_COMMENT_WRITE = "http://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts/1234/replies";
+//    private static final String URL_FORMAT_COMMENT_CHANGE = "http://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts/1234/replies/1";
+//    private static final String URL_FORMAT_COMMENT_DELETE = "http://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts/1234/replies/1";
+//    private static final String URL_FORMAT_COMMENT_DETAIL = "http://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts/1/replies?page=1";
+//    private static final String URL_FORMAT_FILE_UPLOAD = "https://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts/1/photos";
+
+
+    public Request getProfileMe(Context context, final OnResultListener<ProfileMe> listener) throws UnsupportedEncodingException {
+
+        String url = URL_FORMAT_PROFILE_ME;
+
+        final CallbackObject<ProfileMe> callbackObject = new CallbackObject<ProfileMe>();
+
+        Request request = new Request.Builder().url(url)
+                .tag(context)
+                .build();
+
+        callbackObject.request = request;
+        callbackObject.listener = listener;
+        mClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callbackObject.exception = e;
+                Message msg = mHandler.obtainMessage(MESSAGE_FAILURE, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Gson gson = new Gson();
+                ProfileMe profileMe = gson.fromJson(response.body().string(), ProfileMe.class);
+                callbackObject.result = profileMe;
+                Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+        });
+
+        return request;
+    }
+
+    public Request getProfileOther(Context context,int mid, final OnResultListener<ProfileOther> listener) throws UnsupportedEncodingException {
+
+        String url = String.format(URL_FORMAT_PROFILE_OTHER,mid);
+
+        final CallbackObject<ProfileOther> callbackObject = new CallbackObject<ProfileOther>();
+
+        Request request = new Request.Builder().url(url)
+                .tag(context)
+                .build();
+
+        callbackObject.request = request;
+        callbackObject.listener = listener;
+        mClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callbackObject.exception = e;
+                Message msg = mHandler.obtainMessage(MESSAGE_FAILURE, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Gson gson = new Gson();
+                ProfileOther profileOther = gson.fromJson(response.body().string(), ProfileOther.class);
+                callbackObject.result = profileOther;
+                Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+        });
+
+        return request;
+    }
+
+//    private static  final MediaType MEDIA_TYPE = MediaType.parse("image/png");
+    public Request putProfileChange(Context context, String username, String password, String photo, String nickname, String intro, int genre, int position, File file , final OnResultListener<ProfileChange> listener) throws UnsupportedEncodingException {
+
+        String url = URL_FORMAT_PROFILE_CHANGE;
+
+        final CallbackObject<ProfileChange> callbackObject = new CallbackObject<ProfileChange>();
+
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("username", username)
+                .addFormDataPart("password", password)
+                .addFormDataPart("photo", photo)
+                .addFormDataPart("nickname", nickname)
+                .addFormDataPart("intro", intro)
+                .addFormDataPart("genre", "" + genre)
+                .addFormDataPart("position", "" + position);
+        if (file != null) {
+            builder.addFormDataPart("photo", file.getName(), RequestBody.create(MEDIA_TYPE, file));
+        }
+
+        RequestBody body = builder.build();
+        Request request = new Request.Builder().url(url)
+                .tag(context)
+                .put(body)
+                .build();
+
+
+        callbackObject.request = request;
+        callbackObject.listener = listener;
+        mClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callbackObject.exception = e;
+                Message msg = mHandler.obtainMessage(MESSAGE_FAILURE, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Gson gson = new Gson();
+                ProfileChange profileChange = gson.fromJson(response.body().string(), ProfileChange.class);
+                callbackObject.result = profileChange;
+                Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+        });
+
+        return request;
+    }
+
+
 }

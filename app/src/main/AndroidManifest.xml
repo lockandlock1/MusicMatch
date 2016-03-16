@@ -13,9 +13,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
         <activity android:name=".PhotoDetailActivity" />
         <activity android:name=".VideoDetailActivity" />
         <activity android:name=".PostDetailActivity" />
@@ -55,7 +53,7 @@
         <activity android:name=".Login.LoginSoundcloudActivity" />
         <activity android:name=".Login.PasswordFindEmailActivity" />
         <activity android:name=".Login.PasswordFindNewPasswordActivity" />
-        <activity android:name=".Login.SplashActivity" >
+        <activity android:name=".Login.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -65,7 +63,8 @@
         <activity android:name=".Setting.SettingPasswordActivity" />
         <activity android:name=".Setting.ProfileEditActivity" />
         <activity android:name=".Setting.ProfileEditIntroActivity" />
-        <activity android:name=".Setting.ProfileEditNameActivity"></activity>
+        <activity android:name=".Setting.ProfileEditNameActivity" />
+        <activity android:name=".Setting.ProfileOtherActivity"></activity>
     </application>
 
 </manifest>

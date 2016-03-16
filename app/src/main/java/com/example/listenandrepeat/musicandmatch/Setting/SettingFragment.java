@@ -69,6 +69,15 @@ public class SettingFragment extends Fragment {
             }
         });
 
+        btn = (Button)view.findViewById(R.id.btn_alarm);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getContext(), ProfileEditActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         return view;
     }
