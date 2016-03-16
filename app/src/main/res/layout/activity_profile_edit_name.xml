@@ -44,6 +44,7 @@
         android:layout_height="wrap_content"
         android:text="닉네임 변경"
         android:id="@+id/btn_change"
+        android:background="@drawable/nicnamechange"
         android:layout_below="@+id/editText"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"

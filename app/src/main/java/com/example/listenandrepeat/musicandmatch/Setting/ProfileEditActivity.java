@@ -44,6 +44,15 @@ public class ProfileEditActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        btn = (Button) findViewById(R.id.btn_OK);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplication(), ProfileEditIntroActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void showDialogGenreFragment(View view) {

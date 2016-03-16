@@ -62,6 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/checkBox1"
+        android:button="@drawable/selector_checkbox"
         android:layout_below="@+id/editText4"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -71,6 +72,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/checkBox2"
+        android:button="@drawable/selector_checkbox"
         android:layout_below="@+id/checkBox1"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
