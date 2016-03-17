@@ -16,7 +16,8 @@ public class ContentsItem {
     int genre;
     int position;
     String nickname;
-    String photo;
+    public ArrayList<String> photo;
+    String profile;
     String content;
 
     int pid;

@@ -204,6 +204,7 @@ public class NetworkManager {
     private static final String URL_PROFILE_MEMBER = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/members/%s";
 
     // Matching and Story Tab URL
+//    private static final String URL_MATCHING_CONTENT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts?page=%s&key=%s&flag=%s";
     private static final String URL_MATCHING_CONTENT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts?page=%s";
 
     private static final String URL_STORY_WRITE = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts";
@@ -219,18 +220,57 @@ public class NetworkManager {
     private static final String URL_COMMENT_DELETE = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts/%s/replies/%s";
 
     private static final String URL_COMMENT_MODIFY = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts/%s/replies/%s";
+    // SoundCloud URL
 
-    // Login URL
+
+    // Local Login URL
     private static final String URL_SIGN_UP = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/members";
 
     private static final String URL_LOCAL_LOGIN = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/auth/login";
 
-    public Request login(Context context, String userName, String passWord , final OnResultListener<LoginAndSignUpResult> listener) throws UnsupportedEncodingException{
+    private static final String URL_LOCAL_LOGOUT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/auth/logout";
+    //Login Function
+    public Request logOut(Context context, final OnResultListener<LoginAndSignUpResult> listener) throws UnsupportedEncodingException{
+        String url = URL_LOCAL_LOGIN;
+
+        final CallbackObject<LoginAndSignUpResult> callbackObject = new CallbackObject<LoginAndSignUpResult>();
+
+
+        Request request = new Request.Builder().url(url)
+                .tag(context)
+                .get()
+                .build();
+
+        callbackObject.request = request;
+        callbackObject.listener = listener;
+
+        mClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callbackObject.exception = e;
+                Message msg = mHandler.obtainMessage(MESSAGE_FAILURE, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Gson parser = new Gson();
+                LoginAndSignUpResult result = parser.fromJson(response.body().string(),LoginAndSignUpResult.class);
+                callbackObject.result = result;
+                Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS,callbackObject);
+                mHandler.sendMessage(msg);
+            }
+        });
+        return request;
+    }
+
+
+    public Request logIn(Context context, String userName, String passWord , final OnResultListener<LoginAndSignUpResult> listener) throws UnsupportedEncodingException{
         String url = URL_LOCAL_LOGIN;
 
         final CallbackObject<LoginAndSignUpResult> callbackObject = new CallbackObject<LoginAndSignUpResult>();
         RequestBody requestBody = new FormBody.Builder()
-                .add("username",userName)
+                .add("username", userName)
                 .add("password",passWord)
                 .build();
 
@@ -261,14 +301,14 @@ public class NetworkManager {
         });
         return request;
     }
-    //Login Function
+
     public Request signUp(Context context, String userName, String nickName, String passWord, final OnResultListener<LoginAndSignUpResult> listener) throws UnsupportedEncodingException{
         String url = URL_SIGN_UP;
 
         final CallbackObject<LoginAndSignUpResult> callbackObject = new CallbackObject<LoginAndSignUpResult>();
 
         RequestBody requestBody = new FormBody.Builder()
-                .add("username",userName)
+                .add("username", userName)
                 .add("nickname",nickName)
                 .add("password",passWord)
                 .build();
@@ -437,6 +477,8 @@ public class NetworkManager {
     }
     public Request getMatchingDetail(Context context,int page,final OnResultListener<MatchingDetailResult> listener)throws UnsupportedEncodingException{
 
+//        String url = String.format(URL_MATCHING_CONTENT, page, URLEncoder.encode(key,"utf-8"),URLEncoder.encode(flag, "utf-8"));
+
         String url = String.format(URL_MATCHING_CONTENT, page);
 
         final CallbackObject<MatchingDetailResult> callbackObject = new CallbackObject<MatchingDetailResult>();
@@ -458,7 +500,9 @@ public class NetworkManager {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Gson parser = new Gson();
-                MatchingDetailResult result = parser.fromJson(response.body().string(), MatchingDetailResult.class);
+                String text = response.body().string();
+
+                MatchingDetailResult result = parser.fromJson(text, MatchingDetailResult.class);
                 callbackObject.result = result;
                 Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
                 mHandler.sendMessage(msg);
@@ -612,7 +656,8 @@ public class NetworkManager {
            @Override
            public void onResponse(Call call, Response response) throws IOException {
                 Gson parser = new Gson();
-                CommentDetailResult result = parser.fromJson(response.body().string(),CommentDetailResult.class);
+                String text = response.body().string();
+                CommentDetailResult result = parser.fromJson(text,CommentDetailResult.class);
                 callbackObject.result = result;
                 Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
                 mHandler.sendMessage(msg);

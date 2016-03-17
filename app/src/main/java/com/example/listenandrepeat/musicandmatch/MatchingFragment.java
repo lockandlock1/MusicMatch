@@ -88,7 +88,7 @@ public class MatchingFragment extends Fragment {
 
 
         try {
-            NetworkManager.getInstance().getMatchingDetail(getContext(), 1, new NetworkManager.OnResultListener<MatchingDetailResult>() {
+            NetworkManager.getInstance().getMatchingDetail(getContext(), 1,new NetworkManager.OnResultListener<MatchingDetailResult>() {
                 @Override
                 public void onSuccess(Request request, MatchingDetailResult result) {
                     mAdapter.clearAll();

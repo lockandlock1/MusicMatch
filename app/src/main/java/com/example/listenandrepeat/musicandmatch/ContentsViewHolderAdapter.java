@@ -15,8 +15,10 @@ public class ContentsViewHolderAdapter extends RecyclerView.Adapter<ContentsView
  implements ContentsViewHolder.OnImageClickListener{
 
     List<ContentsItem> items = new ArrayList<ContentsItem>();
+
     public void addAll(List<ContentsItem> items){
         this.items.addAll(items);
+
         notifyDataSetChanged();
     }
 

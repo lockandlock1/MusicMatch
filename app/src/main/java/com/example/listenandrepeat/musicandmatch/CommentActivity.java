@@ -80,9 +80,10 @@ public class CommentActivity extends AppCompatActivity {
 
     private void initComment() {
         try {
-            NetworkManager.getInstance().getCommentDetail(CommentActivity.this, postId, 2, new NetworkManager.OnResultListener<CommentDetailResult>() {
+            NetworkManager.getInstance().getCommentDetail(CommentActivity.this, postId, 13, new NetworkManager.OnResultListener<CommentDetailResult>() {
                 @Override
                 public void onSuccess(Request request, CommentDetailResult result) {
+
                     mAdapter.clearAll();
                     mAdapter.addAll(result.success.items);
                 }

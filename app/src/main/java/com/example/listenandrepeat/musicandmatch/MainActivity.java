@@ -20,8 +20,14 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.listenandrepeat.musicandmatch.DataClass.LoginAndSignUpResult;
 import com.example.listenandrepeat.musicandmatch.Login.SplashActivity;
+import com.example.listenandrepeat.musicandmatch.ManagerClass.NetworkManager;
 import com.example.listenandrepeat.musicandmatch.Setting.SettingFragment;
+
+import java.io.UnsupportedEncodingException;
+
+import okhttp3.Request;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener{
     // inhghogogoogogogogog
@@ -97,7 +103,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 .commit();
                 break;
             case R.id.LogOut:
-                Toast.makeText(MainActivity.this,"good",Toast.LENGTH_LONG).show();
+
+
                 startActivity(new Intent(getApplication(), SplashActivity.class));
                 MainActivity.this.finish();
                 break;

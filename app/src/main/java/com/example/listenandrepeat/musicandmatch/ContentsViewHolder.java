@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide;
  * Created by ListenAndRepeat on 2016. 3. 8..
  */
 public class ContentsViewHolder extends RecyclerView.ViewHolder {
-    ImageView profileImage , genreImage , positionImage  , likeImage , commentImage ,editImage ;
+    ImageView profileImage , genreImage , positionImage  , likeImage , commentImage ,editImage , contentImage;
     TextView nickText , contentsText , dateText ,likeNum , commentNum ;
 
     Context mContext;
@@ -35,6 +35,7 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
     public ContentsViewHolder(final View itemView) {
         super(itemView);
         mContext = itemView.getContext();
+        contentImage = (ImageView)itemView.findViewById(R.id.image_content);
         profileImage = (ImageView)itemView.findViewById(R.id.image_profile);
         genreImage = (ImageView)itemView.findViewById(R.id.image_genre);
         positionImage = (ImageView)itemView.findViewById(R.id.image_position);
@@ -78,15 +79,27 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
         item = c;
         // profile
 
-        if(!TextUtils.isEmpty(c.photo)){
+        if(!TextUtils.isEmpty(c.profile)){
             Glide.with(mContext)
-                    .load(c.photo)
+                    .load(c.profile)
                     .into(profileImage);
         } else {
             profileImage.setImageResource(R.mipmap.ic_launcher);
         }
 
+        if(c.photo != null && c.photo.size() > 0 && !TextUtils.isEmpty(c.photo.get(0))){
+            Glide.with(mContext)
+                    .load(c.photo.get(0))
+                    .into(contentImage);
+        } else{
+            contentImage.setVisibility(View.INVISIBLE);
+        }
 
+        if (!TextUtils.isEmpty(c.content)){
+            contentsText.setText(c.content);
+        } else{
+            contentsText.setVisibility(View.INVISIBLE);
+        }
       /*
         //pos
 
@@ -117,11 +130,10 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
         likeImage.setImageResource(R.mipmap.ic_launcher);
         commentImage.setImageResource(R.mipmap.ic_launcher);
 
-        contentsText.setText(c.content);
+
         editImage.setImageResource(R.mipmap.ic_launcher);
         dateText.setText(c.date);
         nickText.setText(c.nickname);
-        // contentsText.setText(c.content);
 
     }
 

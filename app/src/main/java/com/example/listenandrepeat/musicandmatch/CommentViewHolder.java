@@ -41,9 +41,9 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
     public void setCommentItem(CommentItem c){
         item = c;
 
-        if(!TextUtils.isEmpty(c.photo)){
+        if(!TextUtils.isEmpty(c.profile)){
             Glide.with(mContext)
-                    .load(c.photo)
+                    .load(c.profile)
                     .into(profileImage);
         }else {
             profileImage.setImageResource(R.mipmap.ic_launcher);
