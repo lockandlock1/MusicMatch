@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.listenandrepeat.musicandmatch.DataClass.StoryWrite;
 import com.example.listenandrepeat.musicandmatch.DataClass.StoryWriteResult;
 import com.example.listenandrepeat.musicandmatch.ManagerClass.NetworkManager;
 
@@ -31,7 +32,7 @@ public class StoryWriteActivity extends AppCompatActivity {
     EditText writeContents;
     Button btn;
     ImageView photoView;
-    String filePath = "";
+    String filePath ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,7 +63,8 @@ public class StoryWriteActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(Request request, int code, Throwable cause) {
-                              Toast.makeText(StoryWriteActivity.this,"fail",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(StoryWriteActivity.this,cause.getMessage().toString(),Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(StoryWriteActivity.this, "fail", Toast.LENGTH_SHORT).show();
                         }
                     });
                 } catch (UnsupportedEncodingException e) {

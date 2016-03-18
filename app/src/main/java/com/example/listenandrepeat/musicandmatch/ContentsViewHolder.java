@@ -1,6 +1,8 @@
 package com.example.listenandrepeat.musicandmatch;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -83,6 +85,11 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
             Glide.with(mContext)
                     .load(c.profile)
                     .into(profileImage);
+
+            /*
+            Bitmap bm  = ((BitmapDrawable)mContext.getResources().( Glide.with(mContext)
+                    .load(c.profile)
+                    .into(profileImage))).getBitmap();*/
         } else {
             profileImage.setImageResource(R.mipmap.ic_launcher);
         }
@@ -100,10 +107,33 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
         } else{
             contentsText.setVisibility(View.INVISIBLE);
         }
-      /*
+
         //pos
 
         switch (c.position){
+
+            case 10:
+                positionImage.setImageResource(R.drawable.mark_position_base);
+                break;
+            case 11:
+                positionImage.setImageResource(R.drawable.mark_position_guitar);
+                break;
+            case 12:
+                positionImage.setImageResource(R.drawable.mark_position_drum);
+                break;
+            case 13:
+                positionImage.setImageResource(R.drawable.mark_position_keyboard);
+                break;
+            case 14:
+                positionImage.setImageResource(R.drawable.mark_position_vocal);
+                break;
+            case 15:
+                positionImage.setImageResource(R.drawable.mark_position_rap);
+                break;
+            case 16:
+                positionImage.setImageResource(R.drawable.mark_position_compose);
+                break;
+
             default:
                 positionImage.setImageResource(R.mipmap.ic_launcher);
 
@@ -115,11 +145,35 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
         //genre
 
         switch (c.genre){
+            case 0:
+                genreImage.setImageResource(R.drawable.mark_genre_balled);
+                break;
+            case 1:
+                genreImage.setImageResource(R.drawable.mark_genre_rb);
+                break;
+            case 2:
+                genreImage.setImageResource(R.drawable.mark_genre_hiphop);
+                break;
+            case 3:
+                genreImage.setImageResource(R.drawable.mark_genre_rock);
+                break;
+            case 4:
+                genreImage.setImageResource(R.drawable.mark_genre_dance);
+                break;
+            case 5:
+                genreImage.setImageResource(R.drawable.mark_genre_indi);
+                break;
+            case 6:
+                genreImage.setImageResource(R.drawable.mark_genre_ellec);
+                break;
+            case 7:
+                genreImage.setImageResource(R.drawable.mark_genre_trot);
+                break;
             default:
                 genreImage.setImageResource(R.mipmap.ic_launcher);
         }
 
-*/
+
 
 
 
@@ -127,8 +181,8 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
 
         //contents
 
-        likeImage.setImageResource(R.mipmap.ic_launcher);
-        commentImage.setImageResource(R.mipmap.ic_launcher);
+        likeImage.setImageResource(R.drawable.ic_favorite);
+        commentImage.setImageResource(R.drawable.ic_chat);
 
 
         editImage.setImageResource(R.mipmap.ic_launcher);

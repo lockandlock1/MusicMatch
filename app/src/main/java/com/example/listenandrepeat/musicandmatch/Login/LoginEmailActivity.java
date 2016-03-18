@@ -1,6 +1,8 @@
 package com.example.listenandrepeat.musicandmatch.Login;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -10,8 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.listenandrepeat.musicandmatch.DataClass.LoginAndSignUpResult;
+import com.example.listenandrepeat.musicandmatch.DataClass.ProfileMe;
 import com.example.listenandrepeat.musicandmatch.MainActivity;
 import com.example.listenandrepeat.musicandmatch.ManagerClass.NetworkManager;
+import com.example.listenandrepeat.musicandmatch.ManagerClass.PropertyManager;
 import com.example.listenandrepeat.musicandmatch.R;
 
 import java.io.UnsupportedEncodingException;
@@ -19,6 +23,9 @@ import java.io.UnsupportedEncodingException;
 import okhttp3.Request;
 
 public class LoginEmailActivity extends AppCompatActivity {
+
+
+
     TextView textView;
     TextView textEmail;
     TextView textPwd;
@@ -47,18 +54,22 @@ public class LoginEmailActivity extends AppCompatActivity {
 
         textEmail = (EditText)findViewById(R.id.edit_email);
         textPwd = (EditText)findViewById(R.id.edit_pwd);
+
+
         Button btn = (Button)findViewById(R.id.btn_login);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                final String emailId = textEmail.getText().toString();
+                final String pwd = textPwd.getText().toString();
                 try {
-                    NetworkManager.getInstance().logIn(LoginEmailActivity.this, "test1@exe.com", "test1", new NetworkManager.OnResultListener<LoginAndSignUpResult>() {
+                    NetworkManager.getInstance().logIn(LoginEmailActivity.this, emailId, pwd, new NetworkManager.OnResultListener<LoginAndSignUpResult>() {
                         @Override
                         public void onSuccess(Request request, LoginAndSignUpResult result) {
-                            startActivity(new Intent(getApplication(), MainActivity.class));
-                            LoginEmailActivity.this.finish();
-                            AActivity.finish();
+                            PropertyManager.getInstance().setUserId(emailId);
+                            PropertyManager.getInstance().setPassword(pwd);
+                            getMyProfile();
                         }
 
                         @Override
@@ -72,5 +83,27 @@ public class LoginEmailActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void getMyProfile(){
+        try {
+            NetworkManager.getInstance().getProfileMe(LoginEmailActivity.this, new NetworkManager.OnResultListener<ProfileMe>() {
+                @Override
+                public void onSuccess(Request request, ProfileMe result) {
+                    PropertyManager.getInstance().setMid(result.success.data.mid);
+
+                    startActivity(new Intent(getApplication(), MainActivity.class));
+                    LoginEmailActivity.this.finish();
+                    AActivity.finish();
+                }
+
+                @Override
+                public void onFailure(Request request, int code, Throwable cause) {
+
+                }
+            });
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 }

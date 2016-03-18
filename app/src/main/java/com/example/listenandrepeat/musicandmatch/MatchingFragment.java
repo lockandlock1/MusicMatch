@@ -13,9 +13,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.listenandrepeat.musicandmatch.DataClass.CommentResult;
-import com.example.listenandrepeat.musicandmatch.DataClass.MatchingDetailResult;
-import com.example.listenandrepeat.musicandmatch.DataClass.StoryWriteResult;
+import com.example.listenandrepeat.musicandmatch.DataClass.AllListlResult;
 import com.example.listenandrepeat.musicandmatch.ManagerClass.NetworkManager;
 
 import java.io.UnsupportedEncodingException;
@@ -88,9 +86,9 @@ public class MatchingFragment extends Fragment {
 
 
         try {
-            NetworkManager.getInstance().getMatchingDetail(getContext(), 1,new NetworkManager.OnResultListener<MatchingDetailResult>() {
+            NetworkManager.getInstance().getMatchingDetail(getContext(), 1,new NetworkManager.OnResultListener<AllListlResult>() {
                 @Override
-                public void onSuccess(Request request, MatchingDetailResult result) {
+                public void onSuccess(Request request, AllListlResult result) {
                     mAdapter.clearAll();
                     mAdapter.addAll(result.success.items);
                 }

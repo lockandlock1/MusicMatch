@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.listenandrepeat.musicandmatch.DataClass.MatchingDetailResult;
+import com.example.listenandrepeat.musicandmatch.DataClass.AllListlResult;
 import com.example.listenandrepeat.musicandmatch.ManagerClass.NetworkManager;
 
 import java.io.UnsupportedEncodingException;
@@ -67,6 +67,8 @@ public class AllFragment extends Fragment {
                 startActivity(intent);
             }
         });
+
+
         mAdapter = new ContentsViewHolderAdapter();
         recyclerView.setAdapter(mAdapter);
         layoutManager = new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false);
@@ -94,9 +96,9 @@ public class AllFragment extends Fragment {
 
 
         try {
-            NetworkManager.getInstance().getMatchingDetail(getContext(), 1,new NetworkManager.OnResultListener<MatchingDetailResult>() {
+            NetworkManager.getInstance().getAllList(getContext(), 1,new NetworkManager.OnResultListener<AllListlResult>() {
                 @Override
-                public void onSuccess(Request request, MatchingDetailResult result) {
+                public void onSuccess(Request request, AllListlResult result) {
 
 
                     mAdapter.clearAll();

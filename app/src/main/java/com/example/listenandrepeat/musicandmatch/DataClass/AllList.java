@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by ListenAndRepeat on 2016. 3. 4..
  */
-public class MatchingDetail {
+public class AllList {
     public String message;
     public int page;
     public int pageLimit;

@@ -8,7 +8,7 @@ import android.os.Message;
 import com.example.listenandrepeat.musicandmatch.DataClass.CommentDetailResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.CommentResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.LoginAndSignUpResult;
-import com.example.listenandrepeat.musicandmatch.DataClass.MatchingDetailResult;
+import com.example.listenandrepeat.musicandmatch.DataClass.AllListlResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.MemberProfileResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.ProfileChange;
 import com.example.listenandrepeat.musicandmatch.DataClass.ProfileMe;
@@ -302,13 +302,13 @@ public class NetworkManager {
         return request;
     }
 
-    public Request signUp(Context context, String userName, String nickName, String passWord, final OnResultListener<LoginAndSignUpResult> listener) throws UnsupportedEncodingException{
+    public Request signUp(Context context, String emailAddress, String nickName, String passWord, final OnResultListener<LoginAndSignUpResult> listener) throws UnsupportedEncodingException{
         String url = URL_SIGN_UP;
 
         final CallbackObject<LoginAndSignUpResult> callbackObject = new CallbackObject<LoginAndSignUpResult>();
 
         RequestBody requestBody = new FormBody.Builder()
-                .add("username", userName)
+                .add("username", emailAddress)
                 .add("nickname",nickName)
                 .add("password",passWord)
                 .build();
@@ -475,13 +475,13 @@ public class NetworkManager {
         return request;
 
     }
-    public Request getMatchingDetail(Context context,int page,final OnResultListener<MatchingDetailResult> listener)throws UnsupportedEncodingException{
+    public Request getAllList(Context context,int page,final OnResultListener<AllListlResult> listener)throws UnsupportedEncodingException{
 
 //        String url = String.format(URL_MATCHING_CONTENT, page, URLEncoder.encode(key,"utf-8"),URLEncoder.encode(flag, "utf-8"));
 
         String url = String.format(URL_MATCHING_CONTENT, page);
 
-        final CallbackObject<MatchingDetailResult> callbackObject = new CallbackObject<MatchingDetailResult>();
+        final CallbackObject<AllListlResult> callbackObject = new CallbackObject<AllListlResult>();
 
         Request request = new Request.Builder().url(url)
                 .tag(context)
@@ -502,7 +502,7 @@ public class NetworkManager {
                 Gson parser = new Gson();
                 String text = response.body().string();
 
-                MatchingDetailResult result = parser.fromJson(text, MatchingDetailResult.class);
+                AllListlResult result = parser.fromJson(text, AllListlResult.class);
                 callbackObject.result = result;
                 Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
                 mHandler.sendMessage(msg);
