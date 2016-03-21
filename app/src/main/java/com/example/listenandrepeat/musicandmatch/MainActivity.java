@@ -21,8 +21,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.listenandrepeat.musicandmatch.DataClass.LoginAndSignUpResult;
+import com.example.listenandrepeat.musicandmatch.Login.LoginActivity;
 import com.example.listenandrepeat.musicandmatch.Login.SplashActivity;
 import com.example.listenandrepeat.musicandmatch.ManagerClass.NetworkManager;
+import com.example.listenandrepeat.musicandmatch.ManagerClass.PropertyManager;
 import com.example.listenandrepeat.musicandmatch.Setting.SettingFragment;
 
 import java.io.UnsupportedEncodingException;
@@ -34,11 +36,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ///hh
     NavigationView menuView;
     DrawerLayout drawer;
-    TabLayout tabLayout;
-    ViewPager pager;
-    MyPagerAdapter mAdapter;
-
-    AllFragment allFragment;
+   static int numPeople;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,9 +102,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.LogOut:
 
+                try {
+                    NetworkManager.getInstance().logOut(this, new NetworkManager.OnResultListener<LoginAndSignUpResult>() {
+                        @Override
+                        public void onSuccess(Request request, LoginAndSignUpResult result) {
+                            String name = PropertyManager.getInstance().getUserId();
+                            Toast.makeText(MainActivity.this,name,Toast.LENGTH_SHORT).show();
+                            PropertyManager.getInstance().setMid(-1);
+                            PropertyManager.getInstance().clear();
+                            startActivity(new Intent(getApplication(), LoginActivity.class));
+                            MainActivity.this.finish();
+                        }
 
-                startActivity(new Intent(getApplication(), SplashActivity.class));
-                MainActivity.this.finish();
+                        @Override
+                        public void onFailure(Request request, int code, Throwable cause) {
+
+                        }
+                    });
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
+
                 break;
 
         }

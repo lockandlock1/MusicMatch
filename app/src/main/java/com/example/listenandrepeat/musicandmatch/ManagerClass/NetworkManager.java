@@ -8,7 +8,7 @@ import android.os.Message;
 import com.example.listenandrepeat.musicandmatch.DataClass.CommentDetailResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.CommentResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.LoginAndSignUpResult;
-import com.example.listenandrepeat.musicandmatch.DataClass.AllListlResult;
+import com.example.listenandrepeat.musicandmatch.DataClass.ListlResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.MemberProfileResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.ProfileChange;
 import com.example.listenandrepeat.musicandmatch.DataClass.ProfileMe;
@@ -204,8 +204,8 @@ public class NetworkManager {
     private static final String URL_PROFILE_MEMBER = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/members/%s";
 
     // Matching and Story Tab URL
-//    private static final String URL_MATCHING_CONTENT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts?page=%s&key=%s&flag=%s";
-    private static final String URL_MATCHING_CONTENT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts?page=%s";
+      private static final String URL_MATCHING_CONTENT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts?page=%s&key=%s&flag=%s";
+      private static final String URL_ALL_CONTENT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts?page=%s";
 
     private static final String URL_STORY_WRITE = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts";
 
@@ -475,13 +475,10 @@ public class NetworkManager {
         return request;
 
     }
-    public Request getAllList(Context context,int page,final OnResultListener<AllListlResult> listener)throws UnsupportedEncodingException{
+    public Request getMatchingList(Context context,int page,String key,String people,final OnResultListener<ListlResult> listener) throws UnsupportedEncodingException{
+        String url = String.format(URL_MATCHING_CONTENT, page, URLEncoder.encode(key,"utf-8"), URLEncoder.encode(people,"utf-8"));
 
-//        String url = String.format(URL_MATCHING_CONTENT, page, URLEncoder.encode(key,"utf-8"),URLEncoder.encode(flag, "utf-8"));
-
-        String url = String.format(URL_MATCHING_CONTENT, page);
-
-        final CallbackObject<AllListlResult> callbackObject = new CallbackObject<AllListlResult>();
+        final CallbackObject<ListlResult> callbackObject = new CallbackObject<ListlResult>();
 
         Request request = new Request.Builder().url(url)
                 .tag(context)
@@ -502,7 +499,42 @@ public class NetworkManager {
                 Gson parser = new Gson();
                 String text = response.body().string();
 
-                AllListlResult result = parser.fromJson(text, AllListlResult.class);
+                ListlResult result = parser.fromJson(text, ListlResult.class);
+                callbackObject.result = result;
+                Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+        });
+        return request;
+    }
+    public Request getAllList(Context context, int page, final OnResultListener<ListlResult> listener)throws UnsupportedEncodingException{
+
+
+
+        String url = String.format(URL_ALL_CONTENT, page);
+
+        final CallbackObject<ListlResult> callbackObject = new CallbackObject<ListlResult>();
+
+        Request request = new Request.Builder().url(url)
+                .tag(context)
+                .build();
+
+        callbackObject.request = request;
+        callbackObject.listener = listener;
+        mClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callbackObject.exception = e;
+                Message msg = mHandler.obtainMessage(MESSAGE_FAILURE, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Gson parser = new Gson();
+                String text = response.body().string();
+
+                ListlResult result = parser.fromJson(text, ListlResult.class);
                 callbackObject.result = result;
                 Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
                 mHandler.sendMessage(msg);

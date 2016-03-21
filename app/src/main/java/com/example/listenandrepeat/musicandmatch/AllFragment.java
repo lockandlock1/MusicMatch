@@ -12,7 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.example.listenandrepeat.musicandmatch.DataClass.AllListlResult;
+import com.example.listenandrepeat.musicandmatch.DataClass.ListlResult;
 import com.example.listenandrepeat.musicandmatch.ManagerClass.NetworkManager;
 
 import java.io.UnsupportedEncodingException;
@@ -52,6 +52,7 @@ public class AllFragment extends Fragment {
     Button floatingBtn;
     ContentsViewHolderAdapter mAdapter;
     RecyclerView.LayoutManager layoutManager;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -88,6 +89,7 @@ public class AllFragment extends Fragment {
             public void onAdapterItemCommentImageClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
                 Intent intent = new Intent(getActivity(), CommentActivity.class);
                 int postId = adapter.items.get(position).pid;
+
              //   Toast.makeText(getContext(),"CommentImage Click : " + PostId,Toast.LENGTH_SHORT).show();
                 intent.putExtra(CommentActivity.PARAM_POST_ID, postId);
                 startActivity(intent);
@@ -96,9 +98,9 @@ public class AllFragment extends Fragment {
 
 
         try {
-            NetworkManager.getInstance().getAllList(getContext(), 1,new NetworkManager.OnResultListener<AllListlResult>() {
+            NetworkManager.getInstance().getAllList(getContext(),1,new NetworkManager.OnResultListener<ListlResult>() {
                 @Override
-                public void onSuccess(Request request, AllListlResult result) {
+                public void onSuccess(Request request, ListlResult result) {
 
 
                     mAdapter.clearAll();

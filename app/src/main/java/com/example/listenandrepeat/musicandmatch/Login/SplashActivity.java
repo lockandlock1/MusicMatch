@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.listenandrepeat.musicandmatch.DataClass.LoginAndSignUpResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.ProfileMe;
@@ -29,8 +30,10 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
         String name = PropertyManager.getInstance().getUserId();
+
         if(!TextUtils.isEmpty(name)){
             String password = PropertyManager.getInstance().getPassword();
+
             try {
                 NetworkManager.getInstance().logIn(SplashActivity.this, name, password, new NetworkManager.OnResultListener<LoginAndSignUpResult>() {
                     @Override

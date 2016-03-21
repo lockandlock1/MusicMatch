@@ -58,4 +58,8 @@ public class PropertyManager {
         return mPrefs.getString(FIELD_PASSWORD, "");
     }
 
+    public void clear(){
+        mEditor.clear();
+        mEditor.commit();
+    }
 }
