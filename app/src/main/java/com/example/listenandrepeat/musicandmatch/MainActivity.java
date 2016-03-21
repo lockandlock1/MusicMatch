@@ -106,8 +106,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     NetworkManager.getInstance().logOut(this, new NetworkManager.OnResultListener<LoginAndSignUpResult>() {
                         @Override
                         public void onSuccess(Request request, LoginAndSignUpResult result) {
-                            String name = PropertyManager.getInstance().getUserId();
-                            Toast.makeText(MainActivity.this,name,Toast.LENGTH_SHORT).show();
+
                             PropertyManager.getInstance().setMid(-1);
                             PropertyManager.getInstance().clear();
                             startActivity(new Intent(getApplication(), LoginActivity.class));
