@@ -97,13 +97,13 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
                     .load(c.photo.get(0))
                     .into(contentImage);
         } else{
-            contentImage.setVisibility(View.INVISIBLE);
+            contentImage.setVisibility(View.GONE);
         }
 
         if (!TextUtils.isEmpty(c.content)){
             contentsText.setText(c.content);
         } else{
-            contentsText.setVisibility(View.INVISIBLE);
+            contentsText.setVisibility(View.GONE);
         }
 
         //pos
@@ -179,7 +179,7 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
         if(PropertyManager.getInstance().getMid() == c.mid ){
             editImage.setImageResource(R.drawable.ic_create_button);
         } else {
-           // editImage.setImageDrawable(R.drawable.ic_morevert);
+            editImage.setImageResource(R.drawable.ic_morevert);
         }
         //contents
 
@@ -187,7 +187,7 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
         commentImage.setImageResource(R.drawable.ic_chat);
 
 
-        editImage.setImageResource(R.mipmap.ic_launcher);
+
         dateText.setText(c.date);
         nickText.setText(c.nickname);
 
