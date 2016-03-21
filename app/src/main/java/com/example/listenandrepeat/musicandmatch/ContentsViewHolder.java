@@ -177,7 +177,9 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
 
 
         if(PropertyManager.getInstance().getMid() == c.mid ){
-            editImage.setImageResource();
+            editImage.setImageResource(R.drawable.ic_create_button);
+        } else {
+           // editImage.setImageDrawable(R.drawable.ic_morevert);
         }
         //contents
 
