@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.listenandrepeat.musicandmatch.ManagerClass.PropertyManager;
 
 /**
  * Created by ListenAndRepeat on 2016. 3. 8..
@@ -86,10 +87,7 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
                     .load(c.profile)
                     .into(profileImage);
 
-            /*
-            Bitmap bm  = ((BitmapDrawable)mContext.getResources().( Glide.with(mContext)
-                    .load(c.profile)
-                    .into(profileImage))).getBitmap();*/
+
         } else {
             profileImage.setImageResource(R.mipmap.ic_launcher);
         }
@@ -178,7 +176,9 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
 
 
 
-
+        if(PropertyManager.getInstance().getMid() == c.mid ){
+            editImage.setImageResource();
+        }
         //contents
 
         likeImage.setImageResource(R.drawable.ic_favorite);

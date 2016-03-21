@@ -8,7 +8,7 @@ import android.os.Message;
 import com.example.listenandrepeat.musicandmatch.DataClass.CommentDetailResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.CommentResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.LoginAndSignUpResult;
-import com.example.listenandrepeat.musicandmatch.DataClass.ListResult;
+import com.example.listenandrepeat.musicandmatch.DataClass.ListDetailResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.MemberProfileResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.ProfileChange;
 import com.example.listenandrepeat.musicandmatch.DataClass.ProfileMe;
@@ -475,10 +475,10 @@ public class NetworkManager {
         return request;
 
     }
-    public Request getMatchingList(Context context,int page,String key,String people,final OnResultListener<ListResult> listener) throws UnsupportedEncodingException{
+    public Request getMatchingList(Context context,int page,String key,String people,final OnResultListener<ListDetailResult> listener) throws UnsupportedEncodingException{
         String url = String.format(URL_MATCHING_CONTENT, page, URLEncoder.encode(key,"utf-8"), URLEncoder.encode(people,"utf-8"));
 
-        final CallbackObject<ListResult> callbackObject = new CallbackObject<ListResult>();
+        final CallbackObject<ListDetailResult> callbackObject = new CallbackObject<ListDetailResult>();
 
         Request request = new Request.Builder().url(url)
                 .tag(context)
@@ -499,7 +499,7 @@ public class NetworkManager {
                 Gson parser = new Gson();
                 String text = response.body().string();
 
-                ListResult result = parser.fromJson(text, ListResult.class);
+                ListDetailResult result = parser.fromJson(text, ListDetailResult.class);
                 callbackObject.result = result;
                 Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
                 mHandler.sendMessage(msg);
@@ -507,13 +507,13 @@ public class NetworkManager {
         });
         return request;
     }
-    public Request getAllList(Context context, int page, final OnResultListener<ListResult> listener)throws UnsupportedEncodingException{
+    public Request getAllList(Context context, int page, final OnResultListener<ListDetailResult> listener)throws UnsupportedEncodingException{
 
 
 
         String url = String.format(URL_ALL_CONTENT, page);
 
-        final CallbackObject<ListResult> callbackObject = new CallbackObject<ListResult>();
+        final CallbackObject<ListDetailResult> callbackObject = new CallbackObject<ListDetailResult>();
 
         Request request = new Request.Builder().url(url)
                 .tag(context)
@@ -534,7 +534,7 @@ public class NetworkManager {
                 Gson parser = new Gson();
                 String text = response.body().string();
 
-                ListResult result = parser.fromJson(text, ListResult.class);
+                ListDetailResult result = parser.fromJson(text, ListDetailResult.class);
                 callbackObject.result = result;
                 Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
                 mHandler.sendMessage(msg);
