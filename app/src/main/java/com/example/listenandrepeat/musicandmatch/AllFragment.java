@@ -1,9 +1,12 @@
 package com.example.listenandrepeat.musicandmatch;
 
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -16,6 +19,7 @@ import com.example.listenandrepeat.musicandmatch.DataClass.ListDetailResult;
 import com.example.listenandrepeat.musicandmatch.ManagerClass.NetworkManager;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Collection;
 
 import okhttp3.Request;
 
@@ -52,13 +56,24 @@ public class AllFragment extends Fragment {
     Button floatingBtn;
     ContentsViewHolderAdapter mAdapter;
     RecyclerView.LayoutManager layoutManager;
+    SwipeRefreshLayout refreshLayout;
+
+    boolean isLast = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_all,container,false);
+        refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refresh);
 
+        refreshLayout.setColorSchemeColors(Color.RED,Color.BLUE,Color.GREEN);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+
+            }
+        });
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler);
         floatingBtn = (Button)view.findViewById(R.id.btn_edit);
         floatingBtn.setOnClickListener(new View.OnClickListener() {
@@ -124,6 +139,16 @@ public class AllFragment extends Fragment {
 
 
 
+    }
+
+    boolean isMoreData =  false;
+
+    ProgressDialog dialog = null;
+    private void getMoreItem(){
+        if(isMoreData) return;
+
+        isMoreData = true;
+       // if(mAdapter.)
     }
 
 

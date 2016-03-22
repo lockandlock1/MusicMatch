@@ -9,6 +9,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.example.listenandrepeat.musicandmatch.ManagerClass.PropertyManager;
 
 /**
  * Created by ListenAndRepeat on 2016. 3. 8..
@@ -31,11 +32,16 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
         nickText = (TextView)itemView.findViewById(R.id.text_nick);
         contentsText = (TextView)itemView.findViewById(R.id.text_contents);
         dateText = (TextView)itemView.findViewById(R.id.text_date);
+
         spinner = (Spinner)itemView.findViewById(R.id.spinner);
         mAdapter = new SpinnerAdapter();
         spinner.setAdapter(mAdapter);
+        SpinnerItem s1 = new SpinnerItem(R.drawable.ic_create_button,"Edit");
 
-        initSpinner();
+        SpinnerItem s2 = new SpinnerItem(R.drawable.ic_delete_button,"Delete");
+
+        mAdapter.add(s1);
+        mAdapter.add(s2);
 
     }
     public void setCommentItem(CommentItem c){
@@ -49,19 +55,83 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
             profileImage.setImageResource(R.mipmap.ic_launcher);
         }
 
+        if(PropertyManager.getInstance().getMid() != c.mid){
+
+            spinner.setVisibility(View.GONE);
+        }
+
+        //pos
+
+        switch (c.position){
+
+            case 10:
+                positionImage.setImageResource(R.drawable.mark_position_base);
+                break;
+            case 11:
+                positionImage.setImageResource(R.drawable.mark_position_guitar);
+                break;
+            case 12:
+                positionImage.setImageResource(R.drawable.mark_position_drum);
+                break;
+            case 13:
+                positionImage.setImageResource(R.drawable.mark_position_keyboard);
+                break;
+            case 14:
+                positionImage.setImageResource(R.drawable.mark_position_vocal);
+                break;
+            case 15:
+                positionImage.setImageResource(R.drawable.mark_position_rap);
+                break;
+            case 16:
+                positionImage.setImageResource(R.drawable.mark_position_compose);
+                break;
+
+            default:
+                positionImage.setImageResource(R.mipmap.ic_launcher);
+
+        }
+
+
+
+
+        //genre
+
+        switch (c.genre){
+            case 0:
+                genreImage.setImageResource(R.drawable.mark_genre_balled);
+                break;
+            case 1:
+                genreImage.setImageResource(R.drawable.mark_genre_rb);
+                break;
+            case 2:
+                genreImage.setImageResource(R.drawable.mark_genre_hiphop);
+                break;
+            case 3:
+                genreImage.setImageResource(R.drawable.mark_genre_rock);
+                break;
+            case 4:
+                genreImage.setImageResource(R.drawable.mark_genre_dance);
+                break;
+            case 5:
+                genreImage.setImageResource(R.drawable.mark_genre_indi);
+                break;
+            case 6:
+                genreImage.setImageResource(R.drawable.mark_genre_ellec);
+                break;
+            case 7:
+                genreImage.setImageResource(R.drawable.mark_genre_trot);
+                break;
+            default:
+                genreImage.setImageResource(R.mipmap.ic_launcher);
+        }
+
         nickText.setText(c.nickname);
         contentsText.setText(c.content);
         dateText.setText(c.date);
 
 
     }
-    private void initSpinner(){
-        SpinnerItem s1 = new SpinnerItem(null,"Edit");
-        SpinnerItem s2 = new SpinnerItem(null,"Delete");
 
-        mAdapter.add(s1);
-        mAdapter.add(s2);
-    }
 
 
 }

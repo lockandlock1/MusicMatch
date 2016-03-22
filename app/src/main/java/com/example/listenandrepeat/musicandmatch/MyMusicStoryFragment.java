@@ -10,6 +10,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.example.listenandrepeat.musicandmatch.R;
 
@@ -29,7 +31,7 @@ public class MyMusicStoryFragment extends Fragment {
     TabLayout tabLayout;
     ViewPager pager;
     MyPagerAdapter2 mAdapter;
-
+    ImageView imageView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -42,7 +44,21 @@ public class MyMusicStoryFragment extends Fragment {
         tabLayout.setupWithViewPager(pager);
         tabLayout.removeAllTabs();
         for (int i = 0 ; i < 3 ; i ++){
-            tabLayout.addTab(tabLayout.newTab().setText("tab" + i));
+            if(i == 0){
+                imageView = (ImageView)inflater.inflate(R.layout.my_story_tab1,null);
+                imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                tabLayout.addTab(tabLayout.newTab().setCustomView(R.layout.my_story_tab1));
+
+            } else if(i == 1){
+                imageView = (ImageView)inflater.inflate(R.layout.my_story_tab2,null);
+                imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                tabLayout.addTab(tabLayout.newTab().setCustomView(R.layout.my_story_tab2));
+            } else {
+                imageView = (ImageView)inflater.inflate(R.layout.my_story_tab3,null);
+                imageView.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                tabLayout.addTab(tabLayout.newTab().setCustomView(R.layout.my_story_tab3));
+            }
+
         }
         // Inflate the layout for this fragment
         return view;

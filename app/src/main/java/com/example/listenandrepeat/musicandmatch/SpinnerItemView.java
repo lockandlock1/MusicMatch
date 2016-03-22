@@ -27,13 +27,8 @@ public class SpinnerItemView extends FrameLayout {
 
     public void setSpinner(SpinnerItem item){
 
-        if(item.getIcon() != null){
-            iconView.setImageDrawable(item.getIcon());
-        } else {
-            iconView.setImageResource(R.mipmap.ic_launcher);
-        }
-
-        nameView.setText(item.getName());
+       iconView.setImageResource(item.getIcon());
+       nameView.setText(item.getName());
 
     }
 
