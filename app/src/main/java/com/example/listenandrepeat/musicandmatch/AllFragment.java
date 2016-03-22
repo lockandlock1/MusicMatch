@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,10 +14,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.listenandrepeat.musicandmatch.DataClass.ListDetailResult;
 import com.example.listenandrepeat.musicandmatch.ManagerClass.NetworkManager;
+import com.example.listenandrepeat.musicandmatch.ManagerClass.PropertyManager;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Collection;
@@ -56,7 +59,6 @@ public class AllFragment extends Fragment {
     Button floatingBtn;
     ContentsViewHolderAdapter mAdapter;
     RecyclerView.LayoutManager layoutManager;
-    SwipeRefreshLayout refreshLayout;
 
     boolean isLast = false;
 
@@ -65,15 +67,7 @@ public class AllFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_all,container,false);
-        refreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.refresh);
 
-        refreshLayout.setColorSchemeColors(Color.RED,Color.BLUE,Color.GREEN);
-        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-
-            }
-        });
         recyclerView = (RecyclerView)view.findViewById(R.id.recycler);
         floatingBtn = (Button)view.findViewById(R.id.btn_edit);
         floatingBtn.setOnClickListener(new View.OnClickListener() {
@@ -97,7 +91,10 @@ public class AllFragment extends Fragment {
 
             @Override
             public void onAdpaterItemLikeImageClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
+
+
                 Toast.makeText(getContext(), "LikeImage Click : " , Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
@@ -108,6 +105,13 @@ public class AllFragment extends Fragment {
              //   Toast.makeText(getContext(),"CommentImage Click : " + PostId,Toast.LENGTH_SHORT).show();
                 intent.putExtra(CommentActivity.PARAM_POST_ID, postId);
                 startActivity(intent);
+            }
+
+            @Override
+            public void onAdapterItemNickNameTextClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
+
+
+                        ((MainActivity) getActivity()).changeMusicStory(adapter.items.get(position).mid);
             }
         });
 

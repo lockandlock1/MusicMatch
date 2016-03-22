@@ -61,6 +61,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+
+    public void changeMusicStory(int mid) {
+        MyMusicStoryFragment fragment = new MyMusicStoryFragment();
+        Bundle b = new Bundle();
+        b.putInt("mid",mid);
+        fragment.setArguments(b);
+        getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container,fragment)
+                .addToBackStack(null)
+                .commit();
+    }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();

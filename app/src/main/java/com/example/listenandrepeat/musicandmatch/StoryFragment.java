@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.example.listenandrepeat.musicandmatch.DataClass.ListDetailResult;
 import com.example.listenandrepeat.musicandmatch.ManagerClass.NetworkManager;
+import com.example.listenandrepeat.musicandmatch.ManagerClass.PropertyManager;
 
 import java.io.UnsupportedEncodingException;
 
@@ -32,23 +33,34 @@ public class StoryFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public static StoryFragment newInstance(){
+    public static StoryFragment newInstance(int mid){
         StoryFragment fragment = new StoryFragment();
-
+        Bundle b = new Bundle();
+        b.putInt("mid", mid);
+        fragment.setArguments(b);
         return fragment;
 
     }
 
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mid = getArguments().getInt("mid");
+    }
+
     RecyclerView recyclerView;
     ContentsViewHolderAdapter mAdapter;
     RecyclerView.LayoutManager layoutManager;
     Button floatingBtn;
+    int mid;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_all,container,false);
+        View view = inflater.inflate(R.layout.fragment_all, container, false);
+
+
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler);
         floatingBtn = (Button) view.findViewById(R.id.btn_edit);
         floatingBtn.setOnClickListener(new View.OnClickListener() {
@@ -79,14 +91,18 @@ public class StoryFragment extends Fragment {
                 intent.putExtra(CommentActivity.PARAM_POST_ID, PostId);
                 startActivity(intent);
             }
+
+            @Override
+            public void onAdapterItemNickNameTextClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
+
+            }
         });
 
         try {
-            NetworkManager.getInstance().getAllList(getContext(), 1, new NetworkManager.OnResultListener<ListDetailResult>() {
+            NetworkManager.getInstance().getMyStroyList(getContext(), 1, "", "story",mid, new NetworkManager.OnResultListener<ListDetailResult>() {
                 @Override
                 public void onSuccess(Request request, ListDetailResult result) {
-                    mAdapter.clearAll();
-                    mAdapter.addAll(result.success.items);
+
                 }
 
                 @Override

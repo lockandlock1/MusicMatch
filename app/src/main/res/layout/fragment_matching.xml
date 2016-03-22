@@ -16,7 +16,9 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Write"
+        android:background="@drawable/floating_write"
         android:id="@+id/btn_edit"
+        android:layout_marginBottom="30dp"
+        android:layout_marginRight="40dp"
         android:layout_gravity="right|bottom" />
 </FrameLayout>

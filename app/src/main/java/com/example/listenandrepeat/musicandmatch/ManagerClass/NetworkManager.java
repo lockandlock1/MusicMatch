@@ -204,14 +204,19 @@ public class NetworkManager {
     private static final String URL_PROFILE_MEMBER = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/members/%s";
 
     // Matching and Story Tab URL
-      private static final String URL_MATCHING_CONTENT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts?page=%s&key=%s&flag=%s";
-      private static final String URL_ALL_CONTENT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts?page=%s";
+    private static final String URL_MATCHING_CONTENT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts?page=%s&key=%s&flag=%s";
+
+    private static final String URL_ALL_CONTENT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts?page=%s";
 
     private static final String URL_STORY_WRITE = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts";
 
     private static final String URL_STORY_DELETE = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts/%s";
 
     private static final String URL_STORY_MODIFY = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts/%s";
+
+    private static final String URL_MY_STROY_CONTENT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts?page=%s&key=%s&flag=%s&mid=%s";
+
+
     // Comment URL
     private static final String URL_COMMENT_CONTENT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts/%s/replies?page=%s";
 
@@ -474,6 +479,38 @@ public class NetworkManager {
         });
         return request;
 
+    }
+    public Request getMyStroyList(Context context,int page,String key,String people,int mid,final OnResultListener<ListDetailResult> listener) throws UnsupportedEncodingException{
+        String url = String.format(URL_MY_STROY_CONTENT, page, URLEncoder.encode(key, "utf-8"), URLEncoder.encode(people, "utf-8"),mid);
+
+        final CallbackObject<ListDetailResult> callbackObject = new CallbackObject<ListDetailResult>();
+
+        Request request = new Request.Builder().url(url)
+                .tag(context)
+                .build();
+
+        callbackObject.request = request;
+        callbackObject.listener = listener;
+        mClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callbackObject.exception = e;
+                Message msg = mHandler.obtainMessage(MESSAGE_FAILURE, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Gson parser = new Gson();
+                String text = response.body().string();
+
+                ListDetailResult result = parser.fromJson(text, ListDetailResult.class);
+                callbackObject.result = result;
+                Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+        });
+        return request;
     }
     public Request getMatchingList(Context context,int page,String key,String people,final OnResultListener<ListDetailResult> listener) throws UnsupportedEncodingException{
         String url = String.format(URL_MATCHING_CONTENT, page, URLEncoder.encode(key,"utf-8"), URLEncoder.encode(people,"utf-8"));

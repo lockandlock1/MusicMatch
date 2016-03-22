@@ -8,14 +8,16 @@ import android.support.v4.app.FragmentPagerAdapter;
  * Created by ListenAndRepeat on 2016. 3. 2..
  */
 public class MyPagerAdapter2 extends FragmentPagerAdapter {
-    public MyPagerAdapter2(FragmentManager fm) {
+    int mid;
+    public MyPagerAdapter2(FragmentManager fm,int mid) {
         super(fm);
+        this.mid  = mid;
     }
 
     @Override
     public Fragment getItem(int position) {
         if(position == 0){
-            return  StoryFragment.newInstance();
+            return  StoryFragment.newInstance(mid);
         }else if(position == 1){
             return SongFragment.newInstance();
         } else{

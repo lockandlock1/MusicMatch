@@ -82,11 +82,18 @@ public class MatchingFragment extends Fragment {
                 startActivity(intent);
 
             }
+
+            @Override
+            public void onAdapterItemNickNameTextClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
+
+            }
+
+
         });
 
 
         try {
-            NetworkManager.getInstance().getMatchingList(getContext(), 1,"","1",new NetworkManager.OnResultListener<ListDetailResult>() {
+            NetworkManager.getInstance().getMatchingList(getContext(), 1,"","people",new NetworkManager.OnResultListener<ListDetailResult>() {
                 @Override
                 public void onSuccess(Request request, ListDetailResult result) {
                     mAdapter.clearAll();

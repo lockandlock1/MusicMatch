@@ -13,16 +13,18 @@
         <android.support.v7.widget.RecyclerView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/recycler" />
+            android:id="@+id/recycler"
+            />
     </android.support.v4.widget.SwipeRefreshLayout>
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Edit"
+
         android:id="@+id/btn_edit"
         android:layout_marginBottom="30dp"
         android:layout_marginRight="40dp"
+        android:background="@drawable/floating_write"
         android:layout_gravity="right|bottom" />
 
 

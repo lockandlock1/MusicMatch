@@ -26,6 +26,7 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
         public void onCommentImageClick(View view,ContentsItem contentsItem);
         public void onLikeImageClick(View view,ContentsItem contentsItem);
         public void onEditImageClick(View view,ContentsItem contentsItem);
+        public void onNickNameClick(View view,ContentsItem contentsItem);
 
     }
     OnImageClickListener mImageClickListener;
@@ -55,7 +56,7 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 if(mImageClickListener != null){
-                    mImageClickListener.onCommentImageClick(itemView,item);
+                    mImageClickListener.onCommentImageClick(itemView, item);
                 }
             }
         });
@@ -63,7 +64,7 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 if(mImageClickListener != null){
-                    mImageClickListener.onLikeImageClick(itemView,item);
+                    mImageClickListener.onLikeImageClick(itemView, item);
                 }
             }
         });
@@ -71,7 +72,17 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
             @Override
             public void onClick(View v) {
                 if (mImageClickListener != null){
-                    mImageClickListener.onEditImageClick(itemView,item);
+                    mImageClickListener.onEditImageClick(itemView, item);
+                }
+            }
+        });
+
+
+        nickText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mImageClickListener != null){
+                    mImageClickListener.onNickNameClick(itemView, item);
                 }
             }
         });
@@ -183,7 +194,7 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
         }
         //contents
 
-        likeImage.setImageResource(R.drawable.ic_favorite);
+       likeImage.setImageResource(R.drawable.ic_favorite);
         commentImage.setImageResource(R.drawable.ic_chat);
 
 

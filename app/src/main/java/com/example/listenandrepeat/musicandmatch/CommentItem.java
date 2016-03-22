@@ -6,6 +6,7 @@ package com.example.listenandrepeat.musicandmatch;
 public class CommentItem {
     public int rid;
     public int mid;
+
     public String nickname;
     public String profile;
     public int genre;

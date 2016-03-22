@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.example.listenandrepeat.musicandmatch.ManagerClass.PropertyManager;
 import com.example.listenandrepeat.musicandmatch.R;
 
 /**
@@ -32,14 +34,33 @@ public class MyMusicStoryFragment extends Fragment {
     ViewPager pager;
     MyPagerAdapter2 mAdapter;
     ImageView imageView;
+
+    int mid = -1;
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle b = getArguments();
+
+        if (b != null) {
+            mid = b.getInt("mid", -1);
+
+        }
+        if (mid == -1) {
+            mid = PropertyManager.getInstance().getMid();
+
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_my_music_story, container, false);
 
+
+
         tabLayout = (TabLayout)view.findViewById(R.id.maintab_layout);
         pager = (ViewPager)view.findViewById(R.id.pager);
-        mAdapter = new MyPagerAdapter2(getChildFragmentManager());
+        mAdapter = new MyPagerAdapter2(getChildFragmentManager(),mid);
         pager.setAdapter(mAdapter);
         tabLayout.setupWithViewPager(pager);
         tabLayout.removeAllTabs();
