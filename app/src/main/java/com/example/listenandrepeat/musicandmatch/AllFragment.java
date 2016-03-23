@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.listenandrepeat.musicandmatch.DataClass.ListDetailResult;
+import com.example.listenandrepeat.musicandmatch.DataClass.StoryWriteResult;
+import com.example.listenandrepeat.musicandmatch.Login.PasswordFindNewPasswordActivity;
 import com.example.listenandrepeat.musicandmatch.ManagerClass.NetworkManager;
 import com.example.listenandrepeat.musicandmatch.ManagerClass.PropertyManager;
 
@@ -58,10 +60,10 @@ public class AllFragment extends Fragment {
     RecyclerView recyclerView;
     Button floatingBtn;
     ContentsViewHolderAdapter mAdapter;
-    RecyclerView.LayoutManager layoutManager;
-
+    LinearLayoutManager layoutManager;
+    SwipeRefreshLayout refreshLayout;
     boolean isLast = false;
-
+    int pid;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -86,15 +88,20 @@ public class AllFragment extends Fragment {
         mAdapter.setOnAdapterItemClickListener(new ContentsViewHolderAdapter.OnViewHolderAdapterItemClickListener() {
             @Override
             public void onAdapterItemEditImageClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
-                Toast.makeText(getContext(), "EditImage Click : " , Toast.LENGTH_SHORT).show();
+               // Toast.makeText(getContext(), "postmid : " + adapter.items.get(position).mid + ", myID : " + PropertyManager.getInstance().getMid() , Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getActivity(),StoryEditActivity.class);
+                int postId = adapter.items.get(position).pid;
+                intent.putExtra(StoryEditActivity.POST_ID, postId);
+                startActivity(intent);
+                //startActivity(new Intent(getActivity(),StoryEditActivity.class));
             }
 
             @Override
             public void onAdpaterItemLikeImageClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
 
 
-                Toast.makeText(getContext(), "LikeImage Click : " , Toast.LENGTH_SHORT).show();
-
+                //Toast.makeText(getContext(), "LikeImage Click : " , Toast.LENGTH_SHORT).show();
+                storyDelete(adapter.items.get(position).pid);
             }
 
             @Override
@@ -124,6 +131,7 @@ public class AllFragment extends Fragment {
 
                     mAdapter.clearAll();
                     mAdapter.addAll(result.success.items);
+                    mAdapter.setPageNumber(result.success.page);
 
 
                 }
@@ -137,6 +145,31 @@ public class AllFragment extends Fragment {
             e.printStackTrace();
         }
 
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if(isLast && newState == RecyclerView.SCROLL_STATE_IDLE){
+                    getMoreItem();
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int totalItemCount = layoutManager.getItemCount();
+                int lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition();
+
+                if(totalItemCount > 0 && lastVisibleItemPosition != RecyclerView.NO_POSITION && (totalItemCount - 1 <= lastVisibleItemPosition)){
+                    isLast = true;
+                } else {
+                    isLast =false;
+                }
+            }
+        });
+
+
         
 
         return view;
@@ -144,7 +177,6 @@ public class AllFragment extends Fragment {
 
 
     }
-
     boolean isMoreData =  false;
 
     ProgressDialog dialog = null;
@@ -152,7 +184,49 @@ public class AllFragment extends Fragment {
         if(isMoreData) return;
 
         isMoreData = true;
-       // if(mAdapter.)
+
+        if(0 < mAdapter.getPageNumber() && mAdapter.getPageNumber() < 11){
+            int start = mAdapter.getPageNumber() + 1;
+
+            mAdapter.setPageNumber(start);
+
+            try {
+                NetworkManager.getInstance().getAllList(getContext(), start, new NetworkManager.OnResultListener<ListDetailResult>() {
+                    @Override
+                    public void onSuccess(Request request, ListDetailResult result) {
+                        mAdapter.addAll(result.success.items);
+                        isMoreData = false;
+                    }
+
+                    @Override
+                    public void onFailure(Request request, int code, Throwable cause) {
+                        isMoreData = false;
+                    }
+                });
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                isMoreData = false;
+            }
+
+        }
+    }
+
+    private void storyDelete(int pid){
+        try {
+            NetworkManager.getInstance().deleteStory(getContext(), pid, new NetworkManager.OnResultListener<StoryWriteResult>() {
+                @Override
+                public void onSuccess(Request request, StoryWriteResult result) {
+                    Toast.makeText(getContext(),"suc",Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailure(Request request, int code, Throwable cause) {
+                    Toast.makeText(getContext(),"fail",Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
     }
 
 

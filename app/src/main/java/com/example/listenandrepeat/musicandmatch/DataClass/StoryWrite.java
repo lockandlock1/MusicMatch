@@ -6,4 +6,5 @@ package com.example.listenandrepeat.musicandmatch.DataClass;
 public class StoryWrite {
 
     public String message;
+
 }

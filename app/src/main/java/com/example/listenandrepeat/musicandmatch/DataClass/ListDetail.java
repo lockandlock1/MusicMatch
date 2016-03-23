@@ -12,6 +12,7 @@ public class ListDetail {
     public String message;
     public int page;
     public int pageLimit;
+    public int count;
     @SerializedName("data")
     public ArrayList<ContentsItem> items;
 

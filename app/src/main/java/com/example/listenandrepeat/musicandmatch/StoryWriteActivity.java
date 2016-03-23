@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.listenandrepeat.musicandmatch.DataClass.ListDetailResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.StoryWrite;
 import com.example.listenandrepeat.musicandmatch.DataClass.StoryWriteResult;
 import com.example.listenandrepeat.musicandmatch.ManagerClass.NetworkManager;
@@ -58,6 +59,8 @@ public class StoryWriteActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Request request, StoryWriteResult result) {
                             Toast.makeText(StoryWriteActivity.this, result.success.message, Toast.LENGTH_LONG).show();
+                            startActivity(new Intent(StoryWriteActivity.this,MainActivity.class));
+                            finish();
 
                         }
 

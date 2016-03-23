@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.listenandrepeat.musicandmatch">
+    package="com.example.listenandrepeat.musicandmatch" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -12,8 +12,8 @@
         android:icon="@drawable/xhdpi_96"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.NoActionBar">
-        <activity android:name=".MainActivity"></activity>
+        android:theme="@style/AppTheme.NoActionBar" >
+        <activity android:name=".MainActivity" />
         <activity android:name=".PhotoDetailActivity" />
         <activity android:name=".VideoDetailActivity" />
         <activity android:name=".PostDetailActivity" />
@@ -53,7 +53,7 @@
         <activity android:name=".Login.LoginSoundcloudActivity" />
         <activity android:name=".Login.PasswordFindEmailActivity" />
         <activity android:name=".Login.PasswordFindNewPasswordActivity" />
-        <activity android:name=".Login.SplashActivity">
+        <activity android:name=".Login.SplashActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -64,7 +64,9 @@
         <activity android:name=".Setting.ProfileEditActivity" />
         <activity android:name=".Setting.ProfileEditIntroActivity" />
         <activity android:name=".Setting.ProfileEditNameActivity" />
-        <activity android:name=".Setting.ProfileOtherActivity"></activity>
+        <activity android:name=".Setting.ProfileOtherActivity" />
+        <activity android:name=".StoryEditActivity" >
+        </activity>
     </application>
 
 </manifest>

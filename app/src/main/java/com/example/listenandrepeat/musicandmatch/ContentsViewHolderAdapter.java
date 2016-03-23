@@ -31,6 +31,16 @@ public class ContentsViewHolderAdapter extends RecyclerView.Adapter<ContentsView
         notifyDataSetChanged();
     }
 
+    private int pageNumber;
+
+    public int getPageNumber() {
+        return pageNumber;
+    }
+
+    public void setPageNumber(int pageNumber) {
+        this.pageNumber = pageNumber;
+    }
+
     @Override
     public ContentsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -85,7 +95,7 @@ public class ContentsViewHolderAdapter extends RecyclerView.Adapter<ContentsView
     public void onNickNameClick(View view, ContentsItem contentsItem) {
         if(mAdapterListener != null){
             int index = items.indexOf(contentsItem);
-            mAdapterListener.onAdapterItemNickNameTextClick(this,view,contentsItem,index);
+            mAdapterListener.onAdapterItemNickNameTextClick(this, view, contentsItem, index);
         }
     }
 

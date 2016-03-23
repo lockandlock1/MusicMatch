@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.text.TextUtils;
 
 import com.example.listenandrepeat.musicandmatch.DataClass.CommentDetailResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.CommentResult;
@@ -216,6 +217,7 @@ public class NetworkManager {
 
     private static final String URL_MY_STROY_CONTENT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts?page=%s&key=%s&flag=%s&mid=%s";
 
+    private static final String URL_POST_CONTENT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts?page=%s&pid=%s";
 
     // Comment URL
     private static final String URL_COMMENT_CONTENT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts/%s/replies?page=%s";
@@ -234,6 +236,7 @@ public class NetworkManager {
     private static final String URL_LOCAL_LOGIN = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/auth/login";
 
     private static final String URL_LOCAL_LOGOUT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/auth/logout";
+
     //Login Function
     public Request logOut(Context context, final OnResultListener<LoginAndSignUpResult> listener) throws UnsupportedEncodingException{
         String url = URL_LOCAL_LOGIN;
@@ -349,8 +352,52 @@ public class NetworkManager {
 
     // Story Function
 
-     // modify
-    public Request modifyStory(Context context,int pid,String title,String contents,int limitPeo,int decidePeo,final OnResultListener<StoryWriteResult> listener) throws UnsupportedEncodingException{
+     // Story modify
+     public Request modifyStory(Context context,int pid,String contents,String photo,final OnResultListener<StoryWriteResult> listener) throws UnsupportedEncodingException{
+         String url = String .format(URL_STORY_MODIFY,pid);
+
+         final CallbackObject<StoryWriteResult> callbackObject = new CallbackObject<StoryWriteResult>();
+
+
+         FormBody.Builder builder = new FormBody.Builder()
+                 .add("content", contents);
+         if(photo != null){
+             builder.add("photo",photo);
+         }
+         RequestBody requestBody =  builder.build();
+
+
+         Request request = new Request.Builder().url(url)
+                 .tag(context)
+                 .put(requestBody)
+                 .build();
+
+
+         callbackObject.request = request;
+         callbackObject.listener = listener;
+
+         mClient.newCall(request).enqueue(new Callback() {
+             @Override
+             public void onFailure(Call call, IOException e) {
+                 callbackObject.exception = e;
+                 Message msg = mHandler.obtainMessage(MESSAGE_FAILURE, callbackObject);
+                 mHandler.sendMessage(msg);
+             }
+
+             @Override
+             public void onResponse(Call call, Response response) throws IOException {
+                 Gson parser = new Gson();
+                 StoryWriteResult result = parser.fromJson(response.body().string(),StoryWriteResult.class);
+                 callbackObject.result = result;
+                 Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS,callbackObject);
+                 mHandler.sendMessage(msg);
+             }
+         });
+         return request;
+
+     }
+    // Matching Modify
+    public Request modifyMatching(Context context, int pid, String title, String contents, int limitPeo, int decidePeo, String photo, final OnResultListener<StoryWriteResult> listener) throws UnsupportedEncodingException{
         String url = String .format(URL_STORY_MODIFY,pid);
 
         final CallbackObject<StoryWriteResult> callbackObject = new CallbackObject<StoryWriteResult>();
@@ -358,7 +405,8 @@ public class NetworkManager {
         RequestBody requestBody = new FormBody.Builder()
                 .add("content",contents)
                 .add("title",title)
-                .add("limit_people","" + limitPeo)
+                .add("photo",photo)
+                .add("limit_people", "" + limitPeo)
                 .add("decide_people","" + decidePeo)
                 .build();
 
@@ -393,10 +441,10 @@ public class NetworkManager {
 
     }
 
-    // delete
+    // Story delete
     public Request deleteStory(Context context,int pid,
                                  final OnResultListener<StoryWriteResult> listener) throws  UnsupportedEncodingException{
-        String url = String.format(URL_STORY_DELETE,pid);
+        String url = String.format(URL_STORY_DELETE, pid);
         final CallbackObject<StoryWriteResult> callbackObject = new CallbackObject<StoryWriteResult>();
 
 
@@ -431,7 +479,8 @@ public class NetworkManager {
         return  request;
     }
 
-    // write
+    //  Story write
+
     public Request postStoryWrite(Context context,String title,String content,int limitPeo,int decidePeo,File file,final OnResultListener<StoryWriteResult> listener) throws UnsupportedEncodingException{
         String url = URL_STORY_WRITE;
 
@@ -480,6 +529,43 @@ public class NetworkManager {
         return request;
 
     }
+
+    // One Post Get
+    public Request getOnePostContent(Context context, int page, int pid ,final OnResultListener<ListDetailResult> listener)throws UnsupportedEncodingException{
+
+        String url = String.format(URL_POST_CONTENT, page,pid);
+
+        final CallbackObject<ListDetailResult> callbackObject = new CallbackObject<ListDetailResult>();
+
+        Request request = new Request.Builder().url(url)
+                .tag(context)
+                .build();
+
+        callbackObject.request = request;
+        callbackObject.listener = listener;
+        mClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callbackObject.exception = e;
+                Message msg = mHandler.obtainMessage(MESSAGE_FAILURE, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Gson parser = new Gson();
+                String text = response.body().string();
+
+                ListDetailResult result = parser.fromJson(text, ListDetailResult.class);
+                callbackObject.result = result;
+                Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+        });
+        return request;
+    }
+    // Story Get
+
     public Request getMyStroyList(Context context,int page,String key,String people,int mid,final OnResultListener<ListDetailResult> listener) throws UnsupportedEncodingException{
         String url = String.format(URL_MY_STROY_CONTENT, page, URLEncoder.encode(key, "utf-8"), URLEncoder.encode(people, "utf-8"),mid);
 
@@ -512,6 +598,8 @@ public class NetworkManager {
         });
         return request;
     }
+
+    // Matching Get
     public Request getMatchingList(Context context,int page,String key,String people,final OnResultListener<ListDetailResult> listener) throws UnsupportedEncodingException{
         String url = String.format(URL_MATCHING_CONTENT, page, URLEncoder.encode(key,"utf-8"), URLEncoder.encode(people,"utf-8"));
 
