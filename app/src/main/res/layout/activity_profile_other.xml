@@ -30,7 +30,7 @@
         android:layout_alignRight="@+id/text_nickname"
         android:layout_alignEnd="@+id/text_nickname" />
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Button"
@@ -48,7 +48,6 @@
         android:id="@+id/image_genre"
         android:src="@drawable/genre"
         android:clickable="true"
-        android:onClick="showDialogGenreFragment"
         android:layout_below="@+id/text_nickname"
         android:layout_toLeftOf="@+id/image_photo"
         android:layout_toStartOf="@+id/image_photo" />
@@ -59,7 +58,6 @@
         android:id="@+id/image_position"
         android:src="@drawable/position"
         android:clickable="true"
-        android:onClick="showDialogPositionFragment"
         android:layout_above="@+id/btn_intro"
         android:layout_toRightOf="@+id/image_photo"
         android:layout_toEndOf="@+id/image_photo" />
@@ -76,7 +74,7 @@
         android:layout_alignRight="@+id/text_intro"
         android:layout_alignEnd="@+id/text_intro" />
 
-    <Button
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="New Button"

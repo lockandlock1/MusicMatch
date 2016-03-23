@@ -4,19 +4,22 @@ import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.text.TextUtils;
 
 import com.example.listenandrepeat.musicandmatch.DataClass.CommentDetailResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.CommentResult;
-import com.example.listenandrepeat.musicandmatch.DataClass.LoginAndSignUpResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.ListDetailResult;
+import com.example.listenandrepeat.musicandmatch.DataClass.LoginAndSignUpResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.MemberProfileResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.ProfileChange;
 import com.example.listenandrepeat.musicandmatch.DataClass.ProfileMe;
 import com.example.listenandrepeat.musicandmatch.DataClass.ProfileOther;
 import com.example.listenandrepeat.musicandmatch.DataClass.StoryWriteResult;
+import com.example.listenandrepeat.musicandmatch.Login.AccessToken;
+import com.example.listenandrepeat.musicandmatch.Login.BrowserActivity;
+import com.example.listenandrepeat.musicandmatch.Login.MeInfo;
 import com.example.listenandrepeat.musicandmatch.MyApplication;
 import com.example.listenandrepeat.musicandmatch.R;
+import com.example.listenandrepeat.musicandmatch.Soundcloud.SCTrackInfoData;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -68,6 +71,7 @@ public class NetworkManager {
     }
 
     OkHttpClient mClient;
+    OkHttpClient mClientSC;
     private static final int MAX_CACHE_SIZE = 10 * 1024 * 1024;
 
     private NetworkManager() {
@@ -82,6 +86,8 @@ public class NetworkManager {
 
         CookieManager cookieManager = new CookieManager(new PersistentCookieStore(context), CookiePolicy.ACCEPT_ALL);
         builder.cookieJar(new JavaNetCookieJar(cookieManager));
+
+        mClientSC = builder.build();
 
         disableCertificateValidation(context, builder);
 
@@ -862,15 +868,15 @@ public class NetworkManager {
     }
 
 
-    //////////////////////////////////////////////// 인호 추가//////////////////////////////////////////////////////
-    ////////////////////////////////////준수꺼
+    //////////////////////////////////////////////// 인호 추가 //////////////////////////////////////////////////////
+    //////////////////////////////////// 준수꺼
     private static final String URL_FORMAT_JOIN = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/members";
     private static final String URL_FORMAT_LOGIN_LINK = "http://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/auth/soundcloud";
     private static final String URL_FORMAT_LOGIN_LOCAL = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/auth/login";
     private static final String URL_FORMAT_LOGOUT_LOCAL = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/auth/logout";
 
     private static final String URL_FORMAT_PROFILE_ME = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/members/me";
-    private static final String URL_FORMAT_PROFILE_OTHER = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/members/1";
+    private static final String URL_FORMAT_PROFILE_OTHER = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/members/%s";
     private static final String URL_FORMAT_TRACK_LIST_OTHER = "http://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/members/1/tracks";
     private static final String URL_FORMAT_TRACK_LIST_ME = "http://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/members/me/tracks";
 
@@ -886,6 +892,9 @@ public class NetworkManager {
     private static final String URL_FORMAT_COMMENT_CHANGE = "http://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts/1234/replies/1";
     private static final String URL_FORMAT_COMMENT_DELETE = "http://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts/1/replies?page=1";
     private static final String URL_FORMAT_COMMENT_DETAIL = "https://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts/1/photos";
+    private static final String URL_FORMAT_LOGIN_SC = "http://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/auth/soundcloud";
+
+    private static final String URL_SC_TRACK = "http://api.soundcloud.com/users/3207/tracks?client_id=855fe8df184bf720b9d8e3a4bfb05caf";
 
     ////////////////////////////////// 용이형 유알엘주소
 //    private static final String URL_FORMAT_JOIN = "https://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/members";
@@ -911,6 +920,209 @@ public class NetworkManager {
 //    private static final String URL_FORMAT_COMMENT_DELETE = "http://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts/1234/replies/1";
 //    private static final String URL_FORMAT_COMMENT_DETAIL = "http://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts/1/replies?page=1";
 //    private static final String URL_FORMAT_FILE_UPLOAD = "https://ec2-52-79-43-8.ap-northeast-2.compute.amazonaws.com/posts/1/photos";
+
+    private static final String CLIENT_ID = "855fe8df184bf720b9d8e3a4bfb05caf";
+    private static final String CLIENT_SECRET = "aede1edc37a86ede4606326274d1172c";
+    private static final String LOGIN_URL = "https://soundcloud.com/connect";
+    private static final String SCOPE = "*";
+    private static final String RESPONSE_TYPE = "code";
+    private static final String GRANT_TYPE = "authorization_code";
+
+    private static final String TOKEN_URL ="https://api.soundcloud.com/oauth2/token";
+    private static final int RC_LOGIN = 100;
+
+    public void getAccessToken(String code, final OnResultListener<AccessToken> listener) throws UnsupportedEncodingException {
+
+        final CallbackObject<AccessToken> callbackObject = new CallbackObject<AccessToken>();
+
+        RequestBody body = new FormBody.Builder()
+                .add("client_id",CLIENT_ID)
+                .add("client_secret", CLIENT_SECRET)
+                .add("redirect_uri", BrowserActivity.CALLBACK_URL)
+                .add("grant_type", GRANT_TYPE)
+                .add("code",code)
+                .build();
+
+        Request request = new Request.Builder().url(TOKEN_URL)
+                .post(body)
+                .build();
+
+        callbackObject.request = request;
+        callbackObject.listener = listener;
+
+        mClientSC.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callbackObject.exception = e;
+                Message msg = mHandler.obtainMessage(MESSAGE_FAILURE, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+//                Gson gson = new Gson();
+//                final AccessToken token = gson.fromJson(response.body().string(), AccessToken.class);
+//                getMeInfo(token);
+                Gson gson = new Gson();
+                String text = response.body().string();
+                AccessToken token = gson.fromJson(text, AccessToken.class);
+                callbackObject.result = token;
+                Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+        });
+    }
+    private static final String ME_URL = "https://api.soundcloud.com/me";
+    private static final String PARAM_OAUTH_TOKEN = "oauth_token";
+
+    public void getMeInfo(AccessToken token, final OnResultListener<MeInfo> listener) throws UnsupportedEncodingException {
+
+        final CallbackObject<MeInfo> callbackObject = new CallbackObject<MeInfo>();
+
+        StringBuilder sb = new StringBuilder();
+        sb.append(ME_URL).append("?").append(PARAM_OAUTH_TOKEN).append("=").append(token.accessToken);
+        String url = sb.toString();
+
+        Request request = new Request.Builder().url(url).build();
+
+        callbackObject.request = request;
+        callbackObject.listener = listener;
+
+        mClientSC.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callbackObject.exception = e;
+                Message msg = mHandler.obtainMessage(MESSAGE_FAILURE, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+//                Gson gson = new Gson();
+//                final MeInfo info = gson.fromJson(response.body().string(), MeInfo.class);
+//                Toast.makeText(LoginSoundcloudActivity.this, "info : " + info.username, Toast.LENGTH_SHORT).show();
+                Gson gson = new Gson();
+                String text = response.body().string();
+                final MeInfo info = gson.fromJson(text, MeInfo.class);
+                callbackObject.result = info;
+                Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
+                mHandler.sendMessage(msg);
+
+            }
+        });
+    }
+
+
+    public Request getSCTrack(Context context, final OnResultListener<SCTrackInfoData[]> listener) throws UnsupportedEncodingException {
+
+        String url = URL_SC_TRACK;
+
+        final CallbackObject<SCTrackInfoData[]> callbackObject = new CallbackObject<SCTrackInfoData[]>();
+
+        Request request = new Request.Builder().url(url)
+                .tag(context)
+                .build();
+
+        callbackObject.request = request;
+        callbackObject.listener = listener;
+        mClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callbackObject.exception = e;
+                Message msg = mHandler.obtainMessage(MESSAGE_FAILURE, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Gson gson = new Gson();
+                String text = response.body().string();
+                SCTrackInfoData[] scTrackData = gson.fromJson(text, SCTrackInfoData[].class);
+                callbackObject.result = scTrackData;
+                Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+        });
+
+        return request;
+    }
+
+    public Request postLoginSC(Context context, int id, final OnResultListener<LoginAndSignUpResult> listener) throws UnsupportedEncodingException {
+
+        String url = URL_FORMAT_LOGIN_SC;
+
+        final CallbackObject<LoginAndSignUpResult> callbackObject = new CallbackObject<LoginAndSignUpResult>();
+
+        RequestBody requestBody = new FormBody.Builder()
+                .add("id", "" + id)
+                .build();
+
+        Request request = new Request.Builder().url(url)
+                .tag(context)
+                .post(requestBody)
+                .build();
+
+        callbackObject.request = request;
+        callbackObject.listener = listener;
+
+        mClientSC.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callbackObject.exception = e;
+                Message msg = mHandler.obtainMessage(MESSAGE_FAILURE, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Gson gson = new Gson();
+                String text = response.body().string();
+                LoginAndSignUpResult loginAndSignUpResult = gson.fromJson(text, LoginAndSignUpResult.class);
+                callbackObject.result = loginAndSignUpResult;
+                Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+        });
+
+        return request;
+    }
+
+
+
+    public Request getLoginSC(Context context, AccessToken id, final OnResultListener<LoginAndSignUpResult> listener)throws UnsupportedEncodingException{
+
+        String url = String.format(URL_FORMAT_LOGIN_SC, id);
+
+        final CallbackObject<LoginAndSignUpResult> callbackObject = new CallbackObject<LoginAndSignUpResult>();
+
+        Request request = new Request.Builder().url(url)
+                .tag(context)
+                .build();
+
+        callbackObject.request = request;
+        callbackObject.listener = listener;
+        mClient.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                callbackObject.exception = e;
+                Message msg = mHandler.obtainMessage(MESSAGE_FAILURE, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                Gson parser = new Gson();
+                String text = response.body().string();
+
+                LoginAndSignUpResult result = parser.fromJson(text, LoginAndSignUpResult.class);
+                callbackObject.result = result;
+                Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
+                mHandler.sendMessage(msg);
+            }
+        });
+        return request;
+    }
 
 
     public Request getProfileMe(Context context, final OnResultListener<ProfileMe> listener) throws UnsupportedEncodingException {
@@ -979,7 +1191,7 @@ public class NetworkManager {
         return request;
     }
 
-//    private static  final MediaType MEDIA_TYPE = MediaType.parse("image/png");
+    //    private static  final MediaType MEDIA_TYPE = MediaType.parse("image/png");
     public Request putProfileChange(Context context, String username, String password, String photo, String nickname, String intro, int genre, int position, File file , final OnResultListener<ProfileChange> listener) throws UnsupportedEncodingException {
 
         String url = URL_FORMAT_PROFILE_CHANGE;
@@ -1019,7 +1231,8 @@ public class NetworkManager {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Gson gson = new Gson();
-                ProfileChange profileChange = gson.fromJson(response.body().string(), ProfileChange.class);
+                String text = response.body().string();
+                ProfileChange profileChange = gson.fromJson(text, ProfileChange.class);
                 callbackObject.result = profileChange;
                 Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
                 mHandler.sendMessage(msg);

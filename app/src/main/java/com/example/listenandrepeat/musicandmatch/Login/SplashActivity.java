@@ -6,7 +6,6 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.listenandrepeat.musicandmatch.DataClass.LoginAndSignUpResult;
 import com.example.listenandrepeat.musicandmatch.DataClass.ProfileMe;
@@ -24,6 +23,9 @@ public class SplashActivity extends AppCompatActivity {
     ImageView imageView;
     int id = R.drawable.splash;
 
+    String id_inho = "test3@exe.com";
+    String pw_inho = "test3";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
             String password = PropertyManager.getInstance().getPassword();
 
             try {
-                NetworkManager.getInstance().logIn(SplashActivity.this, name, password, new NetworkManager.OnResultListener<LoginAndSignUpResult>() {
+                NetworkManager.getInstance().logIn(SplashActivity.this, id_inho, pw_inho, new NetworkManager.OnResultListener<LoginAndSignUpResult>() {
                     @Override
                     public void onSuccess(Request request, LoginAndSignUpResult result) {
 

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.listenandrepeat.musicandmatch.R;
+import com.example.listenandrepeat.musicandmatch.Soundcloud.LoginSoundcloudActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
