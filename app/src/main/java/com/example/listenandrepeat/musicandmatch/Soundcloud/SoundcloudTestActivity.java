@@ -37,6 +37,7 @@ public class SoundcloudTestActivity extends AppCompatActivity {
     TextView textDuration;
     TextView textAvatarURL;
     TextView textStreamURL;
+    TextView textWaveformURL;
     Uri uri;
 
 
@@ -72,6 +73,7 @@ public class SoundcloudTestActivity extends AppCompatActivity {
         textDuration = (TextView)findViewById(R.id.text_duration);
         textAvatarURL = (TextView)findViewById(R.id.text_avatar_url);
         textStreamURL = (TextView)findViewById(R.id.text_stream_url);
+        textWaveformURL = (TextView)findViewById(R.id.text_waveform_url);
 
         Button btn = (Button)findViewById(R.id.btn_get);
         btn.setOnClickListener(new View.OnClickListener() {
@@ -83,13 +85,19 @@ public class SoundcloudTestActivity extends AppCompatActivity {
                         public void onSuccess(Request request, SCTrackInfoData[] result) {
                             Toast.makeText(SoundcloudTestActivity.this, "success", Toast.LENGTH_SHORT).show();
 
-                            textTitle.setText(result[0].title);
-
                             new LoadImagefromUrl( ).execute(imageIcon, result[0].user.avatar_url);
 
                             Uri fileUri = Uri.fromFile(new File(result[0].user.avatar_url));
                             uri = Uri.fromFile(new File(result[0].stream_url));
                             Glide.with(SoundcloudTestActivity.this).load(fileUri).into(imageIcon);
+
+                            textUsername.setText(result[0].user.username);
+                            textTitle.setText(result[0].title);
+                            textLastModified.setText(result[0].last_modified);
+                            textDuration.setText(result[0].duration);
+                            textAvatarURL.setText(result[0].user.avatar_url);
+                            textStreamURL.setText(result[0].stream_url);
+                            textWaveformURL.setText(result[0].waveform_url);
 
                         }
 

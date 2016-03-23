@@ -43,18 +43,10 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/text_duration"
-        android:text="duration"
+        android:text="Medium Text"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="GET IT!"
-        android:id="@+id/btn_get"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -97,5 +89,23 @@
         android:layout_below="@+id/text_stream_url"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GET IT!"
+        android:id="@+id/btn_get"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/text_waveform_url"
+        android:layout_below="@+id/text_title"
+        android:layout_alignRight="@+id/text_avatar_url"
+        android:layout_alignEnd="@+id/text_avatar_url" />
 
 </RelativeLayout>

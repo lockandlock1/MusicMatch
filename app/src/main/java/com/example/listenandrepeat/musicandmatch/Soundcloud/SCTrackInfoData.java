@@ -9,6 +9,7 @@ public class SCTrackInfoData {
     public String title;
     public String stream_url;
     public String permalink_url;
+    public String waveform_url;
 
     public SCTrackInfoUserData user;
 }

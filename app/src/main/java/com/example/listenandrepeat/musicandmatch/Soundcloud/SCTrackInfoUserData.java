@@ -8,7 +8,4 @@ public class SCTrackInfoUserData {
     public String username;
     public String avatar_url;
 
-
-
-
 }
