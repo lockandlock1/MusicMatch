@@ -143,8 +143,7 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
                 positionImage.setImageResource(R.drawable.mark_position_compose);
                 break;
 
-            default:
-                positionImage.setImageResource(R.mipmap.ic_launcher);
+
 
         }
 
@@ -178,8 +177,7 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
             case 7:
                 genreImage.setImageResource(R.drawable.mark_genre_trot);
                 break;
-            default:
-                genreImage.setImageResource(R.mipmap.ic_launcher);
+
         }
 
 

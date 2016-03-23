@@ -1,8 +1,10 @@
 package com.example.listenandrepeat.musicandmatch;
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.widget.Toast;
 
 /**
  * Created by ListenAndRepeat on 2016. 3. 2..
@@ -12,6 +14,7 @@ public class MyPagerAdapter2 extends FragmentPagerAdapter {
     public MyPagerAdapter2(FragmentManager fm,int mid) {
         super(fm);
         this.mid  = mid;
+
     }
 
     @Override

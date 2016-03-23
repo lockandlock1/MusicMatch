@@ -64,6 +64,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void changeMusicStory(int mid) {
         MyMusicStoryFragment fragment = new MyMusicStoryFragment();
+      //  Toast.makeText(MainActivity.this,""+mid,Toast.LENGTH_SHORT).show();
         Bundle b = new Bundle();
         b.putInt("mid",mid);
         fragment.setArguments(b);

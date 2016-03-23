@@ -47,6 +47,9 @@ public class StoryFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mid = getArguments().getInt("mid");
+      //  Toast.makeText(getContext(),"Story"+mid,Toast.LENGTH_SHORT).show();
+
+
     }
 
     RecyclerView recyclerView;
@@ -102,7 +105,8 @@ public class StoryFragment extends Fragment {
             NetworkManager.getInstance().getMyStroyList(getContext(), 1, "", "story",mid, new NetworkManager.OnResultListener<ListDetailResult>() {
                 @Override
                 public void onSuccess(Request request, ListDetailResult result) {
-
+                    mAdapter.clearAll();
+                    mAdapter.addAll(result.success.items);
                 }
 
                 @Override

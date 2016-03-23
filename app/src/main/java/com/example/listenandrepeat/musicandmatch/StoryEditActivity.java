@@ -26,14 +26,17 @@ public class StoryEditActivity extends AppCompatActivity {
     Button photoDeleteBtn , editBtn;
     ImageView imageView;
     EditText textEdit;
-    String photo = null , content;
+    String photo = null , content = null;
     public static final String POST_ID = "post_id";
+    public static final String PHOTO = "photo_content";
+    public static final String CONTENT ="write_content";
     int postId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_story_edit);
-
+        textEdit = (EditText)findViewById(R.id.text_edit);
         imageView = (ImageView)findViewById(R.id.image_gallery);
         editBtn = (Button)findViewById(R.id.btn_edit);
         photoDeleteBtn = (Button)findViewById(R.id.btn_photo_del);
@@ -41,67 +44,44 @@ public class StoryEditActivity extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        postId = intent.getIntExtra(POST_ID,0);
+        postId = intent.getIntExtra(POST_ID, 0);
+        photo = intent.getStringExtra(PHOTO);
+        content = intent.getStringExtra(CONTENT);
 
+        textEdit.setText(content);
 
-        try {
-            NetworkManager.getInstance().getOnePostContent(StoryEditActivity.this, 1, postId, new NetworkManager.OnResultListener<ListDetailResult>() {
-                @Override
-                public void onSuccess(Request request, final ListDetailResult result) {
+        Toast.makeText(StoryEditActivity.this,"::::"+postId,Toast.LENGTH_SHORT).show();
 
-
-                    if(result.success.items.get(0).photo != null && result.success.items.get(0).photo.size() > 0 && !TextUtils.isEmpty(result.success.items.get(0).photo.get(0))){
-                        photo = result.success.items.get(0).photo.get(0);
-                        photoDeleteBtn.setVisibility(View.VISIBLE);
-                        Glide.with(StoryEditActivity.this)
-                                .load(result.success.items.get(0).photo.get(0))
-                                .into(imageView);
-
-                    }
-
-
-
-
-
-
-
-                    textEdit = (EditText)findViewById(R.id.text_edit);
-                    textEdit.setText(result.success.items.get(0).content);
-
-
-
-
-                     photoDeleteBtn.setOnClickListener(new View.OnClickListener() {
-                         @Override
-                         public void onClick(View v) {
-                             photo = null;
-
-                         }
-                     });
-
-
-                    editBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                          //  Toast.makeText(StoryEditActivity.this,textEdit.getText().toString(),Toast.LENGTH_SHORT).show();
-                            editStroy(postId,textEdit.getText().toString(),photo);
-                        }
-                    });
-
-
-                }
-
-                @Override
-                public void onFailure(Request request, int code, Throwable cause) {
-
-                }
-            });
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
+        if(photo != null && !TextUtils.isEmpty(photo)){
+            photoDeleteBtn.setVisibility(View.VISIBLE);
+            Glide.with(StoryEditActivity.this)
+                    .load(photo)
+                    .into(imageView);
         }
+
+        photoDeleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                photo = null;
+                Glide.with(StoryEditActivity.this)
+                        .load(photo)
+                        .into(imageView);
+            }
+        });
+
+        editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(StoryEditActivity.this,textEdit.getText().toString(),Toast.LENGTH_SHORT).show();
+                editStroy(postId, textEdit.getText().toString(), photo);
+            }
+        });
 
 
     }
+
+
+
 
     private void editStroy(int pid, String content, String photo){
         try {
@@ -110,6 +90,7 @@ public class StoryEditActivity extends AppCompatActivity {
                 public void onSuccess(Request request, StoryWriteResult result) {
                     // 바로 메인 가기
                     startActivity(new Intent(StoryEditActivity.this,MainActivity.class));
+                    finish();
                 }
 
                 @Override

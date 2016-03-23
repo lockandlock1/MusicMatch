@@ -10,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,10 +90,26 @@ public class AllFragment extends Fragment {
             @Override
             public void onAdapterItemEditImageClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
                // Toast.makeText(getContext(), "postmid : " + adapter.items.get(position).mid + ", myID : " + PropertyManager.getInstance().getMid() , Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getActivity(),StoryEditActivity.class);
-                int postId = adapter.items.get(position).pid;
-                intent.putExtra(StoryEditActivity.POST_ID, postId);
-                startActivity(intent);
+
+                if(adapter.items.get(position).mid == PropertyManager.getInstance().getMid()) {
+                    Intent intent = new Intent(getActivity(), StoryEditActivity.class);
+
+                    int postId = adapter.items.get(position).pid;
+                    Toast.makeText(getActivity(),""+postId,Toast.LENGTH_SHORT).show();
+                    String content = adapter.items.get(position).content;
+                    String photo = null;
+
+                    if(adapter.items.get(position).photo != null && adapter.items.get(position).photo.size() > 0 && !TextUtils.isEmpty(adapter.items.get(position).photo.get(0))){
+                        photo = adapter.items.get(position).photo.get(0);
+                        intent.putExtra(StoryEditActivity.PHOTO,photo);
+                    }
+                    intent.putExtra(StoryEditActivity.CONTENT,content);
+                    intent.putExtra(StoryEditActivity.POST_ID, postId);
+
+                    startActivity(intent);
+                } else{
+
+                }
                 //startActivity(new Intent(getActivity(),StoryEditActivity.class));
             }
 

@@ -4,9 +4,11 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.listenandrepeat.musicandmatch.ManagerClass.PropertyManager;
@@ -42,6 +44,20 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
 
         mAdapter.add(s1);
         mAdapter.add(s2);
+
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(mContext,"select " + position,Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
     }
     public void setCommentItem(CommentItem c){

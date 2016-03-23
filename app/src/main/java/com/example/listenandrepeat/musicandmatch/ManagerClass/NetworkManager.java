@@ -530,40 +530,7 @@ public class NetworkManager {
 
     }
 
-    // One Post Get
-    public Request getOnePostContent(Context context, int page, int pid ,final OnResultListener<ListDetailResult> listener)throws UnsupportedEncodingException{
 
-        String url = String.format(URL_POST_CONTENT, page,pid);
-
-        final CallbackObject<ListDetailResult> callbackObject = new CallbackObject<ListDetailResult>();
-
-        Request request = new Request.Builder().url(url)
-                .tag(context)
-                .build();
-
-        callbackObject.request = request;
-        callbackObject.listener = listener;
-        mClient.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                callbackObject.exception = e;
-                Message msg = mHandler.obtainMessage(MESSAGE_FAILURE, callbackObject);
-                mHandler.sendMessage(msg);
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Gson parser = new Gson();
-                String text = response.body().string();
-
-                ListDetailResult result = parser.fromJson(text, ListDetailResult.class);
-                callbackObject.result = result;
-                Message msg = mHandler.obtainMessage(MESSAGE_SUCCESS, callbackObject);
-                mHandler.sendMessage(msg);
-            }
-        });
-        return request;
-    }
     // Story Get
 
     public Request getMyStroyList(Context context,int page,String key,String people,int mid,final OnResultListener<ListDetailResult> listener) throws UnsupportedEncodingException{

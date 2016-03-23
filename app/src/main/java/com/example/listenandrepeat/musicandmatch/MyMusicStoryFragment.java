@@ -49,6 +49,9 @@ public class MyMusicStoryFragment extends Fragment {
             mid = PropertyManager.getInstance().getMid();
 
         }
+
+
+       // Toast.makeText(getContext(),"MymusicFrag"+mid,Toast.LENGTH_SHORT).show();
     }
 
     @Override
