@@ -31,7 +31,7 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
         profileImage = (ImageView)itemView.findViewById(R.id.image_profile);
         genreImage = (ImageView)itemView.findViewById(R.id.image_genre);
         positionImage = (ImageView)itemView.findViewById(R.id.image_position);
-        nickText = (TextView)itemView.findViewById(R.id.text_nick);
+        nickText = (TextView)itemView.findViewById(R.id.text_nickname);
         contentsText = (TextView)itemView.findViewById(R.id.text_contents);
         dateText = (TextView)itemView.findViewById(R.id.text_date);
 

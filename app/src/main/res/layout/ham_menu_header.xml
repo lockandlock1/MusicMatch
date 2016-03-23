@@ -1,39 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="210dp"
+    android:background="@drawable/sidebar_header"
     android:weightSum="1">
 
     <ImageView
         android:layout_width="82dp"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
+        android:layout_marginTop="20dp"
+        android:id="@+id/image_photo"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.17"
-        android:src="@mipmap/ic_launcher"/>
+        android:src="@drawable/circle_sidebar"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Nick Name"
-        android:id="@+id/text_nick"
+        android:id="@+id/text_nickname"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.03" />
     <RelativeLayout
+        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="100dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:src="@drawable/mark_genre"
+            android:id="@+id/image_genre" />
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="50dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="100dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:layout_marginRight="70dp"
+            android:src="@drawable/mark_position"
+            android:id="@+id/image_position" />
     </RelativeLayout>
 
 </LinearLayout>

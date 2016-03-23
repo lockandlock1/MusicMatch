@@ -1,8 +1,6 @@
 package com.example.listenandrepeat.musicandmatch;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
@@ -46,7 +44,7 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
         commentImage = (ImageView)itemView.findViewById(R.id.image_comment);
         likeImage = (ImageView)itemView.findViewById(R.id.image_like);
         editImage = (ImageView)itemView.findViewById(R.id.image_edit);
-        nickText = (TextView)itemView.findViewById(R.id.text_nick);
+        nickText = (TextView)itemView.findViewById(R.id.text_nickname);
         contentsText = (TextView)itemView.findViewById(R.id.text_contents);
         dateText = (TextView)itemView.findViewById(R.id.text_date);
         likeNum = (TextView)itemView.findViewById(R.id.text_like);

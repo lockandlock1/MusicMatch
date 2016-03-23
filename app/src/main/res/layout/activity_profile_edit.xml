@@ -3,12 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/profile_bg"
+    android:paddingBottom="0dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
+    android:paddingTop="0dp"
+    android:background="#d3001e"
     tools:context="com.example.listenandrepeat.musicandmatch.Setting.ProfileEditActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="400dp"
+        android:id="@+id/image_background"
+        android:background="#ffffff"
+
+
+        android:layout_alignParentBottom="true" />
 
     <ImageView
         android:layout_width="100dp"
@@ -17,13 +26,18 @@
         android:src="@drawable/circle_profile"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="64dp" />
+        android:layout_marginTop="80dp" />
 
     <Button
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:text="닉네임"
         android:id="@+id/btn_nickname"
+        android:background="#ffff00"
+        android:gravity="left"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/image_photo"
@@ -36,6 +50,10 @@
         android:text="New Button"
         android:id="@+id/text_nickname"
         android:background="@drawable/nicnamebox"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:layout_below="@+id/btn_nickname"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -49,6 +67,7 @@
         android:src="@drawable/genre"
         android:clickable="true"
         android:onClick="showDialogGenreFragment"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/text_nickname"
         android:layout_toLeftOf="@+id/image_photo"
         android:layout_toStartOf="@+id/image_photo" />
@@ -60,15 +79,22 @@
         android:src="@drawable/position"
         android:clickable="true"
         android:onClick="showDialogPositionFragment"
+        android:layout_marginTop="10dp"
         android:layout_above="@+id/btn_intro"
         android:layout_toRightOf="@+id/image_photo"
         android:layout_toEndOf="@+id/image_photo" />
 
     <Button
+        style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="30dp"
         android:text="소개글"
         android:id="@+id/btn_intro"
+        android:background="#ffff00"
+        android:gravity="left"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
         android:layout_below="@+id/image_genre"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -81,6 +107,10 @@
         android:text="New Button"
         android:id="@+id/text_intro"
         android:background="@drawable/introducebox"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
         android:layout_below="@+id/btn_intro"
@@ -102,7 +132,10 @@
         android:layout_height="wrap_content"
         android:text="편집 완료"
         android:id="@+id/btn_OK"
+        android:background="@drawable/button_box_stroke"
+        android:layout_marginBottom="10dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true" />
+
 
 </RelativeLayout>
