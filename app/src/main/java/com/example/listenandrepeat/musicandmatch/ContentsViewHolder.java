@@ -20,7 +20,7 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
     TextView nickText , contentsText , dateText ,likeNum , commentNum ;
 
     Context mContext;
-//
+////
     public interface OnImageClickListener{
 
         public void onCommentImageClick(View view,ContentsItem contentsItem);
