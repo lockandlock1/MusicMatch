@@ -67,7 +67,8 @@
         <activity android:name=".Setting.ProfileOtherActivity" />
         <activity android:name=".StoryEditActivity" />
         <activity android:name=".Login.BrowserActivity" />
-        <activity android:name=".Soundcloud.SoundcloudTestActivity"></activity>
+        <activity android:name=".Soundcloud.SoundcloudTestActivity" />
+        <activity android:name=".Soundcloud.SoundcloudActivity"></activity>
     </application>
 
 </manifest>
