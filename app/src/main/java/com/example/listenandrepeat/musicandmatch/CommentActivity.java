@@ -52,7 +52,6 @@ public class CommentActivity extends AppCompatActivity {
 
 
 
-
         mAdapter.setOnAdapterItemClickListener(new CommentViewHolderAdapter.OnCommnetViewHolderAdapterItemClickListener() {
             @Override
             public void onAdapterItemDeleteBtnClick(CommentViewHolderAdapter adapter, View view, CommentItem commentItem, int position) {

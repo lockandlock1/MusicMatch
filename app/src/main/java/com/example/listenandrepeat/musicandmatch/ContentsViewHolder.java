@@ -101,6 +101,8 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
             profileImage.setImageResource(R.mipmap.ic_launcher);
         }
 
+
+
         if(c.photo != null && c.photo.size() > 0 && !TextUtils.isEmpty(c.photo.get(0))){
             Glide.with(mContext)
                     .load(c.photo.get(0))

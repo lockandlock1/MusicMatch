@@ -30,6 +30,26 @@ public class PropertyManager {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         mEditor = mPrefs.edit();
     }
+    String content = "";
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    String profile = null;
+
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
 
     String nickName = "";
 
