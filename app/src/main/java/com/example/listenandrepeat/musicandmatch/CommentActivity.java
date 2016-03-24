@@ -26,11 +26,15 @@ public class CommentActivity extends AppCompatActivity {
 
     RecyclerView recyclerView;
     CommentViewHolderAdapter mAdapter;
-    RecyclerView.LayoutManager layoutManager;
+    LinearLayoutManager layoutManager;
     EditText editText;
     Button btn;
     int postId;
     Intent intent;
+
+    boolean isLast = false;
+    boolean isMoreData = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +49,7 @@ public class CommentActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(layoutManager);
         intent = getIntent();
-        postId = intent.getIntExtra(PARAM_POST_ID,0);
+        postId = intent.getIntExtra(PARAM_POST_ID, 0);
 
         editText = (EditText)findViewById(R.id.text_comment);
 
@@ -117,6 +121,30 @@ public class CommentActivity extends AppCompatActivity {
                 }
             }
         });
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(isLast && newState == RecyclerView.SCROLL_STATE_IDLE){
+                    getMoreItem();
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int totalItemCount = layoutManager.getItemCount();
+                int lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition();
+
+                if(totalItemCount > 0 && lastVisibleItemPosition != RecyclerView.NO_POSITION && (totalItemCount - 1 <= lastVisibleItemPosition)){
+                    isLast = true;
+                } else {
+                    isLast =false;
+                }
+            }
+        });
+
     }
 
     private void initComment() {
@@ -130,6 +158,7 @@ public class CommentActivity extends AppCompatActivity {
                   //  Toast.makeText(CommentActivity.this, "Confirm", Toast.LENGTH_SHORT).show();
                     mAdapter.clearAll();
                     mAdapter.addAll(result.success.items);
+                    mAdapter.setPageNumber(result.success.page);
                 }
 
                 @Override
@@ -139,6 +168,35 @@ public class CommentActivity extends AppCompatActivity {
             });
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
+        }
+    }
+
+    private void getMoreItem(){
+        if(isMoreData) return;
+
+        isMoreData = true;
+
+        if(0 < mAdapter.getPageNumber()){
+           int start = mAdapter.getPageNumber() + 1;
+
+            mAdapter.setPageNumber(start);
+            try {
+                NetworkManager.getInstance().getCommentDetail(CommentActivity.this, postId, start, new NetworkManager.OnResultListener<CommentDetailResult>() {
+                    @Override
+                    public void onSuccess(Request request, CommentDetailResult result) {
+                        mAdapter.addAll(result.success.items);
+                        isMoreData = false;
+                    }
+
+                    @Override
+                    public void onFailure(Request request, int code, Throwable cause) {
+                        isMoreData = false;
+                    }
+                });
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                isMoreData = false;
+            }
         }
     }
 }

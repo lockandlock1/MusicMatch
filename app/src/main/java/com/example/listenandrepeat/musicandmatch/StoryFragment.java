@@ -56,10 +56,11 @@ public class StoryFragment extends Fragment {
 
     RecyclerView recyclerView;
     ContentsViewHolderAdapter mAdapter;
-    RecyclerView.LayoutManager layoutManager;
+    LinearLayoutManager layoutManager;
     Button floatingBtn;
     int mid;
-
+    boolean isMoreData = false;
+    boolean isLast = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -135,6 +136,7 @@ public class StoryFragment extends Fragment {
                 public void onSuccess(Request request, ListDetailResult result) {
                     mAdapter.clearAll();
                     mAdapter.addAll(result.success.items);
+                    mAdapter.setPageNumber(result.success.page);
                 }
 
                 @Override
@@ -146,6 +148,29 @@ public class StoryFragment extends Fragment {
             e.printStackTrace();
         }
         // Inflate the layout for this fragment
+
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(isLast && newState == RecyclerView.SCROLL_STATE_IDLE){
+                    getMoreItem();
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int totalItemCount = layoutManager.getItemCount();
+                int lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition();
+
+                if(totalItemCount > 0 && lastVisibleItemPosition != RecyclerView.NO_POSITION && (totalItemCount - 1 <= lastVisibleItemPosition)){
+                    isLast = true;
+                } else {
+                    isLast =false;
+                }
+            }
+        });
         return view;
     }
     private void storyDelete(int pid){
@@ -160,6 +185,7 @@ public class StoryFragment extends Fragment {
                             public void onSuccess(Request request, ListDetailResult result) {
                                 mAdapter.clearAll();
                                 mAdapter.addAll(result.success.items);
+                                mAdapter.setPageNumber(result.success.page);
                             }
 
                             @Override
@@ -191,6 +217,7 @@ public class StoryFragment extends Fragment {
                 public void onSuccess(Request request, ListDetailResult result) {
                     mAdapter.clearAll();
                     mAdapter.addAll(result.success.items);
+                    mAdapter.setPageNumber(result.success.page);
 
                 }
 
@@ -202,5 +229,36 @@ public class StoryFragment extends Fragment {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+    }
+
+
+    private void getMoreItem(){
+
+        if(isMoreData) return;
+
+        isMoreData = true;
+
+        if(0 < mAdapter.getPageNumber()){
+            int start = mAdapter.getPageNumber() + 1;
+            try {
+                NetworkManager.getInstance().getMyStroyList(getContext(), start, "", "stroy", mid, new NetworkManager.OnResultListener<ListDetailResult>() {
+                    @Override
+                    public void onSuccess(Request request, ListDetailResult result) {
+                        mAdapter.addAll(result.success.items);
+                        isMoreData = false;
+                    }
+
+                    @Override
+                    public void onFailure(Request request, int code, Throwable cause) {
+                        isMoreData = false;
+                    }
+                });
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                isMoreData = false;
+            }
+        }
+
+
     }
 }

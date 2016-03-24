@@ -28,6 +28,17 @@ public class CommentViewHolderAdapter extends RecyclerView.Adapter<CommentViewHo
         items.clear();
         notifyDataSetChanged();
     }
+
+    private int pageNumber;
+
+    public int getPageNumber() {
+        return pageNumber;
+    }
+
+    public void setPageNumber(int pageNumber) {
+        this.pageNumber = pageNumber;
+    }
+
     @Override
     public CommentViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());

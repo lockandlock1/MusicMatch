@@ -41,10 +41,11 @@ public class MatchingFragment extends Fragment {
 
     RecyclerView recyclerView;
     ContentsViewHolderAdapter mAdapter;
-    RecyclerView.LayoutManager layoutManager;
+    LinearLayoutManager layoutManager;
     Button floatingBtn;
 
     boolean isLast = false;
+    boolean isMoreData = false;
     int postId;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -137,6 +138,30 @@ public class MatchingFragment extends Fragment {
             e.printStackTrace();
         }
 
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+
+                if(isLast && newState == RecyclerView.SCROLL_STATE_IDLE){
+                    getMoreItem();
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                int totalItemCount = layoutManager.getItemCount();
+                int lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition();
+
+                if(totalItemCount > 0 && lastVisibleItemPosition != RecyclerView.NO_POSITION && (totalItemCount - 1 <= lastVisibleItemPosition)){
+                    isLast = true;
+                } else {
+                    isLast =false;
+                }
+            }
+        });
+
         // Inflate the layout for this fragment
         return view;
     }
@@ -155,6 +180,7 @@ public class MatchingFragment extends Fragment {
                             public void onSuccess(Request request, ListDetailResult result) {
                                 mAdapter.clear();
                                 mAdapter.addAll(result.success.items);
+                                mAdapter.setPageNumber(result.success.page);;
                             }
 
                             @Override
@@ -186,6 +212,7 @@ public class MatchingFragment extends Fragment {
                 public void onSuccess(Request request, ListDetailResult result) {
                     mAdapter.clearAll();
                     mAdapter.addAll(result.success.items);
+                    mAdapter.setPageNumber(result.success.page);
                 }
 
                 @Override
@@ -196,5 +223,36 @@ public class MatchingFragment extends Fragment {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+    }
+
+    private void getMoreItem(){
+
+        if(isMoreData) return;
+
+        isMoreData = true;
+
+        if(0 < mAdapter.getPageNumber()){
+            int start = mAdapter.getPageNumber() + 1;
+
+            try {
+                NetworkManager.getInstance().getMatchingList(getContext(), start, "", "people", new NetworkManager.OnResultListener<ListDetailResult>() {
+                    @Override
+                    public void onSuccess(Request request, ListDetailResult result) {
+                        mAdapter.addAll(result.success.items);
+                        isMoreData = false;
+                    }
+
+                    @Override
+                    public void onFailure(Request request, int code, Throwable cause) {
+                        isMoreData = false;
+                    }
+                });
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+                isMoreData = false;
+            }
+        }
+
+
     }
 }

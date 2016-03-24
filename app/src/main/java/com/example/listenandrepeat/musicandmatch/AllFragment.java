@@ -215,7 +215,7 @@ public class AllFragment extends Fragment {
 
         isMoreData = true;
 
-        if(0 < mAdapter.getPageNumber() && mAdapter.getPageNumber() < 11){
+        if(0 < mAdapter.getPageNumber()){
             int start = mAdapter.getPageNumber() + 1;
 
             mAdapter.setPageNumber(start);
