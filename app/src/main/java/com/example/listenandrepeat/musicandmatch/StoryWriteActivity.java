@@ -42,8 +42,11 @@ public class StoryWriteActivity extends AppCompatActivity {
         writeContents = (EditText)findViewById(R.id.text_wrtie);
         photoView = (ImageView)findViewById(R.id.image_gallery);
 
+
+
         btn = (Button)findViewById(R.id.btn_post);
         btn.setOnClickListener(new View.OnClickListener() {
+
 
 
             @Override
@@ -59,15 +62,14 @@ public class StoryWriteActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(Request request, StoryWriteResult result) {
                             Toast.makeText(StoryWriteActivity.this, result.success.message, Toast.LENGTH_LONG).show();
-                            startActivity(new Intent(StoryWriteActivity.this,MainActivity.class));
-                            finish();
 
+                            finish();
                         }
 
                         @Override
                         public void onFailure(Request request, int code, Throwable cause) {
                             Toast.makeText(StoryWriteActivity.this,cause.getMessage().toString(),Toast.LENGTH_SHORT).show();
-                                    Toast.makeText(StoryWriteActivity.this, "fail", Toast.LENGTH_SHORT).show();
+                                   // Toast.makeText(StoryWriteActivity.this, "fail", Toast.LENGTH_SHORT).show();
                         }
                     });
                 } catch (UnsupportedEncodingException e) {
@@ -131,4 +133,7 @@ public class StoryWriteActivity extends AppCompatActivity {
             }
         }
     }
+
+
+
 }

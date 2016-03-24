@@ -25,7 +25,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".CommentEditActivity" />
         <activity android:name=".MatchingWriteActivity" />
-        <activity android:name=".MatchingActivity" />
+        <activity android:name=".MatchingEditActivity" />
         <activity android:name=".AboutMeActivity" />
         <activity android:name=".PlayMusicActivity" />
         <activity android:name=".AlarmActivity" />

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.listenandrepeat.musicandmatch.DataClass.ListDetailResult;
+import com.example.listenandrepeat.musicandmatch.DataClass.StoryWriteResult;
 import com.example.listenandrepeat.musicandmatch.ManagerClass.NetworkManager;
 
 import java.io.UnsupportedEncodingException;
@@ -43,6 +45,7 @@ public class MatchingFragment extends Fragment {
     Button floatingBtn;
 
     boolean isLast = false;
+    int postId;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -64,8 +67,21 @@ public class MatchingFragment extends Fragment {
         mAdapter.setOnAdapterItemClickListener(new ContentsViewHolderAdapter.OnViewHolderAdapterItemClickListener() {
             @Override
             public void onAdapterItemEditImageClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
+                Intent intent = new Intent(getActivity(), StoryEditActivity.class);
 
+                int postId = adapter.items.get(position).pid;
 
+                String content = adapter.items.get(position).content;
+                String photo = null;
+
+                if(adapter.items.get(position).photo != null && adapter.items.get(position).photo.size() > 0 && !TextUtils.isEmpty(adapter.items.get(position).photo.get(0))){
+                    photo = adapter.items.get(position).photo.get(0);
+                    intent.putExtra(StoryEditActivity.PHOTO,photo);
+                }
+                intent.putExtra(StoryEditActivity.CONTENT,content);
+                intent.putExtra(StoryEditActivity.POST_ID, postId);
+
+                startActivity(intent);
             }
 
             @Override
@@ -77,21 +93,21 @@ public class MatchingFragment extends Fragment {
             @Override
             public void onAdapterItemCommentImageClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
                 Intent intent = new Intent(getActivity(),CommentActivity.class);
-                int PostId = adapter.items.get(position).pid;
+                postId = adapter.items.get(position).pid;
                 //Toast.makeText(getContext(),"CommentImage Click : " + PostId,Toast.LENGTH_SHORT).show();
-                intent.putExtra(CommentActivity.PARAM_POST_ID, PostId);
+                intent.putExtra(CommentActivity.PARAM_POST_ID, postId);
                 startActivity(intent);
 
             }
 
             @Override
             public void onAdapterItemNickNameTextClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
-
+                ((MainActivity) getActivity()).changeMusicStory(adapter.items.get(position).mid);
             }
 
             @Override
             public void onAdapterItemDeleteImageClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
-
+                matchingDelete(adapter.items.get(position).pid);
             }
 
             @Override
@@ -126,4 +142,59 @@ public class MatchingFragment extends Fragment {
     }
 
 
+    //************************************************************************************************************************
+    ////Function
+    private void matchingDelete(int pid){
+        try {
+            NetworkManager.getInstance().deleteStory(getContext(), pid, new NetworkManager.OnResultListener<StoryWriteResult>() {
+                @Override
+                public void onSuccess(Request request, StoryWriteResult result) {
+                    try {
+                        NetworkManager.getInstance().getMatchingList(getContext(), 1, "", "people", new NetworkManager.OnResultListener<ListDetailResult>() {
+                            @Override
+                            public void onSuccess(Request request, ListDetailResult result) {
+                                mAdapter.clear();
+                                mAdapter.addAll(result.success.items);
+                            }
+
+                            @Override
+                            public void onFailure(Request request, int code, Throwable cause) {
+
+                            }
+                        });
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                @Override
+                public void onFailure(Request request, int code, Throwable cause) {
+                    Toast.makeText(getContext(),"게시글 삭제실패",Toast.LENGTH_SHORT).show();
+                }
+            });
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            NetworkManager.getInstance().getMatchingList(getContext(), 1, "", "people", new NetworkManager.OnResultListener<ListDetailResult>() {
+                @Override
+                public void onSuccess(Request request, ListDetailResult result) {
+                    mAdapter.clearAll();
+                    mAdapter.addAll(result.success.items);
+                }
+
+                @Override
+                public void onFailure(Request request, int code, Throwable cause) {
+
+                }
+            });
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
 }

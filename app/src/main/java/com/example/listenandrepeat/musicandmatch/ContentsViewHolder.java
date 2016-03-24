@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.listenandrepeat.musicandmatch.ManagerClass.PropertyManager;
@@ -212,15 +213,17 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
 
 
         if(PropertyManager.getInstance().getMid() == c.mid ){
-            editImage.setImageResource(R.drawable.ic_create_button);
-            btnDel.setImageResource(R.drawable.ic_delete_button);
+
+            editImage.setVisibility(View.VISIBLE);
+            btnDel.setVisibility(View.VISIBLE);
             moreImage.setVisibility(View.GONE);
 
         } else {
+
             editImage.setVisibility(View.GONE);
             btnDel.setVisibility(View.GONE);
 
-            moreImage.setImageResource(R.drawable.ic_morevert);
+            moreImage.setVisibility(View.VISIBLE);
 
         }
         //contents

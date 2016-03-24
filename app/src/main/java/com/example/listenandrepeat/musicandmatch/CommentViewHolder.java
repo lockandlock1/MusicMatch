@@ -81,7 +81,7 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
         if(PropertyManager.getInstance().getMid() == c.mid){
 
             btnDel.setVisibility(View.VISIBLE);
-            btnDel.setVisibility(View.VISIBLE);
+            btnEdit.setVisibility(View.VISIBLE);
 
         } else {
             btnDel.setVisibility(View.GONE);

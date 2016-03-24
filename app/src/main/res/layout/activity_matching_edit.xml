@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context="com.example.listenandrepeat.musicandmatch.MatchingWriteActivity">
+    tools:context="com.example.listenandrepeat.musicandmatch.MatchingEditActivity">
     <android.support.design.widget.CoordinatorLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -27,20 +27,11 @@
     </android.support.design.widget.CoordinatorLayout>
 
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="plus"
-        android:id="@+id/btn_plus"
-        android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/btn_photo"
-        android:layout_alignStart="@+id/btn_photo" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/text_wrtie"
+        android:id="@+id/text_edit"
 
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -49,14 +40,22 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:background="@null"/>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/image_gallery"
+        android:layout_below="@+id/text_edit"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
 
     <Button
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="게시"
-        android:id="@+id/btn_post"
-        android:layout_above="@+id/btn_plus"
+        android:text="수정"
+        android:id="@+id/btn_edit"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
@@ -64,18 +63,11 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="photo"
-        android:id="@+id/btn_photo"
-        android:layout_above="@+id/btn_plus"
+        android:text="photoDelete"
+        android:id="@+id/btn_photo_del"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:id="@+id/image_gallery"
-        android:layout_below="@+id/text_wrtie"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

@@ -64,13 +64,12 @@ public class AllFragment extends Fragment {
     LinearLayoutManager layoutManager;
     SwipeRefreshLayout refreshLayout;
     boolean isLast = false;
-    boolean isSee = false;
 
 
 
     int pid;
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_all,container,false);
@@ -119,7 +118,7 @@ public class AllFragment extends Fragment {
             public void onAdpaterItemLikeImageClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
 
 
-                //Toast.makeText(getContext(), "LikeImage Click : " , Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "LikeImage Click : " , Toast.LENGTH_SHORT).show();
 
             }
 
@@ -149,7 +148,7 @@ public class AllFragment extends Fragment {
 
             @Override
             public void onAdpaterItemMoreImageClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
-
+                Toast.makeText(getContext(), "MoreImage Click : " , Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -277,5 +276,24 @@ public class AllFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        try {
+            NetworkManager.getInstance().getAllList(getContext(), 1, new NetworkManager.OnResultListener<ListDetailResult>() {
+                @Override
+                public void onSuccess(Request request, ListDetailResult result) {
+                    mAdapter.clearAll();
+                    mAdapter.addAll(result.success.items);
+                }
 
+                @Override
+                public void onFailure(Request request, int code, Throwable cause) {
+
+                }
+            });
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+    }
 }

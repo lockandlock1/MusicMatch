@@ -225,6 +225,7 @@ public class NetworkManager {
 
     private static final String URL_POST_CONTENT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts?page=%s&pid=%s";
 
+
     // Comment URL
     private static final String URL_COMMENT_CONTENT = "https://ec2-52-79-117-68.ap-northeast-2.compute.amazonaws.com/posts/%s/replies?page=%s";
 

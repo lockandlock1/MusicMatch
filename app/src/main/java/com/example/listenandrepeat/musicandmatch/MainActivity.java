@@ -37,18 +37,23 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView menuView;
     DrawerLayout drawer;
    static int numPeople;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-       drawer = (DrawerLayout)findViewById(R.id.drawer);
+        drawer = (DrawerLayout)findViewById(R.id.drawer);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.drawer_open, R.string.drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         menuView = (NavigationView)findViewById(R.id.navigation_menu);
+        HeaderView view = (HeaderView)menuView.getHeaderView(0);
+
+        view.setHeader(PropertyManager.getInstance().getNickName(),PropertyManager.getInstance().getProfile(),PropertyManager.getInstance().getPostion(),PropertyManager.getInstance().getGenre());
         menuView.setNavigationItemSelectedListener(this);
 
         if(savedInstanceState == null){

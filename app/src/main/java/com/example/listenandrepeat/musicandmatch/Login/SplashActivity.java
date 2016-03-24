@@ -74,6 +74,7 @@ public class SplashActivity extends AppCompatActivity {
                     PropertyManager.getInstance().setPostion(result.success.data.position);
                     PropertyManager.getInstance().setGenre(result.success.data.genre);
                     PropertyManager.getInstance().setNickName(result.success.data.nickname);
+                    PropertyManager.getInstance().setProfile(result.success.data.photo);
                     startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     finish();
                 }

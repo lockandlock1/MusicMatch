@@ -5,14 +5,14 @@
     android:background="@drawable/sidebar_header"
     android:weightSum="1">
 
-    <ImageView
-        android:layout_width="82dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:id="@+id/image_photo"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.17"
-        android:src="@drawable/circle_sidebar"/>
+        android:layout_marginTop="20dp" />
+
 
     <TextView
         android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="70dp"
-            android:src="@drawable/mark_genre"
+
             android:id="@+id/image_genre" />
         <ImageView
             android:layout_width="wrap_content"
@@ -37,7 +37,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_marginRight="70dp"
-            android:src="@drawable/mark_position"
+
             android:id="@+id/image_position" />
     </RelativeLayout>
 

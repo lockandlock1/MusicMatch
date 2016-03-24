@@ -94,7 +94,9 @@ public class LoginEmailActivity extends AppCompatActivity {
                     PropertyManager.getInstance().setPostion(result.success.data.position);
                     PropertyManager.getInstance().setGenre(result.success.data.genre);
                     PropertyManager.getInstance().setNickName(result.success.data.nickname);
+                    PropertyManager.getInstance().setProfile(result.success.data.photo);
                     startActivity(new Intent(getApplication(), MainActivity.class));
+
                     LoginEmailActivity.this.finish();
                     AActivity.finish();
                 }
