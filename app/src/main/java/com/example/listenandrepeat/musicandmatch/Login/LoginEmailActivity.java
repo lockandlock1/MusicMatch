@@ -91,7 +91,9 @@ public class LoginEmailActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Request request, ProfileMe result) {
                     PropertyManager.getInstance().setMid(result.success.data.mid);
-
+                    PropertyManager.getInstance().setPostion(result.success.data.position);
+                    PropertyManager.getInstance().setGenre(result.success.data.genre);
+                    PropertyManager.getInstance().setNickName(result.success.data.nickname);
                     startActivity(new Intent(getApplication(), MainActivity.class));
                     LoginEmailActivity.this.finish();
                     AActivity.finish();

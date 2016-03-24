@@ -64,6 +64,7 @@ public class LoginJoinActivity extends AppCompatActivity {
                         public void onSuccess(Request request, LoginAndSignUpResult result) {
                             PropertyManager.getInstance().setUserId("music2@exe.com");
                             PropertyManager.getInstance().setPassword("123");
+
                             startActivity(new Intent(LoginJoinActivity.this, MainActivity.class));
                             finish();
                         }
@@ -86,7 +87,9 @@ public class LoginJoinActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Request request, ProfileMe result) {
                     PropertyManager.getInstance().setMid(result.success.data.mid);
-
+                    PropertyManager.getInstance().setPostion(result.success.data.position);
+                    PropertyManager.getInstance().setGenre(result.success.data.genre);
+                    PropertyManager.getInstance().setNickName(result.success.data.nickname);
                     startActivity(new Intent(getApplication(), MainActivity.class));
                     finish();
                 }

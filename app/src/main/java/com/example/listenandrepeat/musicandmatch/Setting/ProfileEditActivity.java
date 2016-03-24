@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide;
 import com.example.listenandrepeat.musicandmatch.DataClass.ProfileChange;
 import com.example.listenandrepeat.musicandmatch.DataClass.ProfileMe;
 import com.example.listenandrepeat.musicandmatch.ManagerClass.NetworkManager;
+import com.example.listenandrepeat.musicandmatch.ManagerClass.PropertyManager;
 import com.example.listenandrepeat.musicandmatch.R;
 
 import java.io.File;
@@ -166,7 +167,9 @@ public class ProfileEditActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Request request, ProfileMe result) {
                     Toast.makeText(ProfileEditActivity.this,"success",Toast.LENGTH_SHORT).show();
-
+                    PropertyManager.getInstance().setPostion(result.success.data.position);
+                    PropertyManager.getInstance().setGenre(result.success.data.genre);
+                    PropertyManager.getInstance().setNickName(result.success.data.nickname);
                     photo = result.success.data.photo;
                     nickname = result.success.data.nickname ;
                     intro = result.success.data.intro;

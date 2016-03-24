@@ -30,12 +30,63 @@ public class PropertyManager {
         mPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         mEditor = mPrefs.edit();
     }
+    String content = "";
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    String profile = null;
+
+
+    public String getProfile() {
+        return profile;
+    }
+
+    public void setProfile(String profile) {
+        this.profile = profile;
+    }
+
+    String nickName = "";
+
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    int genre = -1;
+
+    public int getGenre() {
+        return genre;
+    }
+
+    public void setGenre(int genre) {
+        this.genre = genre;
+    }
+
+    int postion = -1;
+
+    public int getPostion() {
+        return postion;
+    }
+
+    public void setPostion(int postion) {
+        this.postion = postion;
+    }
 
     int mID = -1;
     public void  setMid(int mid){
         mID = mid;
 
     }
+
     public int  getMid() {
         return mID;
     }

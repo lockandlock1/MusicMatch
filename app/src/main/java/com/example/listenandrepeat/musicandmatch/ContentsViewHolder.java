@@ -18,7 +18,7 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
     TextView nickText , contentsText , dateText ,likeNum , commentNum ;
 
     Context mContext;
-////
+
     public interface OnImageClickListener{
 
         public void onCommentImageClick(View view,ContentsItem contentsItem);
@@ -100,6 +100,8 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
         } else {
             profileImage.setImageResource(R.mipmap.ic_launcher);
         }
+
+
 
         if(c.photo != null && c.photo.size() > 0 && !TextUtils.isEmpty(c.photo.get(0))){
             Glide.with(mContext)
@@ -190,7 +192,7 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
         }
         //contents
 
-       likeImage.setImageResource(R.drawable.ic_favorite);
+        likeImage.setImageResource(R.drawable.ic_favorite);
         commentImage.setImageResource(R.drawable.ic_chat);
 
 

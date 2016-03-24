@@ -50,7 +50,7 @@ public class StoryEditActivity extends AppCompatActivity {
 
         textEdit.setText(content);
 
-        Toast.makeText(StoryEditActivity.this,"::::"+postId,Toast.LENGTH_SHORT).show();
+      //  Toast.makeText(StoryEditActivity.this,"::::"+postId,Toast.LENGTH_SHORT).show();
 
         if(photo != null && !TextUtils.isEmpty(photo)){
             photoDeleteBtn.setVisibility(View.VISIBLE);
@@ -89,7 +89,10 @@ public class StoryEditActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Request request, StoryWriteResult result) {
                     // 바로 메인 가기
-                    startActivity(new Intent(StoryEditActivity.this,MainActivity.class));
+                    Intent intent = new Intent(StoryEditActivity.this,MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+                          .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
                     finish();
                 }
 
