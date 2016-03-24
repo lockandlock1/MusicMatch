@@ -32,11 +32,11 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="id_send"
+        android:text="사클 UI"
         android:id="@+id/btn_send"
-        android:layout_below="@+id/textView"
-        android:layout_toRightOf="@+id/btn_login"
-        android:layout_toEndOf="@+id/btn_login" />
+        android:layout_above="@+id/btn_test"
+        android:layout_alignRight="@+id/textView"
+        android:layout_alignEnd="@+id/textView" />
 
     <Button
         android:layout_width="wrap_content"

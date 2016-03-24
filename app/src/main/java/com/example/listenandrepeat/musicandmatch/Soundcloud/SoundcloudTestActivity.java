@@ -256,28 +256,6 @@ public class SoundcloudTestActivity extends AppCompatActivity {
             }
         });
 
-//        mPlayer = new MediaPlayer();
-//        mState = PlayerState.STATE_IDLE;
-//
-//        AssetFileDescriptor afd = getResources().openRawResourceFd(R.raw.winter_blues);
-//        try {
-//            if (mState == PlayerState.STATE_IDLE) {
-//                mPlayer.setDataSource(afd.getFileDescriptor(), afd.getStartOffset(), afd.getLength());
-//                mState = PlayerState.STATE_INITIALIZED;
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        if (mState == PlayerState.STATE_INITIALIZED) {
-//            try {
-//                mPlayer.prepare();
-//                mState = PlayerState.STATE_PREPARED;
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
         progressView.setMax(mPlayer.getDuration());
 
         mPlayer.setOnErrorListener(new MediaPlayer.OnErrorListener() {
@@ -292,11 +270,6 @@ public class SoundcloudTestActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-
-
 
                 if (mState == PlayerState.STATE_INITIALIZED || mState == PlayerState.STATE_STOPPED) {
                     try {

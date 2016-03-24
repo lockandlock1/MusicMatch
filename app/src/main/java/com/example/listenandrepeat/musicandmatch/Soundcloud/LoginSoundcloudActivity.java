@@ -68,7 +68,7 @@ public class LoginSoundcloudActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                startActivity(new Intent(getApplication(), SoundcloudActivity.class));
 //                NetworkManager.getInstance().getMeInfo();
             }
         });

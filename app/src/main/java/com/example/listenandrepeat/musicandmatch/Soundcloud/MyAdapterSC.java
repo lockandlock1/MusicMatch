@@ -13,19 +13,42 @@ import java.util.List;
 /**
  * Created by Tacademy on 2016-03-24.
  */
-public class MyAdapterSC extends RecyclerView.Adapter<MyViewHolderSC> implements OnItemClickListenerSC {
+public class MyAdapterSC extends RecyclerView.Adapter<MyViewHolderSC> implements MyViewHolderSC.OnImageClickListenerSC {
 
     List<MyDataSC> items = new ArrayList<MyDataSC>();
+
+    public void addAll(List<MyDataSC> items){
+        this.items.addAll(items);
+
+        notifyDataSetChanged();
+    }
+
+    public void clearAll(){
+        items.clear();
+        notifyDataSetChanged();
+    }
+
+
+    private int pageNumber;
+
+    public int getPageNumber() {
+        return pageNumber;
+    }
+
+    public void setPageNumber(int pageNumber) {
+        this.pageNumber = pageNumber;
+    }
+
 
     public void add(MyDataSC data) {
         items.add(data);
         notifyDataSetChanged();
     }
 
-    OnItemClickListenerSC itemClickListener;
-    public void setOnItemClickListener(OnItemClickListenerSC listener) {
-        itemClickListener = listener;
-    }
+//    OnItemClickListenerSC itemClickListener;
+//    public void setOnItemClickListener(OnItemClickListenerSC listener) {
+//        itemClickListener = listener;
+//    }
 
     @Override
     public MyViewHolderSC onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -38,7 +61,7 @@ public class MyAdapterSC extends RecyclerView.Adapter<MyViewHolderSC> implements
 
     @Override
     public void onBindViewHolder(MyViewHolderSC holder, int position) {
-        holder.setData(items.get(position));
+        holder.setContentsItem(items.get(position));
     }
 
     @Override
@@ -46,16 +69,56 @@ public class MyAdapterSC extends RecyclerView.Adapter<MyViewHolderSC> implements
         return items.size();
     }
 
-    @Override
-    public void onItemClick(View view, int position) {
-        if (itemClickListener != null) {
-            itemClickListener.onItemClick(view, position);
-        }
-    }
-
     public MyDataSC getItem(int position) {
         if (position < 0 || position >= items.size()) return null;
 
         return items.get(position);
+    }
+
+    @Override
+    public void onCommentImageClick(View view, MyDataSC contentsItem) {
+        if(mAdapterListener != null){
+            int index = items.indexOf(contentsItem);
+            mAdapterListener.onAdapterItemCommentImageClick(this,view,contentsItem,index);
+        }
+    }
+
+    @Override
+    public void onLikeImageClick(View view, MyDataSC contentsItem) {
+        if(mAdapterListener != null){
+            int index = items.indexOf(contentsItem);
+            mAdapterListener.onAdpaterItemLikeImageClick(this,view,contentsItem,index);
+        }
+
+    }
+
+    @Override
+    public void onLayoutImageClick(View view, MyDataSC contentsItem) {
+        if(mAdapterListener != null){
+            int index = items.indexOf(contentsItem);
+            mAdapterListener.onAdapterItemLayoutClick(this,view,contentsItem,index);
+        }
+
+    }
+
+//    public OnViewHolderAdapterItemClickListener getmAdapterListener() {
+//        if(mAdapterListener != null){
+//            int index = items.indexOf(contentsItem);
+//            mAdapterListener.onAdpaterItemLikeImageClick(this,view,contentsItem,index);
+//        }
+//    }
+
+
+    public interface OnViewHolderAdapterItemClickListener{
+
+        public void onAdapterItemLayoutClick(MyAdapterSC adapter,View view,MyDataSC item,int position);
+        public void onAdpaterItemLikeImageClick(MyAdapterSC adapter,View view,MyDataSC item,int position);
+        public void onAdapterItemCommentImageClick(MyAdapterSC adapter,View view,MyDataSC item,int position);
+
+    }
+
+    OnViewHolderAdapterItemClickListener mAdapterListener;
+    public void setOnAdapterItemClickListener(OnViewHolderAdapterItemClickListener listener){
+        mAdapterListener = listener;
     }
 }

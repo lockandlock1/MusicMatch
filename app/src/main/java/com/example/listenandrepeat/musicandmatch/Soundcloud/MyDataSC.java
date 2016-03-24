@@ -1,7 +1,5 @@
 package com.example.listenandrepeat.musicandmatch.Soundcloud;
 
-import android.graphics.drawable.Drawable;
-
 /**
  * Created by Tacademy on 2016-03-24.
  */
@@ -13,6 +11,8 @@ public class MyDataSC {
     String like;
     String comment;
 
-    Drawable icon;
-    float fontSize;
+    String icon_image;
+    String like_image;
+    String comment_image;
+//    float fontSize;
 }

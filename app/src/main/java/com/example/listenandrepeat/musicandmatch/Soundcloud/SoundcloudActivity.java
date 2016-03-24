@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.listenandrepeat.musicandmatch.MainActivity;
 import com.example.listenandrepeat.musicandmatch.R;
 
 import java.util.Random;
@@ -17,6 +16,7 @@ public class SoundcloudActivity extends AppCompatActivity {
     RecyclerView recyclerView;
     MyAdapterSC mAdapter;
     RecyclerView.LayoutManager layoutManager;
+    int mid;
 
     int[] IDS = { R.drawable.mark_genre,
             R.drawable.mark_genre_balled,
@@ -34,13 +34,30 @@ public class SoundcloudActivity extends AppCompatActivity {
         setContentView(R.layout.activity_soundcloud);
         recyclerView = (RecyclerView)findViewById(R.id.recycler);
         mAdapter = new MyAdapterSC();
-        mAdapter.setOnItemClickListener(new OnItemClickListenerSC() {
+        recyclerView.setAdapter(mAdapter);
+        layoutManager = new LinearLayoutManager(SoundcloudActivity.this,LinearLayoutManager.VERTICAL,false);
+        recyclerView.setLayoutManager(layoutManager);
+        mAdapter.setOnAdapterItemClickListener(new MyAdapterSC.OnViewHolderAdapterItemClickListener() {
             @Override
-            public void onItemClick(View view, int position) {
-                MyDataSC data = mAdapter.getItem(position);
-                Toast.makeText(SoundcloudActivity.this, "data : " + data.title, Toast.LENGTH_SHORT).show();
+            public void onAdapterItemLayoutClick(MyAdapterSC adapter, View view, MyDataSC item, int position) {
+                Toast.makeText(SoundcloudActivity.this, "layout Click :", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdpaterItemLikeImageClick(MyAdapterSC adapter, View view, MyDataSC item, int position) {
+                Toast.makeText(SoundcloudActivity.this, "like Click :", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onAdapterItemCommentImageClick(MyAdapterSC adapter, View view, MyDataSC item, int position) {
+                Toast.makeText(SoundcloudActivity.this, "comment Click :", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
+
+
         recyclerView.setAdapter(mAdapter);
 
         layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -58,9 +75,17 @@ public class SoundcloudActivity extends AppCompatActivity {
         Random r = new Random();
         for (int i = 0; i < 100; i++) {
             MyDataSC data = new MyDataSC();
-            data.icon = getResources().getDrawable(IDS[i%IDS.length]);
+
+            data.icon_image = "item " + i;
+            data.like_image = "item " + i;
+            data.comment_image = "item " + i;
+            data.nickname = "item " + i;
             data.title = "item " + i;
-            data.fontSize = 20 + r.nextInt(40);
+            data.text= "item " + i;
+            data.duration = "item " + i;
+            data.like = "item " + i;
+            data.comment = "item " + i;
+//            data.fontSize = 20 + r.nextInt(40);
             mAdapter.add(data);
         }
     }

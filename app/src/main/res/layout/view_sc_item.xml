@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/relativeLayout">
 
         <ImageView
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:id="@+id/imageView3"
+            android:id="@+id/image_icon"
             android:src="@mipmap/ic_launcher"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
@@ -21,38 +22,38 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Small Text"
-            android:id="@+id/textView3"
+            android:id="@+id/text_nickname"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/imageView3"
-            android:layout_toEndOf="@+id/imageView3" />
+            android:layout_toRightOf="@+id/image_icon"
+            android:layout_toEndOf="@+id/image_icon" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Small Text"
-            android:id="@+id/textView5"
-            android:layout_below="@+id/textView3"
-            android:layout_toRightOf="@+id/imageView3"
-            android:layout_toEndOf="@+id/imageView3" />
+            android:id="@+id/text_title"
+            android:layout_below="@+id/text_nickname"
+            android:layout_toRightOf="@+id/image_icon"
+            android:layout_toEndOf="@+id/image_icon" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Small Text"
-            android:id="@+id/textView8"
-            android:layout_below="@+id/textView5"
-            android:layout_toRightOf="@+id/imageView3"
-            android:layout_toEndOf="@+id/imageView3" />
+            android:id="@+id/text_view"
+            android:layout_below="@+id/text_title"
+            android:layout_toRightOf="@+id/image_icon"
+            android:layout_toEndOf="@+id/image_icon" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:text="Small Text"
-            android:id="@+id/textView9"
-            android:layout_above="@+id/textView5"
+            android:id="@+id/text_duration"
+            android:layout_above="@+id/text_title"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true" />
     </RelativeLayout>
@@ -64,7 +65,7 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/imageView5"
+            android:id="@+id/image_like"
             android:src="@mipmap/ic_launcher"
             android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
@@ -75,28 +76,28 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="00"
-            android:id="@+id/textView10"
+            android:id="@+id/text_like"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/imageView5"
-            android:layout_toEndOf="@+id/imageView5" />
+            android:layout_toRightOf="@+id/image_like"
+            android:layout_toEndOf="@+id/image_like" />
 
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/imageView9"
+            android:id="@+id/image_comment"
             android:src="@mipmap/ic_launcher"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/textView10"
-            android:layout_toEndOf="@+id/textView10" />
+            android:layout_toRightOf="@+id/text_like"
+            android:layout_toEndOf="@+id/text_like" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="00"
-            android:id="@+id/textView11"
+            android:id="@+id/text_comment"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/imageView9"
-            android:layout_toEndOf="@+id/imageView9" />
+            android:layout_toRightOf="@+id/image_comment"
+            android:layout_toEndOf="@+id/image_comment" />
     </RelativeLayout>
 </LinearLayout>
