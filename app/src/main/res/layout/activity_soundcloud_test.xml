@@ -13,10 +13,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/image_icon"
-        android:layout_alignParentTop="true"
+        android:src="@mipmap/ic_launcher"
+        android:layout_below="@+id/relativeLayout4"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:src="@mipmap/ic_launcher" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -25,8 +25,8 @@
         android:text="Medium Text"
         android:id="@+id/text_username"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/image_icon"
-        android:layout_toEndOf="@+id/image_icon" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -34,19 +34,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/text_title"
-        android:layout_alignBottom="@+id/image_icon"
-        android:layout_alignLeft="@+id/text_username"
-        android:layout_alignStart="@+id/text_username" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/text_duration"
-        android:text="Medium Text"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/text_username"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -54,9 +44,19 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/text_last_modified"
-        android:layout_alignTop="@+id/text_title"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_below="@+id/text_title"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/text_duration"
+        android:text="Medium Text"
+        android:layout_below="@+id/text_last_modified"
+        android:layout_alignLeft="@+id/text_title"
+        android:layout_alignStart="@+id/text_title" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -64,11 +64,9 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Medium Text"
         android:id="@+id/text_avatar_url"
-        android:layout_below="@+id/image_icon"
+        android:layout_below="@+id/text_duration"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/text_last_modified"
-        android:layout_alignEnd="@+id/text_last_modified" />
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -77,15 +75,15 @@
         android:text="Medium Text"
         android:id="@+id/text_stream_url"
         android:layout_below="@+id/text_avatar_url"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignLeft="@+id/text_duration"
+        android:layout_alignStart="@+id/text_duration" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="strat"
-        android:id="@+id/btn_start"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/text_waveform_url"
         android:layout_below="@+id/text_stream_url"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
@@ -95,17 +93,105 @@
         android:layout_height="wrap_content"
         android:text="GET IT!"
         android:id="@+id/btn_get"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_below="@+id/text_waveform_url"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/text_waveform_url"
-        android:layout_below="@+id/text_title"
-        android:layout_alignRight="@+id/text_avatar_url"
-        android:layout_alignEnd="@+id/text_avatar_url" />
+        android:layout_below="@+id/btn_get"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/relativeLayout4">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello World!"
+            android:id="@+id/textView" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="start"
+            android:id="@+id/btn_start"
+            android:layout_below="@+id/textView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="pause"
+            android:id="@+id/btn_pause"
+            android:layout_alignBottom="@+id/btn_start"
+            android:layout_toRightOf="@+id/btn_start"
+            android:layout_toEndOf="@+id/btn_start" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="stop"
+            android:id="@+id/btn_stop"
+            android:layout_alignTop="@+id/btn_pause"
+            android:layout_toRightOf="@+id/btn_pause"
+            android:layout_toEndOf="@+id/btn_pause" />
+
+        <SeekBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/seek_progress"
+            android:layout_below="@+id/btn_start"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:indeterminate="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Volume"
+            android:id="@+id/textView2"
+            android:layout_below="@+id/seek_progress"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <SeekBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/seek_volume"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/textView2"
+            android:layout_alignRight="@+id/seek_progress"
+            android:layout_alignEnd="@+id/seek_progress"
+            android:indeterminate="false" />
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="mute"
+            android:id="@+id/check_mute"
+            android:layout_above="@+id/seek_progress"
+            android:layout_toRightOf="@+id/btn_stop"
+            android:layout_toEndOf="@+id/btn_stop"
+            android:checked="false" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="List"
+            android:id="@+id/btn_list"
+            android:layout_above="@+id/seek_progress"
+            android:layout_toRightOf="@+id/check_mute"
+            android:layout_toEndOf="@+id/check_mute" />
+
+    </RelativeLayout>
 
 </RelativeLayout>
