@@ -71,7 +71,9 @@ public class SplashActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(Request request, ProfileMe result) {
                     PropertyManager.getInstance().setMid(result.success.data.mid);
-
+                    PropertyManager.getInstance().setPostion(result.success.data.position);
+                    PropertyManager.getInstance().setGenre(result.success.data.genre);
+                    PropertyManager.getInstance().setNickName(result.success.data.nickname);
                     startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     finish();
                 }

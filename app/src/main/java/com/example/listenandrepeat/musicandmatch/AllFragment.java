@@ -95,7 +95,7 @@ public class AllFragment extends Fragment {
                     Intent intent = new Intent(getActivity(), StoryEditActivity.class);
 
                     int postId = adapter.items.get(position).pid;
-                    Toast.makeText(getActivity(),""+postId,Toast.LENGTH_SHORT).show();
+
                     String content = adapter.items.get(position).content;
                     String photo = null;
 
@@ -107,7 +107,7 @@ public class AllFragment extends Fragment {
                     intent.putExtra(StoryEditActivity.POST_ID, postId);
 
                     startActivity(intent);
-                } else{
+                } else {
 
                 }
                 //startActivity(new Intent(getActivity(),StoryEditActivity.class));
@@ -196,7 +196,7 @@ public class AllFragment extends Fragment {
     }
     boolean isMoreData =  false;
 
-    ProgressDialog dialog = null;
+ ///   ProgressDialog dialog = null;
     private void getMoreItem(){
         if(isMoreData) return;
 

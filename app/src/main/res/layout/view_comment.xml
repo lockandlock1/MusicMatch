@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
-        android:id="@+id/text_nickname"
+        android:id="@+id/text_nick"
 
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/image_profile"

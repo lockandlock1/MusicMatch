@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -22,10 +23,22 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
     TextView nickText, contentsText,dateText;
     CommentItem item;
     Context mContext;
-
+    ImageView btnDel,btnEdit;
     Spinner spinner;
     SpinnerAdapter mAdapter;
-    public CommentViewHolder(View itemView) {
+
+    public interface OnButtonClickListener{
+        public void onEditBtnClick(View view,CommentItem commentItem);
+        public void onDeleteBtnClick(View view,CommentItem commentItem);
+    }
+
+    OnButtonClickListener mButtonClickListener;
+
+    public void setOnButtonClickListener(OnButtonClickListener listener){
+        mButtonClickListener = listener;
+    }
+
+    public CommentViewHolder(final View itemView) {
         super(itemView);
         mContext = itemView.getContext();
         profileImage = (ImageView)itemView.findViewById(R.id.image_profile);
@@ -34,31 +47,25 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
         nickText = (TextView)itemView.findViewById(R.id.text_nickname);
         contentsText = (TextView)itemView.findViewById(R.id.text_contents);
         dateText = (TextView)itemView.findViewById(R.id.text_date);
+        btnDel = (ImageView)itemView.findViewById(R.id.btn_del);
+        btnEdit = (ImageView)itemView.findViewById(R.id.btn_edit);
 
-        spinner = (Spinner)itemView.findViewById(R.id.spinner);
-        mAdapter = new SpinnerAdapter();
-        spinner.setAdapter(mAdapter);
-        SpinnerItem s1 = new SpinnerItem(R.drawable.ic_create_button,"Edit");
-
-        SpinnerItem s2 = new SpinnerItem(R.drawable.ic_delete_button,"Delete");
-
-        mAdapter.add(s1);
-        mAdapter.add(s2);
-
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-
+        btnDel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(mContext,"select " + position,Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
+            public void onClick(View v) {
+                if(mButtonClickListener != null){
+                    mButtonClickListener.onDeleteBtnClick(itemView,item);
+                }
             }
         });
-
+        btnEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mButtonClickListener != null){
+                    mButtonClickListener.onEditBtnClick(itemView,item);
+                }
+            }
+        });
     }
     public void setCommentItem(CommentItem c){
         item = c;
@@ -68,12 +75,13 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
                     .load(c.profile)
                     .into(profileImage);
         }else {
-            profileImage.setImageResource(R.mipmap.ic_launcher);
+            profileImage.setImageResource(R.drawable.circle_profile);
         }
 
         if(PropertyManager.getInstance().getMid() != c.mid){
 
-            spinner.setVisibility(View.GONE);
+            btnDel.setVisibility(View.GONE);
+            btnEdit.setVisibility(View.GONE);
         }
 
         //pos
@@ -102,8 +110,7 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
                 positionImage.setImageResource(R.drawable.mark_position_compose);
                 break;
 
-            default:
-                positionImage.setImageResource(R.mipmap.ic_launcher);
+
 
         }
 
@@ -137,8 +144,7 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
             case 7:
                 genreImage.setImageResource(R.drawable.mark_genre_trot);
                 break;
-            default:
-                genreImage.setImageResource(R.mipmap.ic_launcher);
+
         }
 
         nickText.setText(c.nickname);

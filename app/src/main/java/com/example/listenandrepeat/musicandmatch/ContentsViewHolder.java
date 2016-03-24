@@ -18,7 +18,7 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
     TextView nickText , contentsText , dateText ,likeNum , commentNum ;
 
     Context mContext;
-////
+
     public interface OnImageClickListener{
 
         public void onCommentImageClick(View view,ContentsItem contentsItem);
@@ -190,7 +190,7 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
         }
         //contents
 
-       likeImage.setImageResource(R.drawable.ic_favorite);
+        likeImage.setImageResource(R.drawable.ic_favorite);
         commentImage.setImageResource(R.drawable.ic_chat);
 
 

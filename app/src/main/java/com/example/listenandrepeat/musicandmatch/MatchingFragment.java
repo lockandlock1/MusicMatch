@@ -41,6 +41,8 @@ public class MatchingFragment extends Fragment {
     ContentsViewHolderAdapter mAdapter;
     RecyclerView.LayoutManager layoutManager;
     Button floatingBtn;
+
+    boolean isLast = false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -98,6 +100,7 @@ public class MatchingFragment extends Fragment {
                 public void onSuccess(Request request, ListDetailResult result) {
                     mAdapter.clearAll();
                     mAdapter.addAll(result.success.items);
+                    mAdapter.setPageNumber(result.success.page);
                 }
 
                 @Override
