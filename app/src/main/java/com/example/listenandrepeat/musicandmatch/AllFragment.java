@@ -64,6 +64,10 @@ public class AllFragment extends Fragment {
     LinearLayoutManager layoutManager;
     SwipeRefreshLayout refreshLayout;
     boolean isLast = false;
+    boolean isSee = false;
+
+
+
     int pid;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -91,7 +95,7 @@ public class AllFragment extends Fragment {
             public void onAdapterItemEditImageClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
                // Toast.makeText(getContext(), "postmid : " + adapter.items.get(position).mid + ", myID : " + PropertyManager.getInstance().getMid() , Toast.LENGTH_SHORT).show();
 
-                if(adapter.items.get(position).mid == PropertyManager.getInstance().getMid()) {
+
                     Intent intent = new Intent(getActivity(), StoryEditActivity.class);
 
                     int postId = adapter.items.get(position).pid;
@@ -107,10 +111,8 @@ public class AllFragment extends Fragment {
                     intent.putExtra(StoryEditActivity.POST_ID, postId);
 
                     startActivity(intent);
-                } else {
 
-                }
-                //startActivity(new Intent(getActivity(),StoryEditActivity.class));
+
             }
 
             @Override
@@ -118,7 +120,7 @@ public class AllFragment extends Fragment {
 
 
                 //Toast.makeText(getContext(), "LikeImage Click : " , Toast.LENGTH_SHORT).show();
-                storyDelete(adapter.items.get(position).pid);
+
             }
 
             @Override
@@ -137,6 +139,18 @@ public class AllFragment extends Fragment {
 
                         ((MainActivity) getActivity()).changeMusicStory(adapter.items.get(position).mid);
             }
+
+            @Override
+            public void onAdapterItemDeleteImageClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
+
+
+                storyDelete(adapter.items.get(position).pid);
+            }
+
+            @Override
+            public void onAdpaterItemMoreImageClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
+
+            }
         });
 
 
@@ -145,9 +159,9 @@ public class AllFragment extends Fragment {
                 @Override
                 public void onSuccess(Request request, ListDetailResult result) {
 
-
                     mAdapter.clearAll();
                     mAdapter.addAll(result.success.items);
+
                     mAdapter.setPageNumber(result.success.page);
 
 
@@ -233,7 +247,24 @@ public class AllFragment extends Fragment {
             NetworkManager.getInstance().deleteStory(getContext(), pid, new NetworkManager.OnResultListener<StoryWriteResult>() {
                 @Override
                 public void onSuccess(Request request, StoryWriteResult result) {
-                    Toast.makeText(getContext(),"suc",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(),"게시글 삭제 되었습니다.",Toast.LENGTH_SHORT).show();
+                    try {
+                        NetworkManager.getInstance().getAllList(getContext(), 1, new NetworkManager.OnResultListener<ListDetailResult>() {
+                            @Override
+                            public void onSuccess(Request request, ListDetailResult result) {
+                                mAdapter.clearAll();
+                                mAdapter.addAll(result.success.items);
+
+                            }
+
+                            @Override
+                            public void onFailure(Request request, int code, Throwable cause) {
+
+                            }
+                        });
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 @Override

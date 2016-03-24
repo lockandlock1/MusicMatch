@@ -65,7 +65,6 @@ public class MatchingFragment extends Fragment {
             @Override
             public void onAdapterItemEditImageClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
 
-                //Toast.makeText(getContext(), "EditImage Click : ", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -87,6 +86,16 @@ public class MatchingFragment extends Fragment {
 
             @Override
             public void onAdapterItemNickNameTextClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
+
+            }
+
+            @Override
+            public void onAdapterItemDeleteImageClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
+
+            }
+
+            @Override
+            public void onAdpaterItemMoreImageClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
 
             }
 

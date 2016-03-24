@@ -99,6 +99,16 @@ public class StoryFragment extends Fragment {
             public void onAdapterItemNickNameTextClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
 
             }
+
+            @Override
+            public void onAdapterItemDeleteImageClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
+
+            }
+
+            @Override
+            public void onAdpaterItemMoreImageClick(ContentsViewHolderAdapter adapter, View view, ContentsItem item, int position) {
+
+            }
         });
 
         try {

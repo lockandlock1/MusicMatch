@@ -19,7 +19,7 @@ import com.example.listenandrepeat.musicandmatch.ManagerClass.PropertyManager;
  */
 public class CommentViewHolder extends RecyclerView.ViewHolder {
 
-    ImageView profileImage , genreImage , positionImage;
+    ImageView profileImage , genreImage , positionImage ;
     TextView nickText, contentsText,dateText;
     CommentItem item;
     Context mContext;
@@ -44,7 +44,7 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
         profileImage = (ImageView)itemView.findViewById(R.id.image_profile);
         genreImage = (ImageView)itemView.findViewById(R.id.image_genre);
         positionImage = (ImageView)itemView.findViewById(R.id.image_position);
-        nickText = (TextView)itemView.findViewById(R.id.text_nickname);
+        nickText = (TextView)itemView.findViewById(R.id.text_nick);
         contentsText = (TextView)itemView.findViewById(R.id.text_contents);
         dateText = (TextView)itemView.findViewById(R.id.text_date);
         btnDel = (ImageView)itemView.findViewById(R.id.btn_del);
@@ -78,8 +78,12 @@ public class CommentViewHolder extends RecyclerView.ViewHolder {
             profileImage.setImageResource(R.drawable.circle_profile);
         }
 
-        if(PropertyManager.getInstance().getMid() != c.mid){
+        if(PropertyManager.getInstance().getMid() == c.mid){
 
+            btnDel.setVisibility(View.VISIBLE);
+            btnDel.setVisibility(View.VISIBLE);
+
+        } else {
             btnDel.setVisibility(View.GONE);
             btnEdit.setVisibility(View.GONE);
         }

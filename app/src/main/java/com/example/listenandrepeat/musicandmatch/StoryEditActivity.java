@@ -90,8 +90,7 @@ public class StoryEditActivity extends AppCompatActivity {
                 public void onSuccess(Request request, StoryWriteResult result) {
                     // 바로 메인 가기
                     Intent intent = new Intent(StoryEditActivity.this,MainActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-                          .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
                     startActivity(intent);
                     finish();
                 }

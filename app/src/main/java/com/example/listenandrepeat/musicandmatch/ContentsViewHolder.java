@@ -14,7 +14,7 @@ import com.example.listenandrepeat.musicandmatch.ManagerClass.PropertyManager;
  * Created by ListenAndRepeat on 2016. 3. 8..
  */
 public class ContentsViewHolder extends RecyclerView.ViewHolder {
-    ImageView profileImage , genreImage , positionImage  , likeImage , commentImage ,editImage , contentImage;
+    ImageView profileImage , genreImage , positionImage  , likeImage , commentImage ,editImage , contentImage ,btnDel , moreImage;
     TextView nickText , contentsText , dateText ,likeNum , commentNum ;
 
     Context mContext;
@@ -25,7 +25,8 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
         public void onLikeImageClick(View view,ContentsItem contentsItem);
         public void onEditImageClick(View view,ContentsItem contentsItem);
         public void onNickNameClick(View view,ContentsItem contentsItem);
-
+        public void onDeleteImageClick(View view,ContentsItem contentsItem);
+        public void onMoreImageClick(View view,ContentsItem contentsItem);
     }
     OnImageClickListener mImageClickListener;
     public void setOnImageClickListener(OnImageClickListener listener){
@@ -37,6 +38,7 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
     public ContentsViewHolder(final View itemView) {
         super(itemView);
         mContext = itemView.getContext();
+        btnDel =(ImageView)itemView.findViewById(R.id.btn_del);
         contentImage = (ImageView)itemView.findViewById(R.id.image_content);
         profileImage = (ImageView)itemView.findViewById(R.id.image_profile);
         genreImage = (ImageView)itemView.findViewById(R.id.image_genre);
@@ -49,7 +51,25 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
         dateText = (TextView)itemView.findViewById(R.id.text_date);
         likeNum = (TextView)itemView.findViewById(R.id.text_like);
         commentNum = (TextView)itemView.findViewById(R.id.text_comment);
+        moreImage = (ImageView)itemView.findViewById(R.id.image_more);
 
+
+        moreImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mImageClickListener != null){
+                    mImageClickListener.onMoreImageClick(itemView,item);
+                }
+            }
+        });
+        btnDel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mImageClickListener != null){
+                    mImageClickListener.onDeleteImageClick(itemView,item);
+                }
+            }
+        });
         commentImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,15 +83,20 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
             public void onClick(View v) {
                 if(mImageClickListener != null){
                     mImageClickListener.onLikeImageClick(itemView, item);
+
                 }
+
             }
         });
+
         editImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mImageClickListener != null){
                     mImageClickListener.onEditImageClick(itemView, item);
+
                 }
+
             }
         });
 
@@ -110,6 +135,7 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
         } else{
             contentImage.setVisibility(View.GONE);
         }
+
 
         if (!TextUtils.isEmpty(c.content)){
             contentsText.setText(c.content);
@@ -187,8 +213,15 @@ public class ContentsViewHolder extends RecyclerView.ViewHolder {
 
         if(PropertyManager.getInstance().getMid() == c.mid ){
             editImage.setImageResource(R.drawable.ic_create_button);
+            btnDel.setImageResource(R.drawable.ic_delete_button);
+            moreImage.setVisibility(View.GONE);
+
         } else {
-            editImage.setImageResource(R.drawable.ic_morevert);
+            editImage.setVisibility(View.GONE);
+            btnDel.setVisibility(View.GONE);
+
+            moreImage.setImageResource(R.drawable.ic_morevert);
+
         }
         //contents
 

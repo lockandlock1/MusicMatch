@@ -99,12 +99,27 @@ public class ContentsViewHolderAdapter extends RecyclerView.Adapter<ContentsView
         }
     }
 
+    @Override
+    public void onDeleteImageClick(View view, ContentsItem contentsItem) {
+        if(mAdapterListener != null){
+            int index = items.indexOf(contentsItem);
+            mAdapterListener.onAdapterItemDeleteImageClick(this,view,contentsItem,index);
+        }
+    }
+
+    @Override
+    public void onMoreImageClick(View view, ContentsItem contentsItem) {
+
+    }
+
     public interface OnViewHolderAdapterItemClickListener{
 
         public void onAdapterItemEditImageClick(ContentsViewHolderAdapter adapter,View view,ContentsItem item,int position);
         public void onAdpaterItemLikeImageClick(ContentsViewHolderAdapter adapter,View view,ContentsItem item,int position);
         public void onAdapterItemCommentImageClick(ContentsViewHolderAdapter adapter,View view,ContentsItem item,int position);
         public void onAdapterItemNickNameTextClick(ContentsViewHolderAdapter adapter,View view,ContentsItem item,int position);
+        public void onAdapterItemDeleteImageClick(ContentsViewHolderAdapter adapter,View view,ContentsItem item,int position);
+        public void onAdpaterItemMoreImageClick(ContentsViewHolderAdapter adapter,View view,ContentsItem item,int position);
     }
     OnViewHolderAdapterItemClickListener mAdapterListener;
     public void setOnAdapterItemClickListener(OnViewHolderAdapterItemClickListener listener){

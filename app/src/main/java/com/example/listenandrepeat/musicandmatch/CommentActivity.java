@@ -50,7 +50,7 @@ public class CommentActivity extends AppCompatActivity {
         editText = (EditText)findViewById(R.id.text_comment);
 
 
-
+        initComment();
 
         mAdapter.setOnAdapterItemClickListener(new CommentViewHolderAdapter.OnCommnetViewHolderAdapterItemClickListener() {
             @Override
@@ -61,13 +61,13 @@ public class CommentActivity extends AppCompatActivity {
                     NetworkManager.getInstance().deleteComment(CommentActivity.this, postId, adapter.items.get(position).rid, new NetworkManager.OnResultListener<CommentResult>() {
                         @Override
                         public void onSuccess(Request request, CommentResult result) {
-                            Toast.makeText(CommentActivity.this,"suc",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CommentActivity.this, "suc", Toast.LENGTH_SHORT).show();
                             initComment();
                         }
 
                         @Override
                         public void onFailure(Request request, int code, Throwable cause) {
-                            Toast.makeText(CommentActivity.this,"fail",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CommentActivity.this, "fail", Toast.LENGTH_SHORT).show();
                         }
                     });
                 } catch (UnsupportedEncodingException e) {
@@ -78,19 +78,19 @@ public class CommentActivity extends AppCompatActivity {
 
             @Override
             public void onAdapterItemEditBtnClick(CommentViewHolderAdapter adapter, View view, CommentItem commentItem, int position) {
-                Intent intent1 = new Intent(CommentActivity.this,CommentEditActivity.class);
+                Intent intent1 = new Intent(CommentActivity.this, CommentEditActivity.class);
                 String content = adapter.items.get(position).content;
                 String profile = adapter.items.get(position).profile;
                 int replyId = adapter.items.get(position).rid;
-                intent1.putExtra(CommentEditActivity.REPLY_ID,replyId);
-                intent1.putExtra(CommentEditActivity.POST_ID,postId);
-                intent1.putExtra(CommentEditActivity.PRORFILE,profile);
-                intent1.putExtra(CommentEditActivity.CONTENT,content);
+                intent1.putExtra(CommentEditActivity.REPLY_ID, replyId);
+                intent1.putExtra(CommentEditActivity.POST_ID, postId);
+                intent1.putExtra(CommentEditActivity.PRORFILE, profile);
+                intent1.putExtra(CommentEditActivity.CONTENT, content);
                 startActivity(intent1);
                 finish();
             }
         });
-        initComment();
+
         btn = (Button)findViewById(R.id.btn_post);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,9 +121,8 @@ public class CommentActivity extends AppCompatActivity {
 
     private void initComment() {
 
-       //  intent = getIntent();
-       //  postId = intent.getIntExtra(PARAM_POST_ID, 0);
-       // Toast.makeText(CommentActivity.this, "Comment Id : " + postId, Toast.LENGTH_SHORT).show();
+
+      //  Toast.makeText(CommentActivity.this, "Comment Id : " + postId, Toast.LENGTH_SHORT).show();
         try {
             NetworkManager.getInstance().getCommentDetail(CommentActivity.this, postId, 1, new NetworkManager.OnResultListener<CommentDetailResult>() {
                 @Override
