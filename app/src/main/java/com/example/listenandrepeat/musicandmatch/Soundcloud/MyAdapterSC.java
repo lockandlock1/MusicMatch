@@ -15,9 +15,11 @@ import java.util.List;
  */
 public class MyAdapterSC extends RecyclerView.Adapter<MyViewHolderSC> implements MyViewHolderSC.OnImageClickListenerSC {
 
-    List<MyDataSC> items = new ArrayList<MyDataSC>();
+    List<SCTrackInfoData> items = new ArrayList<SCTrackInfoData>();
 
-    public void addAll(List<MyDataSC> items){
+
+
+    public void addAll(List<SCTrackInfoData>  items){
         this.items.addAll(items);
 
         notifyDataSetChanged();
@@ -40,7 +42,7 @@ public class MyAdapterSC extends RecyclerView.Adapter<MyViewHolderSC> implements
     }
 
 
-    public void add(MyDataSC data) {
+    public void add(SCTrackInfoData data) {
         items.add(data);
         notifyDataSetChanged();
     }
@@ -69,14 +71,14 @@ public class MyAdapterSC extends RecyclerView.Adapter<MyViewHolderSC> implements
         return items.size();
     }
 
-    public MyDataSC getItem(int position) {
+    public SCTrackInfoData getItem(int position) {
         if (position < 0 || position >= items.size()) return null;
 
         return items.get(position);
     }
 
     @Override
-    public void onCommentImageClick(View view, MyDataSC contentsItem) {
+    public void onCommentImageClick(View view, SCTrackInfoData contentsItem) {
         if(mAdapterListener != null){
             int index = items.indexOf(contentsItem);
             mAdapterListener.onAdapterItemCommentImageClick(this,view,contentsItem,index);
@@ -84,7 +86,7 @@ public class MyAdapterSC extends RecyclerView.Adapter<MyViewHolderSC> implements
     }
 
     @Override
-    public void onLikeImageClick(View view, MyDataSC contentsItem) {
+    public void onLikeImageClick(View view, SCTrackInfoData contentsItem) {
         if(mAdapterListener != null){
             int index = items.indexOf(contentsItem);
             mAdapterListener.onAdpaterItemLikeImageClick(this,view,contentsItem,index);
@@ -93,7 +95,7 @@ public class MyAdapterSC extends RecyclerView.Adapter<MyViewHolderSC> implements
     }
 
     @Override
-    public void onLayoutImageClick(View view, MyDataSC contentsItem) {
+    public void onLayoutImageClick(View view, SCTrackInfoData contentsItem) {
         if(mAdapterListener != null){
             int index = items.indexOf(contentsItem);
             mAdapterListener.onAdapterItemLayoutClick(this,view,contentsItem,index);
@@ -111,9 +113,9 @@ public class MyAdapterSC extends RecyclerView.Adapter<MyViewHolderSC> implements
 
     public interface OnViewHolderAdapterItemClickListener{
 
-        public void onAdapterItemLayoutClick(MyAdapterSC adapter,View view,MyDataSC item,int position);
-        public void onAdpaterItemLikeImageClick(MyAdapterSC adapter,View view,MyDataSC item,int position);
-        public void onAdapterItemCommentImageClick(MyAdapterSC adapter,View view,MyDataSC item,int position);
+        public void onAdapterItemLayoutClick(MyAdapterSC adapter,View view,SCTrackInfoData item,int position);
+        public void onAdpaterItemLikeImageClick(MyAdapterSC adapter,View view,SCTrackInfoData item,int position);
+        public void onAdapterItemCommentImageClick(MyAdapterSC adapter,View view,SCTrackInfoData item,int position);
 
     }
 

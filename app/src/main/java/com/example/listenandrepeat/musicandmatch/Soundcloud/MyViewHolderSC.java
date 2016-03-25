@@ -30,13 +30,13 @@ public class MyViewHolderSC extends RecyclerView.ViewHolder {
 
     Context mContext;
 
-    MyDataSC data;
+    SCTrackInfoData data;
 
     public interface OnImageClickListenerSC{
 
-        public void onCommentImageClick(View view,MyDataSC contentsItem);
-        public void onLikeImageClick(View view,MyDataSC contentsItem);
-        public void onLayoutImageClick(View view, MyDataSC contentsItem);
+        public void onCommentImageClick(View view,SCTrackInfoData contentsItem);
+        public void onLikeImageClick(View view,SCTrackInfoData contentsItem);
+        public void onLayoutImageClick(View view, SCTrackInfoData contentsItem);
     }
 
     OnImageClickListenerSC mImageClickListener;
@@ -97,16 +97,16 @@ public class MyViewHolderSC extends RecyclerView.ViewHolder {
 
 
 
-    MyDataSC item;
+    SCTrackInfoData item;
 
-    public void setContentsItem(MyDataSC c){
+    public void setContentsItem(SCTrackInfoData c){
         item = c;
         // profile
 
         iconView.setImageResource(R.mipmap.ic_launcher);
-        if(!TextUtils.isEmpty(c.icon_image)){
+        if(!TextUtils.isEmpty(c.user.avatar_url)){
             Glide.with(mContext)
-                    .load(c.icon_image)
+                    .load(c.user.avatar_url)
                     .into(iconView);
 
         } else {
@@ -116,9 +116,10 @@ public class MyViewHolderSC extends RecyclerView.ViewHolder {
         likeImageView.setImageResource(R.drawable.ic_favorite);
         commentImageView.setImageResource(R.drawable.ic_chat);
 
-        nicknameView.setText(c.nickname);
+        nicknameView.setText(c.user.username);
         titleView.setText(c.title);
-        durationView.setText(c.duration);
+        durationView.setText(""+c.duration);
+        textView.setText(""+c.id);
 
     }
 
