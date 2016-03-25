@@ -136,6 +136,7 @@ public class SoundcloudPlayActivity extends AppCompatActivity {
 
 //                    textUsername.setText(result[0].user.username);
 //                    textTitle.setText(result[0].title);
+
                     textLastModified.setText(""+postId);
 //                    textDuration.setText(""+result[0].duration);
 //

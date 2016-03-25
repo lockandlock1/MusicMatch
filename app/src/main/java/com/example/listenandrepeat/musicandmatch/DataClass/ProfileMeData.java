@@ -11,6 +11,7 @@ public class ProfileMeData {
     public int genre;
     public int position;
     public int mid;
+    public String cloud_id;
 }
 
 

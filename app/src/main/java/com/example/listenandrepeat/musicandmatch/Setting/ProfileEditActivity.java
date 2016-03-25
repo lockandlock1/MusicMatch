@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -72,6 +73,7 @@ public class ProfileEditActivity extends AppCompatActivity {
     String intro;
     int genre;
     int position;
+    String cloud_id;
     File file = new File("");
 
     @Override
@@ -153,20 +155,29 @@ public class ProfileEditActivity extends AppCompatActivity {
 
 
         imagePhoto = (ImageView)findViewById(R.id.image_photo);
-        imageGenre = (ImageView)findViewById(R.id.image_genre);
-        imagePosition = (ImageView)findViewById(R.id.image_position);
+        imageGenre = (ImageView)findViewById(R.id.imageView3);
+        imagePosition = (ImageView)findViewById(R.id.imageView5);
         textNickname = (TextView)findViewById(R.id.text_nickname);
         textIntro = (TextView)findViewById(R.id.text_intro);
 
         imageGenre.setImageResource(R.drawable.genrebut);
         imagePosition.setImageResource(R.drawable.positionbut);
 
+        final ImageView circularImageView = (ImageView)findViewById(R.id.image_round);
+// Set Border
+//        circularImageView.setBorderColor(getResources().getColor());
+        //   circularImageView.setBorderWidth(10);
+// Add Shadow with default param
+        //    circularImageView.addShadow();
+// or with custom param
+        //     circularImageView.setShadowRadius(15);
+        //     circularImageView.setShadowColor(Color.RED);
 
         try {
             NetworkManager.getInstance().getProfileMe(ProfileEditActivity.this, new NetworkManager.OnResultListener<ProfileMe>() {
                 @Override
                 public void onSuccess(Request request, ProfileMe result) {
-                    Toast.makeText(ProfileEditActivity.this,"success",Toast.LENGTH_SHORT).show();
+
                     PropertyManager.getInstance().setPostion(result.success.data.position);
                     PropertyManager.getInstance().setGenre(result.success.data.genre);
                     PropertyManager.getInstance().setNickName(result.success.data.nickname);
@@ -175,12 +186,23 @@ public class ProfileEditActivity extends AppCompatActivity {
                     intro = result.success.data.intro;
                     genre = result.success.data.genre;
                     position = result.success.data.position;
+                    cloud_id = result.success.data.cloud_id;
+
+                    Toast.makeText(ProfileEditActivity.this,cloud_id,Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ProfileEditActivity.this,"success",Toast.LENGTH_SHORT).show();
 
                     setGenre(result.success.data.genre);
                     setPosition(result.success.data.position);
                     textNickname.setText(result.success.data.nickname);
                     textIntro.setText(result.success.data.intro);
                     new LoadImagefromUrl( ).execute(imagePhoto, result.success.data.photo);
+
+                    if(!TextUtils.isEmpty(result.success.data.photo))  {
+                        Glide.with(ProfileEditActivity.this)
+                                .load(result.success.data.photo)
+                                .into(circularImageView);
+                    }
+//                    circularImageView.setImageURI(Uri.parse(result.success.data.photo));
                 }
 
                 @Override
@@ -329,6 +351,8 @@ public class ProfileEditActivity extends AppCompatActivity {
         startActivityForResult(intent, RC_GAMERA);
     }
 
+    private static final int RC_NICKNAME = 3;
+    private static final int RC_INTRO = 4;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -351,6 +375,17 @@ public class ProfileEditActivity extends AppCompatActivity {
                 Glide.with(this).load(mFileUri).into(imagePhoto);
             }
         }
+        if (requestCode == RC_NICKNAME) {
+            if (resultCode == Activity.RESULT_OK) {
+                Glide.with(this).load(mFileUri).into(imagePhoto);
+            }
+        }
+
+        if (requestCode == RC_INTRO) {
+            if (resultCode == Activity.RESULT_OK) {
+                Glide.with(this).load(mFileUri).into(imagePhoto);
+            }
+        }
     }
 
     Uri mFileUri;
@@ -364,4 +399,5 @@ public class ProfileEditActivity extends AppCompatActivity {
         mFileUri = Uri.fromFile(file);
         return mFileUri;
     }
+
 }

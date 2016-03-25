@@ -4,12 +4,10 @@ package com.example.listenandrepeat.musicandmatch.Setting;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.example.listenandrepeat.musicandmatch.Login.LoginActivity;
 import com.example.listenandrepeat.musicandmatch.R;
@@ -32,15 +30,15 @@ public class SettingFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
 
-        Toolbar toolbar = (Toolbar)view.findViewById(R.id.toolbar);
-        toolbar.setTitle("설정");
-        toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getActivity(), "center toolbar navigation click", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        Toolbar toolbar = (Toolbar)view.findViewById(R.id.toolbar);
+//        toolbar.setTitle("설정");
+//        toolbar.setNavigationIcon(R.drawable.ic_back);
+//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(getActivity(), "center toolbar navigation click", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         Button btn = (Button)view.findViewById(R.id.btn_pw);
         btn.setOnClickListener(new View.OnClickListener() {
